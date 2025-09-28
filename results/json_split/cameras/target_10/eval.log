@@ -1,0 +1,118 @@
+[nltk_data] Downloading package punkt_tab to /u/onimase/nltk_data...
+[nltk_data]   Package punkt_tab is already up-to-date!
+`torch_dtype` is deprecated! Use `dtype` instead!
+Traceback (most recent call last):
+  File "/u/onimase/miniconda3/envs/controllable-seo/lib/python3.11/site-packages/huggingface_hub/utils/_http.py", line 409, in hf_raise_for_status
+    response.raise_for_status()
+  File "/u/onimase/miniconda3/envs/controllable-seo/lib/python3.11/site-packages/requests/models.py", line 1024, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 403 Client Error: Forbidden for url: https://huggingface.co/lmsys/vicuna-7b-v1.5/resolve/refs%2Fpr%2F13/model.safetensors.index.json
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/u/onimase/controllable-seo-project/controllable-seo/experiment/evaluate.py", line 216, in <module>
+    perplexity_model, perplexity_tokenizer = get_model("lmsys/vicuna-7b-v1.5", 16, device)
+                                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/u/onimase/controllable-seo-project/controllable-seo/experiment/get.py", line 33, in get_model
+    model = transformers.AutoModelForCausalLM.from_pretrained(
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/u/onimase/miniconda3/envs/controllable-seo/lib/python3.11/site-packages/transformers/models/auto/auto_factory.py", line 604, in from_pretrained
+    return model_class.from_pretrained(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/u/onimase/miniconda3/envs/controllable-seo/lib/python3.11/site-packages/transformers/modeling_utils.py", line 288, in _wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/u/onimase/miniconda3/envs/controllable-seo/lib/python3.11/site-packages/transformers/modeling_utils.py", line 5030, in from_pretrained
+    checkpoint_files, sharded_metadata = _get_resolved_checkpoint_files(
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/u/onimase/miniconda3/envs/controllable-seo/lib/python3.11/site-packages/transformers/modeling_utils.py", line 1165, in _get_resolved_checkpoint_files
+    resolved_archive_file, revision, is_sharded = auto_conversion(
+                                                  ^^^^^^^^^^^^^^^^
+  File "/u/onimase/miniconda3/envs/controllable-seo/lib/python3.11/site-packages/transformers/safetensors_conversion.py", line 105, in auto_conversion
+    raise e
+  File "/u/onimase/miniconda3/envs/controllable-seo/lib/python3.11/site-packages/transformers/safetensors_conversion.py", line 93, in auto_conversion
+    sharded = api.file_exists(
+              ^^^^^^^^^^^^^^^^
+  File "/u/onimase/miniconda3/envs/controllable-seo/lib/python3.11/site-packages/huggingface_hub/utils/_validators.py", line 114, in _inner_fn
+    return fn(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^
+  File "/u/onimase/miniconda3/envs/controllable-seo/lib/python3.11/site-packages/huggingface_hub/hf_api.py", line 3015, in file_exists
+    get_hf_file_metadata(url, token=token)
+  File "/u/onimase/miniconda3/envs/controllable-seo/lib/python3.11/site-packages/huggingface_hub/utils/_validators.py", line 114, in _inner_fn
+    return fn(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^
+  File "/u/onimase/miniconda3/envs/controllable-seo/lib/python3.11/site-packages/huggingface_hub/file_download.py", line 1463, in get_hf_file_metadata
+    r = _request_wrapper(
+        ^^^^^^^^^^^^^^^^^
+  File "/u/onimase/miniconda3/envs/controllable-seo/lib/python3.11/site-packages/huggingface_hub/file_download.py", line 286, in _request_wrapper
+    response = _request_wrapper(
+               ^^^^^^^^^^^^^^^^^
+  File "/u/onimase/miniconda3/envs/controllable-seo/lib/python3.11/site-packages/huggingface_hub/file_download.py", line 310, in _request_wrapper
+    hf_raise_for_status(response)
+  File "/u/onimase/miniconda3/envs/controllable-seo/lib/python3.11/site-packages/huggingface_hub/utils/_http.py", line 473, in hf_raise_for_status
+    raise _format(HfHubHTTPError, message, response) from e
+huggingface_hub.errors.HfHubHTTPError: 403 Forbidden: None.
+Cannot access content at: https://huggingface.co/lmsys/vicuna-7b-v1.5/resolve/refs%2Fpr%2F13/model.safetensors.index.json.
+Make sure your token has the correct permissions.
+[nltk_data] Downloading package punkt_tab to /u/onimase/nltk_data...
+[nltk_data]   Package punkt_tab is already up-to-date!
+`torch_dtype` is deprecated! Use `dtype` instead!
+Traceback (most recent call last):
+  File "/u/onimase/miniconda3/envs/controllable-seo/lib/python3.11/site-packages/huggingface_hub/utils/_http.py", line 409, in hf_raise_for_status
+    response.raise_for_status()
+  File "/u/onimase/miniconda3/envs/controllable-seo/lib/python3.11/site-packages/requests/models.py", line 1024, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 403 Client Error: Forbidden for url: https://huggingface.co/lmsys/vicuna-7b-v1.5/resolve/refs%2Fpr%2F13/model.safetensors.index.json
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/u/onimase/controllable-seo-project/controllable-seo/experiment/evaluate.py", line 216, in <module>
+    perplexity_model, perplexity_tokenizer = get_model("lmsys/vicuna-7b-v1.5", 16, device)
+                                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/u/onimase/controllable-seo-project/controllable-seo/experiment/get.py", line 33, in get_model
+    model = transformers.AutoModelForCausalLM.from_pretrained(
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/u/onimase/miniconda3/envs/controllable-seo/lib/python3.11/site-packages/transformers/models/auto/auto_factory.py", line 604, in from_pretrained
+    return model_class.from_pretrained(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/u/onimase/miniconda3/envs/controllable-seo/lib/python3.11/site-packages/transformers/modeling_utils.py", line 288, in _wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/u/onimase/miniconda3/envs/controllable-seo/lib/python3.11/site-packages/transformers/modeling_utils.py", line 5030, in from_pretrained
+    checkpoint_files, sharded_metadata = _get_resolved_checkpoint_files(
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/u/onimase/miniconda3/envs/controllable-seo/lib/python3.11/site-packages/transformers/modeling_utils.py", line 1165, in _get_resolved_checkpoint_files
+    resolved_archive_file, revision, is_sharded = auto_conversion(
+                                                  ^^^^^^^^^^^^^^^^
+  File "/u/onimase/miniconda3/envs/controllable-seo/lib/python3.11/site-packages/transformers/safetensors_conversion.py", line 105, in auto_conversion
+    raise e
+  File "/u/onimase/miniconda3/envs/controllable-seo/lib/python3.11/site-packages/transformers/safetensors_conversion.py", line 93, in auto_conversion
+    sharded = api.file_exists(
+              ^^^^^^^^^^^^^^^^
+  File "/u/onimase/miniconda3/envs/controllable-seo/lib/python3.11/site-packages/huggingface_hub/utils/_validators.py", line 114, in _inner_fn
+    return fn(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^
+  File "/u/onimase/miniconda3/envs/controllable-seo/lib/python3.11/site-packages/huggingface_hub/hf_api.py", line 3015, in file_exists
+    get_hf_file_metadata(url, token=token)
+  File "/u/onimase/miniconda3/envs/controllable-seo/lib/python3.11/site-packages/huggingface_hub/utils/_validators.py", line 114, in _inner_fn
+    return fn(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^
+  File "/u/onimase/miniconda3/envs/controllable-seo/lib/python3.11/site-packages/huggingface_hub/file_download.py", line 1463, in get_hf_file_metadata
+    r = _request_wrapper(
+        ^^^^^^^^^^^^^^^^^
+  File "/u/onimase/miniconda3/envs/controllable-seo/lib/python3.11/site-packages/huggingface_hub/file_download.py", line 286, in _request_wrapper
+    response = _request_wrapper(
+               ^^^^^^^^^^^^^^^^^
+  File "/u/onimase/miniconda3/envs/controllable-seo/lib/python3.11/site-packages/huggingface_hub/file_download.py", line 310, in _request_wrapper
+    hf_raise_for_status(response)
+  File "/u/onimase/miniconda3/envs/controllable-seo/lib/python3.11/site-packages/huggingface_hub/utils/_http.py", line 473, in hf_raise_for_status
+    raise _format(HfHubHTTPError, message, response) from e
+huggingface_hub.errors.HfHubHTTPError: 403 Forbidden: None.
+Cannot access content at: https://huggingface.co/lmsys/vicuna-7b-v1.5/resolve/refs%2Fpr%2F13/model.safetensors.index.json.
+Make sure your token has the correct permissions.

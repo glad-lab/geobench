@@ -1,0 +1,149 @@
+[nltk_data] Downloading package punkt_tab to /u/onimase/nltk_data...
+[nltk_data]   Package punkt_tab is already up-to-date!
+`torch_dtype` is deprecated! Use `dtype` instead!
+Fetching 2 files:   0%|          | 0/2 [00:00<?, ?it/s]Fetching 2 files: 100%|██████████| 2/2 [00:00<00:00, 9372.75it/s]
+Loading checkpoint shards:   0%|          | 0/2 [00:00<?, ?it/s]Loading checkpoint shards: 100%|██████████| 2/2 [00:00<00:00, 36.69it/s]
+The following generation flags are not valid and may be ignored: ['temperature', 'top_p']. Set `TRANSFORMERS_VERBOSITY=info` for more details.
++----+--------------+-----------+----------------+----------------------+--------------------------+
+|    | Model        | Catalog   | Average Rank   | Average Perplexity   | Average Bad Word Ratio   |
++====+==============+===========+================+======================+==========================+
+|  0 | vicuna-7b    | tablet    | 1.0±0.0        | 40.76±48.6           | 0.0±0.0                  |
++----+--------------+-----------+----------------+----------------------+--------------------------+
+|  1 | llama-3.1-8b | tablet    | 1.12±0.35      | 76.57±52.14          | 0.62±0.52                |
++----+--------------+-----------+----------------+----------------------+--------------------------+
+|  2 | mistral-7b   | tablet    | 2.62±2.77      | 81.71±36.81          | 0.25±0.46                |
++----+--------------+-----------+----------------+----------------------+--------------------------+
+|  3 | deepseek-7b  | tablet    | 2.0±1.51       | 37.61±28.77          | 0.12±0.35                |
++----+--------------+-----------+----------------+----------------------+--------------------------+
+✅ Saved to metric/tablet.csv
++----+--------------+-----------+----------------+----------------------+--------------------------+
+|    | Model        | Catalog   | Average Rank   | Average Perplexity   | Average Bad Word Ratio   |
++====+==============+===========+================+======================+==========================+
+|  0 | vicuna-7b    | tent      | 2.75±2.96      | 121.16±87.06         | 0.25±0.46                |
++----+--------------+-----------+----------------+----------------------+--------------------------+
+|  1 | llama-3.1-8b | tent      | 1.25±0.46      | 94.0±47.25           | 0.25±0.46                |
++----+--------------+-----------+----------------+----------------------+--------------------------+
+|  2 | mistral-7b   | tent      | 1.25±0.46      | 174.32±171.53        | 0.0±0.0                  |
++----+--------------+-----------+----------------+----------------------+--------------------------+
+|  3 | deepseek-7b  | tent      | 1.25±0.46      | 75.23±34.13          | 0.5±0.53                 |
++----+--------------+-----------+----------------+----------------------+--------------------------+
+✅ Saved to metric/tent.csv
++----+--------------+------------+----------------+----------------------+--------------------------+
+|    | Model        | Catalog    | Average Rank   | Average Perplexity   | Average Bad Word Ratio   |
++====+==============+============+================+======================+==========================+
+|  0 | vicuna-7b    | tool chest | 2.5±1.69       | 190.44±155.03        | 0.12±0.35                |
++----+--------------+------------+----------------+----------------------+--------------------------+
+|  1 | llama-3.1-8b | tool chest | 1.0±0.0        | 82.56±31.87          | 0.38±0.52                |
++----+--------------+------------+----------------+----------------------+--------------------------+
+|  2 | mistral-7b   | tool chest | 1.12±0.35      | 81.62±32.17          | 0.12±0.35                |
++----+--------------+------------+----------------+----------------------+--------------------------+
+|  3 | deepseek-7b  | tool chest | 1.88±1.13      | 37.81±20.53          | 0.25±0.46                |
++----+--------------+------------+----------------+----------------------+--------------------------+
+✅ Saved to metric/tool chest.csv
++----+--------------+-----------------+----------------+----------------------+--------------------------+
+|    | Model        | Catalog         | Average Rank   | Average Perplexity   | Average Bad Word Ratio   |
++====+==============+=================+================+======================+==========================+
+|  0 | vicuna-7b    | washing machine | 3.12±2.9       | 136.43±126.27        | 0.12±0.35                |
++----+--------------+-----------------+----------------+----------------------+--------------------------+
+|  1 | llama-3.1-8b | washing machine | 2.0±2.45       | 85.13±26.67          | 0.62±0.52                |
++----+--------------+-----------------+----------------+----------------------+--------------------------+
+|  2 | mistral-7b   | washing machine | 1.12±0.35      | 123.61±108.34        | 0.0±0.0                  |
++----+--------------+-----------------+----------------+----------------------+--------------------------+
+|  3 | deepseek-7b  | washing machine | 1.5±0.76       | 57.09±18.86          | 0.0±0.0                  |
++----+--------------+-----------------+----------------+----------------------+--------------------------+
+✅ Saved to metric/washing machine.csv
++----+--------------+----------------+----------------+----------------------+--------------------------+
+|    | Model        | Catalog        | Average Rank   | Average Perplexity   | Average Bad Word Ratio   |
++====+==============+================+================+======================+==========================+
+|  0 | vicuna-7b    | wet-dry vacuum | 1.12±0.35      | 46.22±36.36          | 0.0±0.0                  |
++----+--------------+----------------+----------------+----------------------+--------------------------+
+|  1 | llama-3.1-8b | wet-dry vacuum | 1.5±1.41       | 58.54±15.04          | 0.38±0.52                |
++----+--------------+----------------+----------------+----------------------+--------------------------+
+|  2 | mistral-7b   | wet-dry vacuum | 1.25±0.71      | 80.31±62.74          | 0.38±0.52                |
++----+--------------+----------------+----------------+----------------------+--------------------------+
+|  3 | deepseek-7b  | wet-dry vacuum | 2.38±1.41      | 36.44±17.35          | 0.38±0.52                |
++----+--------------+----------------+----------------+----------------------+--------------------------+
+✅ Saved to metric/wet-dry vacuum.csv
++----+--------------+-------------+----------------+----------------------+--------------------------+
+|    | Model        | Catalog     | Average Rank   | Average Perplexity   | Average Bad Word Ratio   |
++====+==============+=============+================+======================+==========================+
+|  0 | vicuna-7b    | wifi router | 1.25±0.71      | 149.71±116.36        | 0.25±0.46                |
++----+--------------+-------------+----------------+----------------------+--------------------------+
+|  1 | llama-3.1-8b | wifi router | 1.0±0.0        | 69.42±29.32          | 0.5±0.53                 |
++----+--------------+-------------+----------------+----------------------+--------------------------+
+|  2 | mistral-7b   | wifi router | 1.12±0.35      | 73.6±42.36           | 0.25±0.46                |
++----+--------------+-------------+----------------+----------------------+--------------------------+
+|  3 | deepseek-7b  | wifi router | 1.12±0.35      | 40.09±36.46          | 0.5±0.53                 |
++----+--------------+-------------+----------------+----------------------+--------------------------+
+✅ Saved to metric/wifi router.csv
++----+--------------+-------------+----------------+----------------------+--------------------------+
+|    | Model        | Catalog     | Average Rank   | Average Perplexity   | Average Bad Word Ratio   |
++====+==============+=============+================+======================+==========================+
+|  0 | vicuna-7b    | wood router | 1.75±1.16      | 91.4±51.8            | 0.12±0.35                |
++----+--------------+-------------+----------------+----------------------+--------------------------+
+|  1 | llama-3.1-8b | wood router | 1.12±0.35      | 90.74±56.13          | 0.5±0.53                 |
++----+--------------+-------------+----------------+----------------------+--------------------------+
+|  2 | mistral-7b   | wood router | 1.38±0.74      | 95.46±64.14          | 0.0±0.0                  |
++----+--------------+-------------+----------------+----------------------+--------------------------+
+|  3 | deepseek-7b  | wood router | 1.38±0.52      | 41.4±16.58           | 0.38±0.52                |
++----+--------------+-------------+----------------+----------------------+--------------------------+
+✅ Saved to metric/wood router.csv
+[nltk_data] Downloading package punkt_tab to /u/onimase/nltk_data...
+[nltk_data]   Package punkt_tab is already up-to-date!
+`torch_dtype` is deprecated! Use `dtype` instead!
+Traceback (most recent call last):
+  File "/u/onimase/miniconda3/envs/controllable-seo/lib/python3.11/site-packages/huggingface_hub/utils/_http.py", line 409, in hf_raise_for_status
+    response.raise_for_status()
+  File "/u/onimase/miniconda3/envs/controllable-seo/lib/python3.11/site-packages/requests/models.py", line 1024, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 403 Client Error: Forbidden for url: https://huggingface.co/lmsys/vicuna-7b-v1.5/resolve/refs%2Fpr%2F13/model.safetensors.index.json
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/u/onimase/controllable-seo-project/controllable-seo/experiment/evaluate.py", line 216, in <module>
+    perplexity_model, perplexity_tokenizer = get_model("lmsys/vicuna-7b-v1.5", 16, device)
+                                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/u/onimase/controllable-seo-project/controllable-seo/experiment/get.py", line 33, in get_model
+    model = transformers.AutoModelForCausalLM.from_pretrained(
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/u/onimase/miniconda3/envs/controllable-seo/lib/python3.11/site-packages/transformers/models/auto/auto_factory.py", line 604, in from_pretrained
+    return model_class.from_pretrained(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/u/onimase/miniconda3/envs/controllable-seo/lib/python3.11/site-packages/transformers/modeling_utils.py", line 288, in _wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/u/onimase/miniconda3/envs/controllable-seo/lib/python3.11/site-packages/transformers/modeling_utils.py", line 5030, in from_pretrained
+    checkpoint_files, sharded_metadata = _get_resolved_checkpoint_files(
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/u/onimase/miniconda3/envs/controllable-seo/lib/python3.11/site-packages/transformers/modeling_utils.py", line 1165, in _get_resolved_checkpoint_files
+    resolved_archive_file, revision, is_sharded = auto_conversion(
+                                                  ^^^^^^^^^^^^^^^^
+  File "/u/onimase/miniconda3/envs/controllable-seo/lib/python3.11/site-packages/transformers/safetensors_conversion.py", line 105, in auto_conversion
+    raise e
+  File "/u/onimase/miniconda3/envs/controllable-seo/lib/python3.11/site-packages/transformers/safetensors_conversion.py", line 93, in auto_conversion
+    sharded = api.file_exists(
+              ^^^^^^^^^^^^^^^^
+  File "/u/onimase/miniconda3/envs/controllable-seo/lib/python3.11/site-packages/huggingface_hub/utils/_validators.py", line 114, in _inner_fn
+    return fn(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^
+  File "/u/onimase/miniconda3/envs/controllable-seo/lib/python3.11/site-packages/huggingface_hub/hf_api.py", line 3015, in file_exists
+    get_hf_file_metadata(url, token=token)
+  File "/u/onimase/miniconda3/envs/controllable-seo/lib/python3.11/site-packages/huggingface_hub/utils/_validators.py", line 114, in _inner_fn
+    return fn(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^
+  File "/u/onimase/miniconda3/envs/controllable-seo/lib/python3.11/site-packages/huggingface_hub/file_download.py", line 1463, in get_hf_file_metadata
+    r = _request_wrapper(
+        ^^^^^^^^^^^^^^^^^
+  File "/u/onimase/miniconda3/envs/controllable-seo/lib/python3.11/site-packages/huggingface_hub/file_download.py", line 286, in _request_wrapper
+    response = _request_wrapper(
+               ^^^^^^^^^^^^^^^^^
+  File "/u/onimase/miniconda3/envs/controllable-seo/lib/python3.11/site-packages/huggingface_hub/file_download.py", line 310, in _request_wrapper
+    hf_raise_for_status(response)
+  File "/u/onimase/miniconda3/envs/controllable-seo/lib/python3.11/site-packages/huggingface_hub/utils/_http.py", line 473, in hf_raise_for_status
+    raise _format(HfHubHTTPError, message, response) from e
+huggingface_hub.errors.HfHubHTTPError: 403 Forbidden: None.
+Cannot access content at: https://huggingface.co/lmsys/vicuna-7b-v1.5/resolve/refs%2Fpr%2F13/model.safetensors.index.json.
+Make sure your token has the correct permissions.

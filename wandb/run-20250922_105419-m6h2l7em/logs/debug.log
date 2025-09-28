@@ -1,0 +1,54 @@
+2025-09-22 10:54:19,387 INFO    Thread-2 (_run_job):1789165 [wandb_setup.py:_flush():68] Current SDK version is 0.19.6
+2025-09-22 10:54:19,388 INFO    Thread-2 (_run_job):1789165 [wandb_setup.py:_flush():68] Configure stats pid to 1789165
+2025-09-22 10:54:19,388 INFO    Thread-2 (_run_job):1789165 [wandb_setup.py:_flush():68] Loading settings from /u/onimase/.config/wandb/settings
+2025-09-22 10:54:19,388 INFO    Thread-2 (_run_job):1789165 [wandb_setup.py:_flush():68] Loading settings from /u/onimase/controllable-seo-project/controllable-seo/wandb/settings
+2025-09-22 10:54:19,388 INFO    Thread-2 (_run_job):1789165 [wandb_setup.py:_flush():68] Loading settings from environment variables
+2025-09-22 10:54:19,388 INFO    Thread-2 (_run_job):1789165 [wandb_init.py:setup_run_log_directory():637] Logging user logs to /u/onimase/controllable-seo-project/controllable-seo/wandb/run-20250922_105419-m6h2l7em/logs/debug.log
+2025-09-22 10:54:19,388 INFO    Thread-2 (_run_job):1789165 [wandb_init.py:setup_run_log_directory():638] Logging internal logs to /u/onimase/controllable-seo-project/controllable-seo/wandb/run-20250922_105419-m6h2l7em/logs/debug-internal.log
+2025-09-22 10:54:19,388 INFO    Thread-2 (_run_job):1789165 [wandb_init.py:init():756] calling init triggers
+2025-09-22 10:54:19,388 INFO    Thread-2 (_run_job):1789165 [wandb_init.py:init():761] wandb.init called with sweep_config: {'batch_size': 5, 'catalog': 'coffee maker', 'comment': 'main experiment', 'dataset': 'ragroll', 'fluency': 1, 'iter_steps': [0, 50, 200, 500, 1500], 'length': 30, 'lr': 0.03, 'mode': 'suffix', 'model': 'deepseek-7b', 'ngram': 5, 'noise_stds': [0.1, 0.05, 0.01, 0.005, 0.001], 'num_iter': 2000, 'precision': 16, 'random_inference': True, 'random_order': True, 'result_dir': 'result/suffix/v1', 'seed': 42, 'similarity': 1, 'target': 50, 'target_product_idx': 8, 'temperature': 0.1, 'test_iter': 100, 'topk': 10}
+config: {'_wandb': {}}
+2025-09-22 10:54:19,388 INFO    Thread-2 (_run_job):1789165 [wandb_init.py:init():789] starting backend
+2025-09-22 10:54:19,598 INFO    Thread-2 (_run_job):1789165 [wandb_init.py:init():793] sending inform_init request
+2025-09-22 10:54:19,604 INFO    Thread-2 (_run_job):1789165 [backend.py:_multiprocessing_setup():97] multiprocessing start_methods=fork,spawn,forkserver, using: spawn
+2025-09-22 10:54:19,604 INFO    Thread-2 (_run_job):1789165 [wandb_init.py:init():808] backend started and connected
+2025-09-22 10:54:19,605 INFO    Thread-2 (_run_job):1789165 [wandb_run.py:_config_callback():1253] config_cb None None {'batch_size': 5, 'catalog': 'coffee maker', 'comment': 'main experiment', 'dataset': 'ragroll', 'fluency': 1, 'iter_steps': [0, 50, 200, 500, 1500], 'length': 30, 'lr': 0.03, 'mode': 'suffix', 'model': 'deepseek-7b', 'ngram': 5, 'noise_stds': [0.1, 0.05, 0.01, 0.005, 0.001], 'num_iter': 2000, 'precision': 16, 'random_inference': True, 'random_order': True, 'result_dir': 'result/suffix/v1', 'seed': 42, 'similarity': 1, 'target': 50, 'target_product_idx': 8, 'temperature': 0.1, 'test_iter': 100, 'topk': 10}
+2025-09-22 10:54:19,605 INFO    Thread-2 (_run_job):1789165 [wandb_init.py:init():901] updated telemetry
+2025-09-22 10:54:19,615 INFO    Thread-2 (_run_job):1789165 [wandb_init.py:init():936] communicating run to backend with 90.0 second timeout
+2025-09-22 10:54:19,839 INFO    Thread-2 (_run_job):1789165 [wandb_init.py:init():994] starting run threads in backend
+2025-09-22 10:54:19,944 INFO    Thread-2 (_run_job):1789165 [wandb_run.py:_console_start():2385] atexit reg
+2025-09-22 10:54:19,944 INFO    Thread-2 (_run_job):1789165 [wandb_run.py:_redirect():2235] redirect: wrap_raw
+2025-09-22 10:54:19,944 INFO    Thread-2 (_run_job):1789165 [wandb_run.py:_redirect():2300] Wrapping output streams.
+2025-09-22 10:54:19,944 INFO    Thread-2 (_run_job):1789165 [wandb_run.py:_redirect():2325] Redirects installed.
+2025-09-22 10:54:19,947 INFO    Thread-2 (_run_job):1789165 [wandb_init.py:init():1036] run started, returning control to user process
+2025-09-22 11:33:02,899 ERROR   Thread-1 (_heartbeat):1789165 [internal_api.py:execute():400] 502 response executing GraphQL.
+2025-09-22 11:33:02,899 ERROR   Thread-1 (_heartbeat):1789165 [internal_api.py:execute():401] 
+<html><head>
+<meta http-equiv="content-type" content="text/html;charset=utf-8">
+<title>502 Server Error</title>
+</head>
+<body text=#000000 bgcolor=#ffffff>
+<h1>Error: Server Error</h1>
+<h2>The server encountered a temporary error and could not complete your request.<p>Please try again in 30 seconds.</h2>
+<h2></h2>
+</body></html>
+
+2025-09-22 11:35:04,550 ERROR   Thread-1 (_heartbeat):1789165 [internal_api.py:execute():400] 502 response executing GraphQL.
+2025-09-22 11:35:04,551 ERROR   Thread-1 (_heartbeat):1789165 [internal_api.py:execute():401] 
+<html><head>
+<meta http-equiv="content-type" content="text/html;charset=utf-8">
+<title>502 Server Error</title>
+</head>
+<body text=#000000 bgcolor=#ffffff>
+<h1>Error: Server Error</h1>
+<h2>The server encountered a temporary error and could not complete your request.<p>Please try again in 30 seconds.</h2>
+<h2></h2>
+</body></html>
+
+2025-09-22 11:45:15,712 INFO    Thread-2 (_run_job):1789165 [wandb_run.py:_finish():2110] finishing run nimase-university-of-southern-california/seo/m6h2l7em
+2025-09-22 11:45:15,712 INFO    Thread-2 (_run_job):1789165 [wandb_run.py:_atexit_cleanup():2350] got exitcode: 0
+2025-09-22 11:45:15,712 INFO    Thread-2 (_run_job):1789165 [wandb_run.py:_restore():2332] restore
+2025-09-22 11:45:15,712 INFO    Thread-2 (_run_job):1789165 [wandb_run.py:_restore():2338] restore done
+2025-09-22 11:45:18,630 INFO    Thread-2 (_run_job):1789165 [wandb_run.py:_footer_history_summary_info():3963] rendering history
+2025-09-22 11:45:18,630 INFO    Thread-2 (_run_job):1789165 [wandb_run.py:_footer_history_summary_info():3995] rendering summary
+2025-09-22 11:45:18,631 INFO    Thread-2 (_run_job):1789165 [wandb_run.py:_footer_sync_info():3924] logging synced files

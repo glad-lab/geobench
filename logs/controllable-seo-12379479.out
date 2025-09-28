@@ -1,0 +1,80 @@
+Job started at: Sun Sep 21 01:22:23 CDT 2025
+Job started at: Sun Sep 21 01:22:23 CDT 2025
+Job ID: 12379479
+=== GPU Verification ===
+Sun Sep 21 01:22:26 2025       
++-----------------------------------------------------------------------------------------+
+| NVIDIA-SMI 550.163.01             Driver Version: 550.163.01     CUDA Version: 12.4     |
+|-----------------------------------------+------------------------+----------------------+
+| GPU  Name                 Persistence-M | Bus-Id          Disp.A | Volatile Uncorr. ECC |
+| Fan  Temp   Perf          Pwr:Usage/Cap |           Memory-Usage | GPU-Util  Compute M. |
+|                                         |                        |               MIG M. |
+|=========================================+========================+======================|
+|   0  NVIDIA A40                     On  |   00000000:85:00.0 Off |                    0 |
+|  0%   32C    P8             29W /  300W |       1MiB /  46068MiB |      0%      Default |
+|                                         |                        |                  N/A |
++-----------------------------------------+------------------------+----------------------+
+                                                                                         
++-----------------------------------------------------------------------------------------+
+| Processes:                                                                              |
+|  GPU   GI   CI        PID   Type   Process name                              GPU Memory |
+|        ID   ID                                                               Usage      |
+|=========================================================================================|
+|  No running processes found                                                             |
++-----------------------------------------------------------------------------------------+
+CUDA available: True
+=== Running Setup Test ===
+=== Setup Verification ===
+
+Basic Imports:
+Testing basic imports...
+✓ Experiment modules imported successfully
+
+CUDA:
+Testing CUDA...
+CUDA available: True
+GPU count: 1
+GPU name: NVIDIA A40
+
+NLTK:
+Testing NLTK...
+✓ NLTK working: 198 stopwords loaded
+
+=== Results ===
+✓ All tests passed!
+Note: CUDA will only be True on GPU compute nodes, not login nodes.
+=== Starting Main Experiment ===
+Create sweep with ID: fqsfew2t
+Sweep URL: https://wandb.ai/nimase-university-of-southern-california/seo/sweeps/fqsfew2t
+
+TARGET STR: 1. DeLonghi
+Evaluation completed at iteration 1 Rank: 1
+Evaluation completed at iteration 100 Rank: 1
+Evaluation completed at iteration 200 Rank: 1
+Evaluation completed at iteration 300 Rank: 1
+Evaluation completed at iteration 400 Rank: 1
+Evaluation completed at iteration 500 Rank: 1
+Evaluation completed at iteration 600 Rank: 1
+Evaluation completed at iteration 700 Rank: 1
+Evaluation completed at iteration 800 Rank: 1
+Evaluation completed at iteration 900 Rank: 1
+Evaluation completed at iteration 1000 Rank: 1
+Evaluation completed at iteration 1100 Rank: 1
+Evaluation completed at iteration 1200 Rank: 1
+Evaluation completed at iteration 1300 Rank: 1
+Evaluation completed at iteration 1400 Rank: 1
+Evaluation completed at iteration 1500 Rank: 1
+Evaluation completed at iteration 1600 Rank: 1
+Evaluation completed at iteration 1700 Rank: 1
+Evaluation completed at iteration 1800 Rank: 1
+Evaluation completed at iteration 1900 Rank: 1
+Evaluation completed at iteration 2000 Rank: 1
+Local result saved to result/suffix/v1/deepseek-7b/ragroll/coffee maker/8/random_inference=True.csv
+=== Running Evaluations ===
+> /u/onimase/controllable-seo-project/controllable-seo/experiment/evaluate.py(68)calculate_avg_perplexity()
+-> attack_prompt = attack.lstrip('<span style="color:red;">').rstrip('</span>')
+(Pdb) 
+> /u/onimase/controllable-seo-project/controllable-seo/experiment/evaluate.py(68)calculate_avg_perplexity()
+-> attack_prompt = attack.lstrip('<span style="color:red;">').rstrip('</span>')
+(Pdb) 
+Job completed at: Sun Sep 21 02:18:32 CDT 2025
