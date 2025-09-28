@@ -16,7 +16,7 @@ echo "Job ID: $SLURM_JOB_ID"
 source ~/miniconda3/bin/activate
 conda activate controllable-seo
 export MISTRAL_API_KEY="$MISTRAL_API_KEY"
-cd /work/hdd/beaa/onimase/controllable-seo-project/controllable-seo
+cd /work/hdd/beaa/onimase/controllable-seo-project/geobench
 
 mkdir -p logs results
 
@@ -48,9 +48,7 @@ run_ragroll_experiment() {
     
     python << 'EOF'
 import yaml
-import os
-
-with open(os.environ['OPT_CONFIG'], 'r') as f:
+with open('$OPT_CONFIG', 'r') as f:
     config = yaml.safe_load(f)
 
 config['wandb']['project'] = 'controllable-seo-mistral-7b-ragroll'
@@ -66,7 +64,7 @@ config['parameters']['temperature']['value'] = 0.05
 config['parameters']['iter_steps']['value'] = [0, 25, 100, 250, 750]
 config['parameters']['noise_stds']['value'] = [0.05, 0.025, 0.01, 0.005, 0.001]
 
-with open(os.environ['OPT_CONFIG'], 'w') as f:
+with open('$OPT_CONFIG', 'w') as f:
     yaml.dump(config, f)
 EOF
     

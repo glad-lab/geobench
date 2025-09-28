@@ -212,15 +212,27 @@ def extract_all_results(results_base_dir="results"):
     
     print("=== EXTRACTING ALL RESULTS ===")
     
-    # Process both json_split and ragroll_split directories
-    for dataset_dir in ["json_split", "ragroll_split"]:
+    # Define all experiment directories to process
+    experiment_configs = [
+        # DeepSeek experiments
+        {"dir": "json_split", "dataset": "json", "model": "deepseek-7b"},
+        {"dir": "ragroll_split", "dataset": "ragroll", "model": "deepseek-7b"},
+        # Mistral experiments  
+        {"dir": "mistral_json_split", "dataset": "json", "model": "mistral-7b"},
+        {"dir": "mistral_ragroll_split", "dataset": "ragroll", "model": "mistral-7b"},
+    ]
+    
+    for config in experiment_configs:
+        dataset_dir = config["dir"]
+        dataset_name = config["dataset"] 
+        expected_model = config["model"]
+        
         dataset_path = os.path.join(results_base_dir, dataset_dir)
         if not os.path.exists(dataset_path):
             print(f"Directory not found: {dataset_path}")
             continue
             
-        dataset_name = "json" if "json" in dataset_dir else "ragroll"
-        print(f"\nProcessing {dataset_name} experiments...")
+        print(f"\nProcessing {expected_model} {dataset_name} experiments...")
         
         # Find all experiment directories
         pattern = os.path.join(dataset_path, "*/target_*")
@@ -243,7 +255,11 @@ def extract_all_results(results_base_dir="results"):
             metrics_file = os.path.join(exp_dir, "metrics.txt")
             
             # Extract all metrics
+            # Use expected model from directory structure as fallback
             model = extract_model_from_log(main_log)
+            if model == "unknown" or model == "deepseek-7b":
+                model = expected_model  # Use the expected model based on directory
+            
             rank = extract_rank_from_log(main_log)
             perplexity = extract_perplexity_from_individual_log(main_log)
             bad_word_ratio = check_for_bad_words(main_log)
@@ -283,17 +299,17 @@ def main():
     df = pd.DataFrame(results)
     
     # Save detailed results
-    output_file = "complete_results.csv"
+    output_file = "complete_multi_model_results.csv"
     df.to_csv(output_file, index=False)
     print(f"\n=== Results saved to {output_file} ===")
     
     # Display summary by model and dataset
     print("\n=== SUMMARY BY MODEL AND DATASET ===")
-    for model in df['Model'].unique():
+    for model in sorted(df['Model'].unique()):
         model_df = df[df['Model'] == model]
         print(f"\n{model.upper()} Model:")
         
-        for dataset in model_df['Dataset'].unique():
+        for dataset in sorted(model_df['Dataset'].unique()):
             dataset_df = model_df[model_df['Dataset'] == dataset]
             
             # Success rate
@@ -305,9 +321,49 @@ def main():
             ranks = [r for r in dataset_df['Final_Rank'] if isinstance(r, int)]
             avg_rank = np.mean(ranks) if ranks else "N/A"
             
-            print(f"  {dataset.upper()} Dataset: {success_count}/{total_count} = {success_rate:.1%}, Avg Rank: {avg_rank}")
+            print(f"  {dataset.upper()} Dataset: {success_count}/{total_count} = {success_rate:.1%}, Avg Rank: {avg_rank:.2f}")
     
-    # Paper comparison
+    # Model vs Model Comparison
+    print(f"\n=== MODEL COMPARISON ===")
+    comparison_data = []
+    
+    for model in sorted(df['Model'].unique()):
+        model_df = df[df['Model'] == model]
+        
+        for dataset in ['json', 'ragroll']:
+            dataset_df = model_df[model_df['Dataset'] == dataset]
+            
+            if not dataset_df.empty:
+                ranks = [r for r in dataset_df['Final_Rank'] if isinstance(r, int)]
+                success_count = sum(dataset_df['Success'] == True)
+                total_count = len(dataset_df)
+                
+                comparison_data.append({
+                    'Model': model,
+                    'Dataset': dataset,
+                    'Avg_Rank': np.mean(ranks) if ranks else None,
+                    'Success_Rate': success_count / total_count if total_count > 0 else 0,
+                    'Total_Experiments': total_count
+                })
+    
+    comp_df = pd.DataFrame(comparison_data)
+    if not comp_df.empty:
+        print("\nDetailed Comparison:")
+        print(comp_df.to_string(index=False))
+        
+        # Best performing model per dataset
+        print(f"\n=== BEST PERFORMING MODELS ===")
+        for dataset in ['json', 'ragroll']:
+            dataset_comp = comp_df[comp_df['Dataset'] == dataset]
+            if not dataset_comp.empty:
+                best_rank = dataset_comp.loc[dataset_comp['Avg_Rank'].idxmin()]
+                best_success = dataset_comp.loc[dataset_comp['Success_Rate'].idxmax()]
+                
+                print(f"{dataset.upper()} Dataset:")
+                print(f"  Best Average Rank: {best_rank['Model']} ({best_rank['Avg_Rank']:.2f})")
+                print(f"  Best Success Rate: {best_success['Model']} ({best_success['Success_Rate']:.1%})")
+    
+    # Paper comparison (DeepSeek-7B)
     print(f"\n=== COMPARISON TO PAPER (DeepSeek-7B) ===")
     deepseek_df = df[df['Model'] == 'deepseek-7b']
     
@@ -322,6 +378,31 @@ def main():
         if ragroll_ranks:
             ragroll_avg = np.mean(ragroll_ranks)
             print(f"Your Ragroll average rank: {ragroll_avg:.2f} vs Paper: 2.15 (Difference: {ragroll_avg - 2.15:+.2f})")
+    
+    # Mistral vs DeepSeek Direct Comparison
+    mistral_df = df[df['Model'] == 'mistral-7b']
+    if not mistral_df.empty and not deepseek_df.empty:
+        print(f"\n=== MISTRAL vs DEEPSEEK COMPARISON ===")
+        
+        for dataset in ['json', 'ragroll']:
+            deepseek_data = deepseek_df[deepseek_df['Dataset'] == dataset]
+            mistral_data = mistral_df[mistral_df['Dataset'] == dataset]
+            
+            if not deepseek_data.empty and not mistral_data.empty:
+                ds_ranks = [r for r in deepseek_data['Final_Rank'] if isinstance(r, int)]
+                ms_ranks = [r for r in mistral_data['Final_Rank'] if isinstance(r, int)]
+                
+                ds_success = sum(deepseek_data['Success'] == True) / len(deepseek_data)
+                ms_success = sum(mistral_data['Success'] == True) / len(mistral_data)
+                
+                if ds_ranks and ms_ranks:
+                    ds_avg = np.mean(ds_ranks)
+                    ms_avg = np.mean(ms_ranks)
+                    
+                    print(f"{dataset.upper()} Dataset:")
+                    print(f"  DeepSeek: Avg Rank {ds_avg:.2f}, Success Rate {ds_success:.1%}")
+                    print(f"  Mistral:  Avg Rank {ms_avg:.2f}, Success Rate {ms_success:.1%}")
+                    print(f"  Winner: {'Mistral' if ms_avg < ds_avg else 'DeepSeek' if ds_avg < ms_avg else 'Tie'} (rank), {'Mistral' if ms_success > ds_success else 'DeepSeek' if ds_success > ms_success else 'Tie'} (success)")
 
 if __name__ == "__main__":
     main()

@@ -16,7 +16,7 @@ echo "Job ID: $SLURM_JOB_ID"
 source ~/miniconda3/bin/activate
 conda activate controllable-seo
 export MISTRAL_API_KEY="$MISTRAL_API_KEY"
-cd /work/hdd/beaa/onimase/controllable-seo-project/controllable-seo
+cd /work/hdd/beaa/onimase/controllable-seo-project/geobench
 
 mkdir -p logs results
 
