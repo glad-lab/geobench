@@ -4,4 +4,4 @@ let us upload datasets to the github [Datasets](https://github.com/glad-lab/geob
 
 | Person   | Assigned Paper Title                          | Dataset Used                        | Metrics                        | Code |
 |----------|-----------------------------------------------|-------------------------------------|-------------------------------------|-------------------------------------|
-| Chris Xia    | [Rewrite-to-Rank](https://arxiv.org/abs/2507.21099) | [RewriteToRank](https://github.com/glad-lab/geobench/tree/main/Datasets/RewriteToRank)                  | ∆MRR, ∆DIR | [link to code] |
+| Andrew Yu    | [Rewrite-to-Rank](https://arxiv.org/abs/2507.21099) | [RewriteToRank](https://github.com/glad-lab/geobench/tree/main/Datasets/RewriteToRank)                  | ∆MRR, ∆DIR | [link to code] |
