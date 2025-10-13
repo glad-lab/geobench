@@ -13,7 +13,7 @@ category = "toys"
 num = 10
 
 # 输出文件路径
-output_file_path = f"/Users/andy/Desktop/vscode/llm-rank-optimizer/data/{category}_output.jsonl"
+output_file_path = f"Datasets/llm-rank-optimizer/extend_data/{category}.jsonl"
 
 
 # --- 2. 定义 Prompt (已修复花括号问题) ---
