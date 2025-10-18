@@ -403,6 +403,6 @@ def main():
                     print(f"  DeepSeek: Avg Rank {ds_avg:.2f}, Success Rate {ds_success:.1%}")
                     print(f"  Mistral:  Avg Rank {ms_avg:.2f}, Success Rate {ms_success:.1%}")
                     print(f"  Winner: {'Mistral' if ms_avg < ds_avg else 'DeepSeek' if ds_avg < ms_avg else 'Tie'} (rank), {'Mistral' if ms_success > ds_success else 'DeepSeek' if ds_success > ms_success else 'Tie'} (success)")
-
+ 
 if __name__ == "__main__":
     main()
