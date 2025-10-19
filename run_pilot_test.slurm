@@ -25,12 +25,10 @@ for model in "${MODELS[@]}"; do
     echo "=== Testing $model at $(date) ==="
     
     python -m experiment.main \
-        --config configs/pilot.yaml \
         --dataset "json" \
         --catalog "coffee_machines" \
         --model "$model" \
         --mode "suffix" \
-        --num_iter 20 \
         > results_new/pilot/${model}.log 2>&1
     
     if grep -q "model.*loaded\|Model loaded" results_new/pilot/${model}.log; then
