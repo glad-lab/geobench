@@ -11,14 +11,14 @@
 #SBATCH --error=logs/srp-%j.err
 
 # ===== CONFIGURATION =====
-MODELS=("deepseek-7b" "mistral-7b")
-DATASETS=("json" "ragroll")
+MODELS=("deepseek-7b")
+DATASETS=("json")
 
 declare -A CATEGORIES
 CATEGORIES[json]="coffee_machines books cameras"
 CATEGORIES[ragroll]="coffee_maker laptop smartphone dishwasher"
 
-TARGET_INDICES=(1 5 8 10)
+TARGET_INDICES=(1 2 3 4 5 6 7 8 9 10)
 
 # ===== SETUP =====
 echo "=== Experiments Started: $(date) ==="
@@ -40,8 +40,12 @@ for model in "${MODELS[@]}"; do
     for category in ${CATEGORIES[$dataset]}; do
       for target_idx in "${TARGET_INDICES[@]}"; do
         
+        echo "  Processing: $category target_$target_idx"
         RESULT_DIR="results_new/full/${model}_${dataset}/${category}/target_${target_idx}"
         mkdir -p "$RESULT_DIR"
+        
+        # Update config for this specific target
+        sed -i "s/values: \[.*\]  # \[1,2,3/values: [$target_idx]  # [1,2,3/" configs/suffix.yaml
         
         python -m experiment.main \
           --dataset "$dataset" \
@@ -50,9 +54,7 @@ for model in "${MODELS[@]}"; do
           --mode "suffix" \
           > "$RESULT_DIR/main.log" 2>&1
         
-        python -m experiment.evaluate --job=rank_perplexity > "$RESULT_DIR/eval.log" 2>&1
-        python -m experiment.evaluate --job=bad_word >> "$RESULT_DIR/eval.log" 2>&1
-        
+        echo "  Completed: $category target_$target_idx at $(date)"
       done
     done
   done
