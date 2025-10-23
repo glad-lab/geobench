@@ -45,7 +45,7 @@ for model in "${MODELS[@]}"; do
         mkdir -p "$RESULT_DIR"
         
         # Update config for this specific target
-        sed -i "s/values: \[.*\]  # \[1,2,3/values: [$target_idx]  # [1,2,3/" configs/suffix.yaml
+        sed -i '/target_product_idx:/!b;n;s/values: \[.*\]/values: ['"$target_idx"']/' configs/suffix.yaml
         
         python -m experiment.main \
           --dataset "$dataset" \

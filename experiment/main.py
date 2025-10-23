@@ -199,7 +199,7 @@ def get_args():
 if __name__ == "__main__":
     args = get_args()
 
-    with open(f'configs/{args.mode}.yaml', 'r') as f:
+    with open(f'configs/{args.mode}_{args.model}.yaml', 'r') as f:
         sweep_config = yaml.safe_load(f)
     search_hparams = get_search_hparams(sweep_config)
 
@@ -216,4 +216,3 @@ if __name__ == "__main__":
 
     sweep_id = wandb.sweep(sweep_config, entity=ENTITY, project=PROJECT)
     wandb.agent(sweep_id, function=main, entity=ENTITY, project=PROJECT)
-
