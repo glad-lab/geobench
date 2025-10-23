@@ -1,48 +1,0 @@
-[nltk_data] Downloading package punkt_tab to /u/onimase/nltk_data...
-[nltk_data]   Package punkt_tab is already up-to-date!
-`torch_dtype` is deprecated! Use `dtype` instead!
-Fetching 2 files:   0%|          | 0/2 [00:00<?, ?it/s]Fetching 2 files: 100%|██████████| 2/2 [00:00<00:00, 39.29it/s]
-Loading checkpoint shards:   0%|          | 0/2 [00:00<?, ?it/s]Loading checkpoint shards:  50%|█████     | 1/2 [00:03<00:03,  3.78s/it]Loading checkpoint shards: 100%|██████████| 2/2 [00:04<00:00,  2.21s/it]Loading checkpoint shards: 100%|██████████| 2/2 [00:04<00:00,  2.45s/it]
-The following generation flags are not valid and may be ignored: ['temperature', 'top_p']. Set `TRANSFORMERS_VERBOSITY=info` for more details.
-Traceback (most recent call last):
-  File "<frozen runpy>", line 198, in _run_module_as_main
-  File "<frozen runpy>", line 88, in _run_code
-  File "/work/hdd/beaa/onimase/controllable-seo-project/geobench/experiment/evaluate.py", line 225, in <module>
-    avg_rank, std_rank = calculate_average_rank(result_dir, model, catalog, random_inference, indices=[1,2,3,4,5,6,7,8])
-                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/work/hdd/beaa/onimase/controllable-seo-project/geobench/experiment/evaluate.py", line 34, in calculate_average_rank
-    assert len(ranks) > 0, f"No results found for {model}, {catalog}, random_inference={random_inference}"
-           ^^^^^^^^^^^^^^
-AssertionError: No results found for vicuna-7b, tablet, random_inference=True
-File not found: result/suffix/v1/vicuna-7b/ragroll/tablet/1/random_inference=True.csv
-File not found: result/suffix/v1/vicuna-7b/ragroll/tablet/2/random_inference=True.csv
-File not found: result/suffix/v1/vicuna-7b/ragroll/tablet/3/random_inference=True.csv
-File not found: result/suffix/v1/vicuna-7b/ragroll/tablet/4/random_inference=True.csv
-File not found: result/suffix/v1/vicuna-7b/ragroll/tablet/5/random_inference=True.csv
-File not found: result/suffix/v1/vicuna-7b/ragroll/tablet/6/random_inference=True.csv
-File not found: result/suffix/v1/vicuna-7b/ragroll/tablet/7/random_inference=True.csv
-File not found: result/suffix/v1/vicuna-7b/ragroll/tablet/8/random_inference=True.csv
-[nltk_data] Downloading package punkt_tab to /u/onimase/nltk_data...
-[nltk_data]   Package punkt_tab is already up-to-date!
-`torch_dtype` is deprecated! Use `dtype` instead!
-Fetching 2 files:   0%|          | 0/2 [00:00<?, ?it/s]Fetching 2 files: 100%|██████████| 2/2 [00:00<00:00, 4632.03it/s]
-Loading checkpoint shards:   0%|          | 0/2 [00:00<?, ?it/s]Loading checkpoint shards: 100%|██████████| 2/2 [00:00<00:00, 36.38it/s]
-The following generation flags are not valid and may be ignored: ['temperature', 'top_p']. Set `TRANSFORMERS_VERBOSITY=info` for more details.
-Traceback (most recent call last):
-  File "<frozen runpy>", line 198, in _run_module_as_main
-  File "<frozen runpy>", line 88, in _run_code
-  File "/work/hdd/beaa/onimase/controllable-seo-project/geobench/experiment/evaluate.py", line 225, in <module>
-    avg_rank, std_rank = calculate_average_rank(result_dir, model, catalog, random_inference, indices=[1,2,3,4,5,6,7,8])
-                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/work/hdd/beaa/onimase/controllable-seo-project/geobench/experiment/evaluate.py", line 34, in calculate_average_rank
-    assert len(ranks) > 0, f"No results found for {model}, {catalog}, random_inference={random_inference}"
-           ^^^^^^^^^^^^^^
-AssertionError: No results found for vicuna-7b, tablet, random_inference=True
-File not found: result/suffix/v1/vicuna-7b/ragroll/tablet/1/random_inference=True.csv
-File not found: result/suffix/v1/vicuna-7b/ragroll/tablet/2/random_inference=True.csv
-File not found: result/suffix/v1/vicuna-7b/ragroll/tablet/3/random_inference=True.csv
-File not found: result/suffix/v1/vicuna-7b/ragroll/tablet/4/random_inference=True.csv
-File not found: result/suffix/v1/vicuna-7b/ragroll/tablet/5/random_inference=True.csv
-File not found: result/suffix/v1/vicuna-7b/ragroll/tablet/6/random_inference=True.csv
-File not found: result/suffix/v1/vicuna-7b/ragroll/tablet/7/random_inference=True.csv
-File not found: result/suffix/v1/vicuna-7b/ragroll/tablet/8/random_inference=True.csv
