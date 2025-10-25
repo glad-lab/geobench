@@ -85,7 +85,7 @@ parameters:
     value: "suffix"
 
   dataset:
-    value: "json"
+    value: "ragroll"
 
   batch_size: 
     value: 5
@@ -118,13 +118,13 @@ parameters:
     value: [0.1, 0.05, 0.01, 0.005, 0.001]
     
   catalog: 
-    values: ["coffee_machines", "books", "cameras"]
+    values: ["tablet", "tent", "tool chest"]
   random_order: 
     value: True 
   random_inference:
     value: True
   target_product_idx: 
-    values: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+    values: [1, 2, 3, 4, 5, 6, 7, 8]
 
   result_dir:
     value: "results_new/full/suffix/v1"

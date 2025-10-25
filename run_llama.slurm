@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH --job-name=llama-json
+#SBATCH --job-name=llama-ragroll
 #SBATCH --partition=gpuA40x4
 #SBATCH --account=beaa-delta-gpu
 #SBATCH --nodes=1
@@ -15,4 +15,4 @@ conda activate controllable-seo
 export HF_HOME=/work/hdd/beaa/onimase/hf_cache
 cd /work/hdd/beaa/onimase/controllable-seo-project/geobench
 
-python -m experiment.main --model llama-3.1-8b --dataset json --mode suffix
+python -m experiment.main --model llama-3.1-8b --dataset ragroll --mode suffix
