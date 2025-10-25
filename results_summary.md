@@ -1,7 +1,5 @@
 # StealthRank Replication Results
 
-## Original Paper Results (Table 1)
-
 <h2>Original Paper Results (Table 1)</h2>
 
 <table style="border-collapse:collapse; font-variant-numeric: tabular-nums;">
@@ -130,9 +128,7 @@
   </tbody>
 </table>
 
-
-## Replicated Results: STSData (json)
-
+Only replicated SRP because that's the paper's contribution method, TAP and STS are baselines.
 <h2>Replicated Results: STSData (json)</h2>
 
 <table style="border-collapse:collapse; font-variant-numeric: tabular-nums;">
