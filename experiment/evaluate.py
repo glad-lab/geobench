@@ -22,7 +22,7 @@ def calculate_average_rank(result_dir, model, catalog, random_inference, indices
     ranks = []
 
     for idx in indices:
-        file_path = f"{result_dir}/{model}/ragroll/{catalog}/{idx}/random_inference={random_inference}.csv"
+        file_path = f"{result_dir}/{model}/json/{catalog}/{idx}/random_inference={random_inference}.csv"
         if not os.path.exists(file_path):
             print(f"File not found: {file_path}")
             continue
@@ -53,7 +53,7 @@ def calculate_avg_perplexity(result_dir, model, catalog, random_inference, ppl_m
     perplexities = []
 
     for idx in indices:
-        file_path = f"{result_dir}/{model}/ragroll/{catalog}/{idx}/random_inference={random_inference}.csv"
+        file_path = f"{result_dir}/{model}/json/{catalog}/{idx}/random_inference={random_inference}.csv"
         if not os.path.exists(file_path):
             print(f"File not found: {file_path}")
             continue
@@ -116,7 +116,7 @@ def calculate_avg_bad_word_ratio(result_dir, model, catalog, random_inference, i
     bad_words_total = []
 
     for idx in indices:
-        file_path = f"{result_dir}/{model}/ragroll/{catalog}/{idx}/random_inference={random_inference}.csv"
+        file_path = f"{result_dir}/{model}/json/{catalog}/{idx}/random_inference={random_inference}.csv"
         if not os.path.exists(file_path):
             print(f"File not found: {file_path}")
             continue
@@ -151,11 +151,11 @@ if __name__ == "__main__":
     output_dir = 'metric'
     os.makedirs(output_dir, exist_ok=True)
 
-    result_dir = "result/suffix/v1"  # Adjust this to your actual results directory
+    result_dir = "results_new/full/suffix/v1"
 
     models = ['vicuna-7b', 'llama-3.1-8b', 'mistral-7b', 'deepseek-7b']
-    # catalogs = ['books', 'coffee_machines', 'cameras']
-    product_list = [
+    catalogs = ['books', 'coffee_machines', 'cameras']
+    #product_list = [
         # "air compressor",
         # "air purifier",
         # "automatic garden watering system",
@@ -199,14 +199,14 @@ if __name__ == "__main__":
         # "solid state drive",
         # "space heater",
         # "string trimmer",
-        "tablet",
-        "tent",
-        "tool chest",
-        "washing machine",
-        "wet-dry vacuum",
-        "wifi router",
-        "wood router"
-    ]
+        #"tablet",
+        #"tent",
+        #"tool chest",
+        #"washing machine",
+        #"wet-dry vacuum",
+        #"wifi router",
+        #"wood router"
+    #]
 
 
     # if args.job == 'rank_perplexity':
@@ -215,7 +215,7 @@ if __name__ == "__main__":
     # Load model and tokenizer (GPT-2) for calculating perplexity
     perplexity_model, perplexity_tokenizer = get_model("lmsys/vicuna-7b-v1.5", 16, device)
 
-    for catalog in product_list:
+    for catalog in catalogs: #product_list
         results = []
         # if os.path.exists(f"{output_dir}/{catalog}.csv"):
         #     continue
