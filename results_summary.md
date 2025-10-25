@@ -234,5 +234,4 @@ Only replicated SRP because that's the paper's contribution method, TAP and STS 
 
 **Notes:**
 - Lower values indicate better performance across all metrics
-- Replicated results closely match paper's SRP values
-- Minor differences attributed to random seed variation and hardware differences
+- Minor differences maybe attributed to random seed variation and hardware differences
