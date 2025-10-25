@@ -1,118 +1,0 @@
-wandb: WARNING Malformed sweep config detected! This may cause your sweep to behave in unexpected ways.
-wandb: WARNING To avoid this, please fix the sweep config schema violations below:
-wandb: WARNING   Violation 1. Additional properties are not allowed ('wandb' was unexpected)
-wandb: Agent Starting Run: xjitfxtl with config:
-wandb: 	batch_size: 5
-wandb: 	catalog: coffee_machines
-wandb: 	comment: main experiment
-wandb: 	dataset: amazon
-wandb: 	fluency: 1
-wandb: 	iter_steps: [0, 50, 200, 500, 1500]
-wandb: 	length: 30
-wandb: 	lr: 0.03
-wandb: 	mode: suffix
-wandb: 	model: deepseek-7b
-wandb: 	ngram: 5
-wandb: 	noise_stds: [0.1, 0.05, 0.01, 0.005, 0.001]
-wandb: 	num_iter: 2000
-wandb: 	precision: 16
-wandb: 	random_inference: True
-wandb: 	random_order: True
-wandb: 	result_dir: result/suffix/v1
-wandb: 	seed: 42
-wandb: 	similarity: 1
-wandb: 	target: 50
-wandb: 	target_product_idx: 8
-wandb: 	temperature: 0.1
-wandb: 	test_iter: 100
-wandb: 	topk: 10
-wandb: Currently logged in as: nimase (nimase-university-of-southern-california) to https://api.wandb.ai. Use `wandb login --relogin` to force relogin
-wandb: WARNING Ignoring project 'seo' when running a sweep.
-wandb: WARNING Ignoring entity '' when running a sweep.
-wandb: Using wandb-core as the SDK backend.  Please refer to https://wandb.me/wandb-core for more information.
-wandb: Tracking run with wandb version 0.19.6
-wandb: Run data is saved locally in /u/onimase/controllable-seo-project/controllable-seo/wandb/run-20250920_220217-xjitfxtl
-wandb: Run `wandb offline` to turn off syncing.
-wandb: Syncing run lunar-sweep-1
-wandb: ⭐️ View project at https://wandb.ai/nimase-university-of-southern-california/seo
-wandb: 🧹 View sweep at https://wandb.ai/nimase-university-of-southern-california/seo/sweeps/kiezk1sa
-wandb: 🚀 View run at https://wandb.ai/nimase-university-of-southern-california/seo/runs/xjitfxtl
-`torch_dtype` is deprecated! Use `dtype` instead!
-Fetching 2 files:   0%|          | 0/2 [00:00<?, ?it/s]Fetching 2 files: 100%|██████████| 2/2 [00:00<00:00, 2355.69it/s]
-Loading checkpoint shards:   0%|          | 0/2 [00:00<?, ?it/s]Loading checkpoint shards:  50%|█████     | 1/2 [00:11<00:11, 11.79s/it]Loading checkpoint shards: 100%|██████████| 2/2 [00:16<00:00,  7.39s/it]Loading checkpoint shards: 100%|██████████| 2/2 [00:16<00:00,  8.05s/it]
-wandb:                                                                                
-wandb: 🚀 View run seotarget_product_idx=8 at: https://wandb.ai/nimase-university-of-southern-california/seo/runs/xjitfxtl
-wandb: ⭐️ View project at: https://wandb.ai/nimase-university-of-southern-california/seo
-wandb: Synced 5 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
-wandb: Find logs at: ./wandb/run-20250920_220217-xjitfxtl/logs
-Run xjitfxtl errored:
-Traceback (most recent call last):
-  File "/u/onimase/miniconda3/envs/controllable-seo/lib/python3.11/site-packages/wandb/agents/pyagent.py", line 306, in _run_job
-    self._function()
-  File "/u/onimase/controllable-seo-project/controllable-seo/experiment/main.py", line 114, in main
-    product_list, target_product, target_product_natural, target_str = get_product_list(hparams.catalog, hparams.target_product_idx, args.dataset)
-                                                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/u/onimase/controllable-seo-project/controllable-seo/experiment/get.py", line 61, in get_product_list
-    with open(f'data2/{dataset}/{catalog}.jsonl', "r") as file:
-         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-FileNotFoundError: [Errno 2] No such file or directory: 'data2/amazon/coffee_machines.jsonl'
-
-wandb: ERROR Run xjitfxtl errored:
-wandb: ERROR Traceback (most recent call last):
-wandb: ERROR   File "/u/onimase/miniconda3/envs/controllable-seo/lib/python3.11/site-packages/wandb/agents/pyagent.py", line 306, in _run_job
-wandb: ERROR     self._function()
-wandb: ERROR   File "/u/onimase/controllable-seo-project/controllable-seo/experiment/main.py", line 114, in main
-wandb: ERROR     product_list, target_product, target_product_natural, target_str = get_product_list(hparams.catalog, hparams.target_product_idx, args.dataset)
-wandb: ERROR                                                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-wandb: ERROR   File "/u/onimase/controllable-seo-project/controllable-seo/experiment/get.py", line 61, in get_product_list
-wandb: ERROR     with open(f'data2/{dataset}/{catalog}.jsonl', "r") as file:
-wandb: ERROR          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-wandb: ERROR FileNotFoundError: [Errno 2] No such file or directory: 'data2/amazon/coffee_machines.jsonl'
-wandb: ERROR 
-wandb: Sweep Agent: Waiting for job.
-wandb: Sweep Agent: Exiting.
-[nltk_data] Downloading package punkt_tab to /u/onimase/nltk_data...
-[nltk_data]   Package punkt_tab is already up-to-date!
-`torch_dtype` is deprecated! Use `dtype` instead!
-Fetching 2 files:   0%|          | 0/2 [00:00<?, ?it/s]Fetching 2 files:  50%|█████     | 1/2 [00:36<00:36, 36.02s/it]Fetching 2 files: 100%|██████████| 2/2 [00:36<00:00, 18.01s/it]
-Loading checkpoint shards:   0%|          | 0/2 [00:00<?, ?it/s]Loading checkpoint shards:  50%|█████     | 1/2 [00:01<00:01,  1.54s/it]Loading checkpoint shards: 100%|██████████| 2/2 [00:02<00:00,  1.06it/s]Loading checkpoint shards: 100%|██████████| 2/2 [00:02<00:00,  1.04s/it]
-The following generation flags are not valid and may be ignored: ['temperature', 'top_p']. Set `TRANSFORMERS_VERBOSITY=info` for more details.
-Traceback (most recent call last):
-  File "<frozen runpy>", line 198, in _run_module_as_main
-  File "<frozen runpy>", line 88, in _run_code
-  File "/u/onimase/controllable-seo-project/controllable-seo/experiment/evaluate.py", line 226, in <module>
-    avg_perplexity, std_perplexity = calculate_avg_perplexity(result_dir, model, catalog, random_inference, perplexity_model, perplexity_tokenizer, device, indices=[1,2,3,4,5,6,7,8])
-                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/u/onimase/controllable-seo-project/controllable-seo/experiment/evaluate.py", line 68, in calculate_avg_perplexity
-    attack_prompt = attack.lstrip('<span style="color:red;">').rstrip('</span>')
-                    ^^^^^^
-  File "/u/onimase/miniconda3/envs/controllable-seo/lib/python3.11/bdb.py", line 90, in trace_dispatch
-    return self.dispatch_line(frame)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/u/onimase/miniconda3/envs/controllable-seo/lib/python3.11/bdb.py", line 115, in dispatch_line
-    if self.quitting: raise BdbQuit
-                      ^^^^^^^^^^^^^
-bdb.BdbQuit
-[nltk_data] Downloading package punkt_tab to /u/onimase/nltk_data...
-[nltk_data]   Package punkt_tab is already up-to-date!
-`torch_dtype` is deprecated! Use `dtype` instead!
-Fetching 2 files:   0%|          | 0/2 [00:00<?, ?it/s]Fetching 2 files: 100%|██████████| 2/2 [00:00<00:00, 8839.42it/s]
-Loading checkpoint shards:   0%|          | 0/2 [00:00<?, ?it/s]Loading checkpoint shards: 100%|██████████| 2/2 [00:00<00:00, 35.94it/s]
-The following generation flags are not valid and may be ignored: ['temperature', 'top_p']. Set `TRANSFORMERS_VERBOSITY=info` for more details.
-Traceback (most recent call last):
-  File "<frozen runpy>", line 198, in _run_module_as_main
-  File "<frozen runpy>", line 88, in _run_code
-  File "/u/onimase/controllable-seo-project/controllable-seo/experiment/evaluate.py", line 226, in <module>
-    avg_perplexity, std_perplexity = calculate_avg_perplexity(result_dir, model, catalog, random_inference, perplexity_model, perplexity_tokenizer, device, indices=[1,2,3,4,5,6,7,8])
-                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/u/onimase/controllable-seo-project/controllable-seo/experiment/evaluate.py", line 68, in calculate_avg_perplexity
-    attack_prompt = attack.lstrip('<span style="color:red;">').rstrip('</span>')
-                    ^^^^^^
-  File "/u/onimase/miniconda3/envs/controllable-seo/lib/python3.11/bdb.py", line 90, in trace_dispatch
-    return self.dispatch_line(frame)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/u/onimase/miniconda3/envs/controllable-seo/lib/python3.11/bdb.py", line 115, in dispatch_line
-    if self.quitting: raise BdbQuit
-                      ^^^^^^^^^^^^^
-bdb.BdbQuit
-python: can't open file '/u/onimase/controllable-seo-project/controllable-seo/ablation_bad_word.py': [Errno 2] No such file or directory
