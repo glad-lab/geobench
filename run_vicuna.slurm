@@ -1,7 +1,7 @@
 #!/bin/bash
 #SBATCH --job-name=vicuna-ragroll
 #SBATCH --partition=gpuA40x4
-#SBATCH --account=beaa-delta-gpu
+#SBATCH --account=bdns-delta-gpu
 #SBATCH --nodes=1
 #SBATCH --gpus-per-node=1
 #SBATCH --cpus-per-task=16
