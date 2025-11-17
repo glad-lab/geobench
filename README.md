@@ -10,6 +10,7 @@ let us upload datasets to the github [Datasets](https://github.com/glad-lab/geob
 | Zhe Chen    | [Manipulating LLMs to Increase Product Visibility](<https://arxiv.org/abs/2404.07981>) | Fictitious product catalogs (e.g., coffee machines, books, cameras)(details in [data folder](<https://github.com/glad-lab/geobench/tree/main/Datasets/llm-rank-optimizer>)) | Rank Distribution | [Main Code](<https://github.com/aounon/llm-rank-optimizer>) [Updated Code](<https://github.com/KillerQueen-Z/llm-rank-optimizer>)| Raw Results, Summarized Results |
 | xuzhizhang | [Large Language Models are Zero-Shot Rankers for Recommender Systems](https://arxiv.org/abs/2305.08845) | [LLMRank JSON Datasets](https://drive.google.com/drive/folders/1lw478Vt1IdlXz0Kzqrzr6NzUbfL093qU?usp=drive_link) | NDCG@K (K=1,5,10,20) | [Code](https://github.com/RUCAIBox/LLMRank) | Raw Results, Summarized Results |
 | Freddy Song | [Adversarial Search Engine Optimization for Large Language Models](<https://arxiv.org/pdf/2406.18382>) | [Fictitious product data, combination of real and attack (e.g., books, photography, furniture)](https://github.com/glad-lab/geobench/tree/main/Datasets/AdversarialSEO) | Rank Position, Attack Success Rate |  | Raw Results, Summarized Results |
+|  | [RAF](<https://arxiv.org/abs/2510.06732>) | same with Stealth Rank |  | [Original Code](https://github.com/glad-lab/RAF) | |
 
 ## Experiments
 <table border="1">
