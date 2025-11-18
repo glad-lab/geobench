@@ -37,11 +37,15 @@ import logging
 from pathlib import Path
 from typing import List, Dict, Any, Optional
 import time
+from dotenv import load_dotenv
 
 # Add parent directory and src to path for imports
 project_root = Path(__file__).parent.parent
 sys.path.insert(0, str(project_root))
 sys.path.insert(0, str(project_root / "src"))
+
+# Load environment variables from .env file
+load_dotenv(project_root / ".env")
 
 from vector_store import VectorStoreManager
 
@@ -118,29 +122,48 @@ def verify_attack_documents(
     Returns:
         True if verification passes, False otherwise
     """
-    logger.info("Verifying attack documents are searchable...")
+    logger.info("Verifying attack documents are in database...")
 
-    # Test queries for different attack types
-    test_queries = [
-        ("system prompt injection", "[system]"),
-        ("camera safety warnings", "WARNING:"),
-        ("wildlife conservation cameras", "blind puppies"),
+    # Attack patterns to look for (case-insensitive)
+    attack_patterns = [
+        ("[system]", "Prompt Injection"),
+        ("warning:", "Discreditation"),
+        ("blind puppies", "Persuasion"),
     ]
 
-    found_attacks = set()
+    found_attacks = []
 
-    for query, pattern in test_queries:
-        logger.info(f"Testing query: '{query}' (looking for pattern: '{pattern}')")
+    # Get all documents from the vector store
+    try:
+        # Use scroll to get all documents
+        from qdrant_client.models import ScrollRequest
+        scroll_result = vector_store.client.scroll(
+            collection_name=vector_store.collection_name,
+            limit=100,
+            with_payload=True
+        )
 
-        results = vector_store.search(query, limit=10)
+        all_documents = scroll_result[0]
+        logger.info(f"Checking {len(all_documents)} documents in collection...")
 
-        for doc_id, score, metadata in results:
-            description = metadata.get('description', '')
-            if pattern.lower() in description.lower():
-                found_attacks.add(metadata.get('name'))
-                logger.info(f"  ✓ Found attack document: {metadata.get('name')[:50]}... (score: {score:.3f})")
+        # Check each document for attack patterns
+        for doc in all_documents:
+            metadata = doc.payload
+            # The description is stored as 'content' in the vector store
+            content = metadata.get('content', metadata.get('description', '')).lower()
+            name = metadata.get('name', 'Unknown')
 
-    logger.info(f"Found {len(found_attacks)} unique attack documents via search")
+            for pattern, attack_type in attack_patterns:
+                if pattern.lower() in content:
+                    found_attacks.append((name, attack_type))
+                    logger.info(f"  ✓ Found {attack_type} attack in: {name[:60]}...")
+                    break
+
+    except Exception as e:
+        logger.error(f"Error during verification: {e}")
+        return False
+
+    logger.info(f"Found {len(found_attacks)} attack documents in database")
 
     if len(found_attacks) >= expected_attack_count:
         logger.info("✓ Attack document verification PASSED")
@@ -150,6 +173,9 @@ def verify_attack_documents(
             f"✗ Attack document verification FAILED: "
             f"Expected at least {expected_attack_count}, found {len(found_attacks)}"
         )
+        logger.warning("Attack documents found:")
+        for name, attack_type in found_attacks:
+            logger.warning(f"  - {name} ({attack_type})")
         return False
 
 

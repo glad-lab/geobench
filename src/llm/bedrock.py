@@ -40,18 +40,22 @@ def _import_langchain():
 
 
 class BedrockClient(LLMClient):
-    """AWS Bedrock client for LLaMA models using boto3."""
+    """AWS Bedrock client for LLaMA and Claude models using boto3."""
 
     DEFAULT_MODELS = {
         "meta.llama3-8b-instruct-v1:0": 2048,
         "meta.llama3-70b-instruct-v1:0": 4096,
         "meta.llama2-13b-chat-v1": 2048,
         "meta.llama2-70b-chat-v1": 4096,
+        "anthropic.claude-3-haiku-20240307-v1:0": 4096,
+        "anthropic.claude-3-sonnet-20240229-v1:0": 4096,
+        "anthropic.claude-3-opus-20240229-v1:0": 4096,
+        "anthropic.claude-3-5-sonnet-20240620-v1:0": 4096,
     }
 
     def __init__(
         self,
-        model: str = "meta.llama3-8b-instruct-v1:0",
+        model: str = "anthropic.claude-3-haiku-20240307-v1:0",
         region_name: Optional[str] = None,
         aws_profile: Optional[str] = None,
         temperature: float = 0.0,
@@ -75,6 +79,7 @@ class BedrockClient(LLMClient):
         self.max_tokens = self.config.max_tokens
         self.ClientError = ClientError
         self.region = region_name or os.getenv("AWS_REGION", "us-east-1")
+        self.is_claude = model.startswith("anthropic.")
 
         try:
             if aws_profile:
@@ -100,7 +105,7 @@ class BedrockClient(LLMClient):
     def model_name(self) -> str:
         return self.model
 
-    def _format_messages_for_bedrock(self, messages: List[Any]) -> str:
+    def _format_messages_for_llama(self, messages: List[Any]) -> str:
         """Format LangChain messages for Bedrock LLaMA models."""
         HumanMessage, SystemMessage = _import_langchain()
 
@@ -121,6 +126,24 @@ class BedrockClient(LLMClient):
             return f"<s>[INST] <<SYS>>\n{system_message}\n<</SYS>>\n\n{user_content} [/INST]"
         else:
             return f"<s>[INST] {user_content} [/INST]"
+
+    def _format_messages_for_claude(self, messages: List[Any]) -> tuple[str, List[Dict[str, str]]]:
+        """Format LangChain messages for Bedrock Claude models."""
+        HumanMessage, SystemMessage = _import_langchain()
+
+        system_message = None
+        formatted_messages = []
+
+        for message in messages:
+            if isinstance(message, SystemMessage):
+                system_message = message.content
+            elif isinstance(message, HumanMessage):
+                formatted_messages.append({"role": "user", "content": message.content})
+            else:
+                content = str(message.content) if hasattr(message, 'content') else str(message)
+                formatted_messages.append({"role": "user", "content": content})
+
+        return system_message, formatted_messages
 
     def _clean_response(self, content: str) -> str:
         """Clean Bedrock response from formatting artifacts."""
@@ -160,49 +183,10 @@ class BedrockClient(LLMClient):
     def generate(self, messages: List[Any], **kwargs) -> LLMResponse:
         """Generate response using AWS Bedrock."""
         try:
-            prompt = self._format_messages_for_bedrock(messages)
-
-            request_body = {
-                "prompt": prompt,
-                "max_gen_len": kwargs.get("max_tokens", self.max_tokens),
-                "temperature": kwargs.get("temperature", self.temperature),
-                "top_p": kwargs.get("top_p", 0.9),
-            }
-
-            response = self.client.invoke_model(
-                modelId=self.model,
-                body=json.dumps(request_body),
-                accept="application/json",
-                contentType="application/json"
-            )
-
-            response_body = json.loads(response["body"].read())
-
-            if "generation" not in response_body:
-                raise LLMValidationError(
-                    "No generation found in Bedrock response",
-                    provider="bedrock",
-                    model=self.model
-                )
-
-            content = self._clean_response(response_body["generation"])
-
-            if not content or len(content.strip()) < 1:
-                logger.warning(f"Empty content after parsing. Raw: {response_body.get('generation', '')[:200]}")
-                content = response_body.get('generation', 'No response generated').strip()
-
-            return LLMResponse(
-                content=content,
-                model=self.model,
-                usage=response_body.get("usage"),
-                finish_reason="stop",
-                metadata={
-                    "provider": "bedrock",
-                    "region": self.region,
-                    "response_metadata": response_body
-                }
-            )
-
+            if self.is_claude:
+                return self._generate_claude(messages, **kwargs)
+            else:
+                return self._generate_llama(messages, **kwargs)
         except self.ClientError as e:
             error_code = e.response.get('Error', {}).get('Code', 'Unknown')
             error_msg = e.response.get('Error', {}).get('Message', str(e))
@@ -240,6 +224,95 @@ class BedrockClient(LLMClient):
                 provider="bedrock",
                 model=self.model
             ) from e
+
+    def _generate_llama(self, messages: List[Any], **kwargs) -> LLMResponse:
+        """Generate response using LLaMA models."""
+        prompt = self._format_messages_for_llama(messages)
+
+        request_body = {
+            "prompt": prompt,
+            "max_gen_len": kwargs.get("max_tokens", self.max_tokens),
+            "temperature": kwargs.get("temperature", self.temperature),
+            "top_p": kwargs.get("top_p", 0.9),
+        }
+
+        response = self.client.invoke_model(
+            modelId=self.model,
+            body=json.dumps(request_body),
+            accept="application/json",
+            contentType="application/json"
+        )
+
+        response_body = json.loads(response["body"].read())
+
+        if "generation" not in response_body:
+            raise LLMValidationError(
+                "No generation found in Bedrock response",
+                provider="bedrock",
+                model=self.model
+            )
+
+        content = self._clean_response(response_body["generation"])
+
+        if not content or len(content.strip()) < 1:
+            logger.warning(f"Empty content after parsing. Raw: {response_body.get('generation', '')[:200]}")
+            content = response_body.get('generation', 'No response generated').strip()
+
+        return LLMResponse(
+            content=content,
+            model=self.model,
+            usage=response_body.get("usage"),
+            finish_reason="stop",
+            metadata={
+                "provider": "bedrock",
+                "region": self.region,
+                "response_metadata": response_body
+            }
+        )
+
+    def _generate_claude(self, messages: List[Any], **kwargs) -> LLMResponse:
+        """Generate response using Claude models."""
+        system_message, formatted_messages = self._format_messages_for_claude(messages)
+
+        request_body = {
+            "anthropic_version": "bedrock-2023-05-31",
+            "messages": formatted_messages,
+            "max_tokens": kwargs.get("max_tokens", self.max_tokens),
+            "temperature": kwargs.get("temperature", self.temperature),
+        }
+
+        if system_message:
+            request_body["system"] = system_message
+
+        response = self.client.invoke_model(
+            modelId=self.model,
+            body=json.dumps(request_body),
+            accept="application/json",
+            contentType="application/json"
+        )
+
+        response_body = json.loads(response["body"].read())
+
+        if "content" not in response_body:
+            raise LLMValidationError(
+                "No content found in Bedrock Claude response",
+                provider="bedrock",
+                model=self.model
+            )
+
+        content = response_body["content"][0]["text"]
+
+        return LLMResponse(
+            content=content,
+            model=self.model,
+            usage=response_body.get("usage"),
+            finish_reason=response_body.get("stop_reason", "stop"),
+            metadata={
+                "provider": "bedrock",
+                "region": self.region,
+                "response_metadata": response_body
+            }
+        )
 
     def generate_text(self, prompt: str, **kwargs) -> LLMResponse:
         """Generate response from text prompt."""

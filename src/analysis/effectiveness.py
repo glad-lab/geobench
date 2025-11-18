@@ -11,6 +11,7 @@ from collections import defaultdict
 import logging
 
 from .base import BaseAnalyzer, AnalysisResult
+from ..ranking.metrics import RankingMetrics
 
 logger = logging.getLogger(__name__)
 
@@ -33,19 +34,35 @@ class EffectivenessAnalyzer(BaseAnalyzer):
 
     def analyze(self, data: List[Dict[str, Any]]) -> AnalysisResult:
         """
-        Perform comprehensive effectiveness analysis.
+        Perform comprehensive effectiveness analysis with enhanced metrics.
+
+        Calculates both binary (Top-K success rates) and magnitude metrics
+        (absolute improvement, percentage improvement, final position).
 
         Args:
             data: Experimental data with attack information
 
         Returns:
-            AnalysisResult with effectiveness metrics
+            AnalysisResult with comprehensive effectiveness metrics
+
+        Metrics returned:
+            Binary metrics:
+                - top_3_success_rate: Fraction reaching top-3 positions
+                - top_5_success_rate: Fraction reaching top-5 positions
+                - top_10_success_rate: Fraction reaching top-10 positions
+                - position_1_rate: Fraction reaching position 1 (legacy)
+
+            Magnitude metrics:
+                - mean_absolute_improvement: Average position change
+                - mean_percentage_improvement: Average % improvement
+                - mean_final_position: Average final ranking position
         """
         self._validate_data(data)
 
         # Extract success metrics
         successes = []
-        positions = []
+        final_positions = []
+        baseline_positions = []
 
         for item in data:
             metrics = item.get("metrics", {})
@@ -53,22 +70,75 @@ class EffectivenessAnalyzer(BaseAnalyzer):
 
             # Track final position if available
             if "final_position" in metrics:
-                positions.append(metrics["final_position"])
+                final_positions.append(metrics["final_position"])
 
-        # Calculate aggregate metrics
+            # Track baseline position if available
+            if "baseline_position" in metrics:
+                baseline_positions.append(metrics["baseline_position"])
+
+        # Determine total items for percentage calculation
+        total_items = max(final_positions) if final_positions else 10  # Default to 10 if unknown
+
+        # Calculate binary metrics (Top-K success rates)
         metrics_dict = {
+            # Legacy overall metrics
             "overall_success_rate": np.mean(successes) if successes else 0.0,
             "success_std": np.std(successes, ddof=1) if len(successes) > 1 else 0.0,
-            "position_1_rate": sum(1 for p in positions if p == 1) / len(positions) if positions else 0.0,
-            "mean_final_position": np.mean(positions) if positions else 0.0,
             "n_trials": len(data)
         }
 
+        # Binary metrics: Top-K success rates
+        if final_positions:
+            metrics_dict["top_3_success_rate"] = RankingMetrics.top_k_success_rate(final_positions, k=3)
+            metrics_dict["top_5_success_rate"] = RankingMetrics.top_k_success_rate(final_positions, k=5)
+            metrics_dict["top_10_success_rate"] = RankingMetrics.top_k_success_rate(final_positions, k=10)
+            metrics_dict["position_1_rate"] = RankingMetrics.top_k_success_rate(final_positions, k=1)  # Legacy
+
+        # Magnitude metrics
+        if final_positions:
+            metrics_dict["mean_final_position"] = RankingMetrics.mean_final_position(final_positions)
+
+        if baseline_positions and final_positions and len(baseline_positions) == len(final_positions):
+            # Absolute improvement
+            absolute_improvements = RankingMetrics.absolute_position_improvement(
+                baseline_positions, final_positions
+            )
+            metrics_dict["mean_absolute_improvement"] = np.mean(absolute_improvements)
+            metrics_dict["median_absolute_improvement"] = np.median(absolute_improvements)
+
+            # Percentage improvement
+            percentage_improvements = RankingMetrics.percentage_improvement(
+                baseline_positions, final_positions, total_items
+            )
+            metrics_dict["mean_percentage_improvement"] = np.mean(percentage_improvements)
+            metrics_dict["median_percentage_improvement"] = np.median(percentage_improvements)
+
+        # Generate insights
         insights = [
             f"Overall success rate: {metrics_dict['overall_success_rate']:.3f}",
-            f"Position-1 rate: {metrics_dict['position_1_rate']:.3f}",
-            f"Mean final position: {metrics_dict['mean_final_position']:.2f}"
         ]
+
+        if "top_3_success_rate" in metrics_dict:
+            insights.append(
+                f"Binary metrics - Top-3: {metrics_dict['top_3_success_rate']:.3f}, "
+                f"Top-5: {metrics_dict['top_5_success_rate']:.3f}, "
+                f"Top-10: {metrics_dict['top_10_success_rate']:.3f}"
+            )
+
+        if "mean_final_position" in metrics_dict:
+            insights.append(
+                f"Magnitude metrics - Mean final position: {metrics_dict['mean_final_position']:.2f}"
+            )
+
+        if "mean_absolute_improvement" in metrics_dict:
+            insights.append(
+                f"Mean absolute improvement: {metrics_dict['mean_absolute_improvement']:.2f} positions"
+            )
+
+        if "mean_percentage_improvement" in metrics_dict:
+            insights.append(
+                f"Mean percentage improvement: {metrics_dict['mean_percentage_improvement']:.1f}%"
+            )
 
         return AnalysisResult(
             analyzer_name=self.name,

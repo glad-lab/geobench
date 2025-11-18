@@ -20,8 +20,18 @@ from qdrant_client.models import (
 )
 import logging
 import os
-from langchain_community.embeddings import OpenAIEmbeddings
-from .gemini_embeddings import GeminiEmbeddingsWithFallback
+
+# Use new LangChain OpenAI import (fixes deprecation warning)
+try:
+    from langchain_openai import OpenAIEmbeddings
+except ImportError:
+    # Fallback to old import for backward compatibility
+    from langchain_community.embeddings import OpenAIEmbeddings
+
+try:
+    from .gemini_embeddings import GeminiEmbeddingsWithFallback
+except ImportError:
+    from gemini_embeddings import GeminiEmbeddingsWithFallback
 
 logger = logging.getLogger(__name__)
 
@@ -87,8 +97,9 @@ class VectorStoreManager:
             else:
                 self.vector_size = 1536  # Default for OpenAI models
         elif self.embedding_provider == "gemini":
+            gemini_model = embedding_model if "text-embedding-004" in embedding_model or "embedding-001" in embedding_model else "text-embedding-004"
             self.embeddings = GeminiEmbeddingsWithFallback(
-                model=embedding_model,
+                model=gemini_model,
                 api_key=api_key,
                 fallback_to_openai=True,
                 openai_model="text-embedding-ada-002"
@@ -110,12 +121,26 @@ class VectorStoreManager:
         try:
             collections = self.client.get_collections().collections
             collection_exists = any(c.name == self.collection_name for c in collections)
-            
+
             if reset and collection_exists:
                 self.client.delete_collection(self.collection_name)
                 logger.info(f"Deleted existing collection: {self.collection_name}")
                 collection_exists = False
-            
+
+            # Check if existing collection has correct vector dimension
+            if collection_exists:
+                collection_info = self.client.get_collection(self.collection_name)
+                existing_size = collection_info.config.params.vectors.size
+
+                if existing_size != self.vector_size:
+                    logger.warning(
+                        f"Collection '{self.collection_name}' has vector size {existing_size} "
+                        f"but current embeddings produce {self.vector_size} dimensions. "
+                        f"Recreating collection..."
+                    )
+                    self.client.delete_collection(self.collection_name)
+                    collection_exists = False
+
             if not collection_exists:
                 self.client.create_collection(
                     collection_name=self.collection_name,
@@ -124,10 +149,10 @@ class VectorStoreManager:
                         distance=Distance.COSINE
                     )
                 )
-                logger.info(f"Created collection: {self.collection_name}")
+                logger.info(f"Created collection '{self.collection_name}' with vector size {self.vector_size}")
             else:
-                logger.info(f"Using existing collection: {self.collection_name}")
-                
+                logger.info(f"Using existing collection '{self.collection_name}' with vector size {self.vector_size}")
+
         except Exception as e:
             logger.error(f"Error initializing collection: {e}")
             raise

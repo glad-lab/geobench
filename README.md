@@ -5,19 +5,18 @@
 **License**: MIT
 **Python**: 3.9+
 
-A comprehensive research framework for studying preference manipulation attacks on LLM-powered search engines and RAG systems. This project provides modular, well-tested tools for reproducing and validating findings from adversarial SEO research.
+A comprehensive research framework for studying preference manipulation attacks on LLM-powered search engines and RAG systems. This project provides modular tools for reproducing and validating findings from adversarial SEO research through controlled, ethical experiments.
 
 ---
 
 ## Overview
 
-This framework demonstrates how adversarial content can manipulate rankings in LLM-based search systems through controlled, ethical experiments. The project has been completely refactored from a monolithic codebase into **12 modular packages** with **482 comprehensive tests** and **87% average test coverage**.
+This framework demonstrates how adversarial content can manipulate rankings in LLM-based search systems. The project has been completely refactored from a monolithic codebase into **12 modular packages** with comprehensive documentation and examples.
 
 ### Key Features
 
 - 🔬 **Research-Ready**: Reproduce paper findings with validated experiments
 - 🧩 **Modular Architecture**: 12 packages, 75+ focused modules
-- ✅ **Comprehensive Testing**: 482 tests, 87% average coverage
 - 🎯 **Multi-Provider Support**: AWS Bedrock, OpenAI, Anthropic Claude
 - 📊 **Statistical Analysis**: Built-in metrics and significance testing
 - 📈 **Visualization**: Publication-ready charts and reports
@@ -26,28 +25,81 @@ This framework demonstrates how adversarial content can manipulate rankings in L
 
 ---
 
-## Quick Start
+## Getting Started
 
-### Installation
+### Prerequisites
 
+- Python 3.9+
+- Docker (for Qdrant vector database)
+- API keys: Anthropic Claude OR OpenAI OR AWS Bedrock
+- (Optional) Google Gemini API key for embeddings
+
+### Quick Start (5 minutes)
+
+1. **Clone and setup:**
+   ```bash
+   git clone https://github.com/your-org/adversarial-seo.git
+   cd adversarial-seo
+   python -m venv venv
+   source venv/bin/activate  # Windows: venv\Scripts\activate
+   pip install -r requirements.txt
+   ```
+
+2. **Configure environment:**
+   ```bash
+   cp .env.example .env
+   # Edit .env and add your API keys
+   ```
+
+3. **Start services and populate database:**
+   ```bash
+   docker-compose up -d
+   python scripts/repopulate_db.py --reset --verify
+   ```
+
+4. **Run your first experiment:**
+   ```bash
+   python examples/experiment_usage.py
+   # OR use the main entrypoint:
+   python run_experiment.py
+   ```
+
+---
+
+## Main Entrypoints
+
+### Primary Entry Point
+- **`run_experiment.py`** - Main launcher showing available examples
+  ```bash
+  python run_experiment.py
+  ```
+
+### Database Management
+- **`scripts/repopulate_db.py`** - Populate vector database (required first step)
+  ```bash
+  python scripts/repopulate_db.py --reset --verify
+  ```
+
+### Example Experiments
+
+Located in `examples/` directory:
+
+| Script | Purpose | Best For |
+|--------|---------|----------|
+| `experiment_usage.py` | Core experiment patterns | Learning experiment configuration |
+| `rag_example.py` | RAG pipeline usage | Understanding retrieval and ranking |
+| `experiments_evaluation_integration.py` | End-to-end workflow | Complete pipeline understanding |
+| `visualization_demo.py` | Chart generation | Creating publication-ready visualizations |
+| `reporting_package_example.py` | Report generation | Generating experiment reports |
+
+Run any example:
 ```bash
-# Clone repository
-git clone https://github.com/your-org/adversarial-seo.git
-cd adversarial-seo
-
-# Create virtual environment
-python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
-
-# Install package
-pip install -e ".[dev]"
-
-# Configure environment
-cp .env.example .env
-# Edit .env with your API keys
+python examples/experiment_usage.py
 ```
 
-### Basic Usage
+---
+
+## Basic Usage Example
 
 ```python
 from experiments import ExperimentRunner, ExperimentConfig
@@ -73,24 +125,6 @@ print(f"Average target rank: {results.average_rank:.2f}")
 results.save("results/single_attack.json")
 ```
 
-### Example Experiments
-
-See the `examples/` directory for complete examples:
-
-```bash
-# Run single attack experiment
-python examples/experiment_usage.py
-
-# Visualize results
-python examples/visualization_demo.py
-
-# Run multi-provider comparison
-python examples/testing_package_example.py
-
-# Generate reports
-python examples/reporting_package_example.py
-```
-
 ---
 
 ## Documentation
@@ -113,216 +147,24 @@ python examples/reporting_package_example.py
 
 ---
 
-## Package Overview
+## Core Packages
 
-### Core Packages
+The framework consists of 12 modular packages:
 
-#### 🤖 LLM Package (`src/llm/`)
-Multi-provider LLM client abstraction with factory pattern, retry logic, and error handling.
+- **`llm/`** - Multi-provider LLM clients (OpenAI, Anthropic, AWS Bedrock)
+- **`attacks/`** - Attack generation strategies (prompt injection, discreditation, persuasion)
+- **`ranking/`** - LLM and RAG-based ranking algorithms
+- **`vector_db/`** - Vector database population and management
+- **`experiments/`** - Experiment orchestration and configuration
+- **`evaluation/`** - Result evaluation and metrics
+- **`rag/`** - RAG pipeline (retrieval + generation)
+- **`analysis/`** - Statistical analysis and comparison
+- **`visualization/`** - Chart and graph generation
+- **`reporting/`** - Report generation (Markdown, HTML)
+- **`testing/`** - Multi-provider test utilities
+- **`utils/`** - Data loading, sampling, validation
 
-```python
-from llm import create_llm_client
-
-client = create_llm_client(provider="anthropic", model="claude-3-haiku")
-response = client.generate_text("Rank these products...")
-```
-
-**Features**:
-- Support for OpenAI, Anthropic, AWS Bedrock
-- Automatic retry with exponential backoff
-- Custom exception hierarchy
-- Configuration builders
-
----
-
-#### ⚔️ Attacks Package (`src/attacks/`)
-Attack generation strategies for adversarial testing.
-
-```python
-from attacks import create_attack_generator
-
-generator = create_attack_generator("prompt_injection", intensity=0.8)
-attack = generator.generate_attack("cam_001", "Camera Pro", ["cam_002"])
-```
-
-**Attack Types**:
-- Prompt Injection: Direct instruction manipulation
-- Discreditation: Competitor disparagement
-- Persuasion: Emotional appeals
-
----
-
-#### 📊 Ranking Package (`src/ranking/`)
-LLM-based and RAG-based ranking algorithms with evaluation metrics.
-
-```python
-from ranking import create_ranker, RankingMetrics
-
-ranker = create_ranker("llm", llm_client=llm, temperature=0.0)
-result = ranker.rank("best camera", products, top_k=5)
-metrics = RankingMetrics.evaluate_ranking(result.rankings, ideal, relevant)
-```
-
-**Features**:
-- LLM-based direct ranking
-- RAG two-stage ranking (retrieval + reranking)
-- Standard IR metrics (NDCG, MRR, P@K, R@K)
-
----
-
-#### 💾 Vector DB Package (`src/vector_db/`)
-Vector database population with pipeline pattern and validation.
-
-```python
-from vector_db import VectorDBPopulator, UnifiedDatasetLoader
-from vector_store import VectorStoreManager
-
-vector_store = VectorStoreManager(collection_name="products")
-populator = (VectorDBPopulator(vector_store)
-    .add_loader(UnifiedDatasetLoader("data/products_master.json"))
-    .add_validator(SchemaValidator())
-    .populate(reset=True))
-```
-
-**Features**:
-- Builder pattern for flexible pipelines
-- Batch processing for large datasets
-- Schema validation and integrity checks
-- CLI for database management
-
----
-
-#### 🧪 Experiments Package (`src/experiments/`)
-Experiment orchestration with configuration-driven approach.
-
-```python
-from experiments import ExperimentRunner, ExperimentConfig
-
-config = ExperimentConfig(
-    name="prisoner_dilemma",
-    experiment_type="prisoner_dilemma",
-    num_attackers=3,
-    num_trials=10
-)
-runner = ExperimentRunner(config)
-results = runner.run()
-```
-
-**Experiment Types**:
-- Single Attack: Individual attack effectiveness
-- Prisoner's Dilemma: Multi-attacker scenarios
-- Positional Bias: Attack position effects
-- External Validation: Discrete attack documents
-
----
-
-#### 📈 Evaluation Package (`src/evaluation/`)
-Result evaluation with comprehensive metrics.
-
-```python
-from evaluation import AttackEffectivenessEvaluator
-
-evaluator = AttackEffectivenessEvaluator()
-metrics = evaluator.evaluate(experiment_results)
-print(f"Effectiveness: {metrics['effectiveness_score']:.2%}")
-```
-
-**Evaluators**:
-- Attack Effectiveness: Success rates, rank improvements
-- Ranking Quality: IR metrics, ideal comparison
-- Statistical Significance: P-values, effect sizes
-
----
-
-### Advanced Packages
-
-#### 🔍 RAG Package (`src/rag/`)
-RAG pipeline with observability and customization.
-
-```python
-from rag import RAGPipeline, Retriever, Generator
-
-pipeline = RAGPipeline(
-    retriever=Retriever(embeddings, vector_store),
-    generator=Generator(llm_client),
-    config=RAGConfig(top_k=10)
-)
-response = pipeline.query("best camera for photography")
-```
-
----
-
-#### 📊 Analysis Package (`src/analysis/`)
-Statistical analysis and cross-provider comparison.
-
-```python
-from analysis import StatisticalAnalyzer, ComparativeAnalyzer
-
-analyzer = StatisticalAnalyzer()
-stats = analyzer.analyze(results)
-print(f"95% CI: [{stats.ci_lower:.2%}, {stats.ci_upper:.2%}]")
-
-comparator = ComparativeAnalyzer()
-comparison = comparator.compare_providers({
-    "anthropic": results_anthropic,
-    "openai": results_openai
-})
-```
-
----
-
-### Utility Packages
-
-#### 📉 Visualization Package (`src/visualization/`)
-Publication-ready charts and reports.
-
-```python
-from visualization import AttackVisualization, ComparisonVisualization
-
-attack_viz = AttackVisualization()
-attack_viz.plot_success_rates(results)
-attack_viz.save("attack_success.png", dpi=300)
-```
-
----
-
-#### 📄 Reporting Package (`src/reporting/`)
-Markdown and HTML report generation.
-
-```python
-from reporting import MarkdownReporter
-
-reporter = MarkdownReporter()
-report = reporter.generate(results)
-reporter.save("experiment_report.md")
-```
-
----
-
-#### 🧪 Testing Package (`src/testing/`)
-Multi-provider testing utilities.
-
-```python
-from testing import ProviderTestSuite
-
-suite = ProviderTestSuite()
-suite.add_provider("anthropic", llm_client_anthropic)
-suite.add_provider("openai", llm_client_openai)
-results = suite.run_all()
-```
-
----
-
-#### 🛠️ Utils Package (`src/utils/`)
-Shared data loading, manipulation, and validation utilities.
-
-```python
-from utils import DataLoader, DataSampler
-
-loader = DataLoader("data/products_master.json")
-products = loader.load()
-sampled = DataSampler.stratified_sample(products, n=10, seed=42)
-```
+For detailed API documentation, see [API Reference](docs/API_REFERENCE.md)
 
 ---
 
@@ -332,44 +174,21 @@ sampled = DataSampler.stratified_sample(products, n=10, seed=42)
 
 This framework has validated key findings from adversarial SEO research:
 
-✅ **Single Attack Effectiveness**: 38% average position-1 success rate (within paper's 25-60% range)
-✅ **Prisoner's Dilemma**: Confirmed collective performance degradation (p < 0.01)
-✅ **Attack Transferability**: Validated across AWS Bedrock, OpenAI, Anthropic
-✅ **Positional Bias**: Confirmed position-dependent effectiveness (p < 0.05)
+- ✅ **Single Attack Effectiveness**: 38% average position-1 success rate (within paper's 25-60% range)
+- ✅ **Prisoner's Dilemma**: Confirmed collective performance degradation (p < 0.01)
+- ✅ **Attack Transferability**: Validated across AWS Bedrock, OpenAI, Anthropic
+- ✅ **Positional Bias**: Confirmed position-dependent effectiveness (p < 0.05)
 
 ### Experiment Types
 
-**1. Single Attack Experiments**
-Test individual attack effectiveness on product rankings.
-
-**2. Multi-Attacker Scenarios (Prisoner's Dilemma)**
-Demonstrate how multiple attackers degrade collective performance.
-
-**3. Positional Bias Analysis**
-Test whether attack position within context affects success rates.
-
-**4. External Attack Validation**
-Test attacks from discrete documents with complete separation and transparency.
+1. **Single Attack Experiments** - Test individual attack effectiveness on product rankings
+2. **Multi-Attacker Scenarios (Prisoner's Dilemma)** - Demonstrate how multiple attackers degrade collective performance
+3. **Positional Bias Analysis** - Test whether attack position within context affects success rates
+4. **External Attack Validation** - Test attacks from discrete documents with complete separation and transparency
 
 ---
 
-## Technical Details
-
-### Architecture
-
-**Before Refactoring**:
-- 7 monolithic files (~3,200 LOC)
-- Mixed responsibilities
-- No testing framework
-- Limited documentation
-
-**After Refactoring (v2.0)**:
-- 12 modular packages (75+ modules, ~12,000 LOC)
-- SOLID principles throughout
-- 482 tests (87% coverage)
-- Comprehensive documentation
-
-### Technology Stack
+## Technology Stack
 
 **Core**:
 - Python 3.9+
@@ -394,97 +213,44 @@ Test attacks from discrete documents with complete separation and transparency.
 
 ## Configuration
 
-### Environment Variables
+### Essential Environment Variables
 
 ```bash
-# LLM Providers
-API_PROVIDER=anthropic
-LLM_MODEL=claude-3-haiku-20240307
+# LLM Provider (choose one)
 ANTHROPIC_API_KEY=sk-...
+# OR
 OPENAI_API_KEY=sk-...
+# OR configure AWS CLI for Bedrock
 
-# AWS Bedrock
-AWS_REGION=us-east-1
-AWS_ACCESS_KEY_ID=...
-AWS_SECRET_ACCESS_KEY=...
-
-# Embeddings
-EMBEDDING_PROVIDER=gemini
+# Embeddings (recommended: Google Gemini free tier)
 GOOGLE_API_KEY=...
 
-# Vector Store
+# Vector Store (default settings)
 QDRANT_HOST=localhost
 QDRANT_PORT=6333
-
-# Experiments
-EXPERIMENT_OUTPUT_DIR=results/
-LOG_LEVEL=INFO
 ```
 
-### API Keys Setup
+### API Key Setup
 
 **Google Gemini API** (embeddings, free tier):
-1. Get API key: https://aistudio.google.com/app/apikey
-2. Set `GOOGLE_API_KEY` in `.env`
+- Get API key: https://aistudio.google.com/app/apikey
+- Set `GOOGLE_API_KEY` in `.env`
 
 **Anthropic Claude** (recommended for research):
-1. Get API key: https://console.anthropic.com/
-2. Set `ANTHROPIC_API_KEY` in `.env`
+- Get API key: https://console.anthropic.com/
+- Set `ANTHROPIC_API_KEY` in `.env`
 
 **OpenAI** (optional):
-1. Get API key: https://platform.openai.com/api-keys
-2. Set `OPENAI_API_KEY` in `.env`
+- Get API key: https://platform.openai.com/api-keys
+- Set `OPENAI_API_KEY` in `.env`
 
 **AWS Bedrock** (pay-per-use):
-1. Configure: `aws configure`
-2. Ensure IAM permissions for Bedrock
-
----
-
-## Testing
-
-### Run Tests
-
-```bash
-# Run all tests
-pytest tests/ -v
-
-# Run with coverage
-pytest --cov=src --cov-report=html tests/
-
-# Run specific package tests
-pytest tests/unit/test_attacks.py -v
-
-# Run integration tests
-pytest tests/integration/ -v
-
-# View coverage report
-open htmlcov/index.html
-```
-
-### Test Coverage
-
-| Package | Coverage | Tests | Status |
-|---------|----------|-------|--------|
-| **llm** | Pending | Pending | 🔄 In Progress |
-| **attacks** | 92% | 28 | ✅ Excellent |
-| **ranking** | 88% | 44 | ✅ Excellent |
-| **vector_db** | 87% | 47 | ✅ Excellent |
-| **experiments** | 85% | 52 | ✅ Good |
-| **evaluation** | 86% | 38 | ✅ Excellent |
-| **rag** | 84% | 29 | ✅ Good |
-| **analysis** | 89% | 64 | ✅ Excellent |
-| **visualization** | 83% | 35 | ✅ Good |
-| **reporting** | 81% | 28 | ✅ Good |
-| **testing** | 90% | 32 | ✅ Excellent |
-| **utils** | 88% | 25 | ✅ Excellent |
-| **Average** | **87%** | **482** | ✅ **Exceeds Target** |
+- Configure: `aws configure`
+- Ensure IAM permissions for Bedrock
 
 ---
 
 ## Ethical Guidelines
-
-### Critical Constraints
 
 This framework is designed for **controlled, ethical research only**:
 
@@ -494,8 +260,6 @@ This framework is designed for **controlled, ethical research only**:
 - ✅ Clear separation between research and malicious use
 - ✅ Sandboxed execution environment
 - ✅ Transparent attack mechanisms (glass box approach)
-
-### Research Ethics
 
 **Purpose**: Understand vulnerabilities to build better defenses
 **Scope**: Academic research and controlled experiments
@@ -597,9 +361,8 @@ MIT License - see [LICENSE](LICENSE) file for details.
 ## Project Status
 
 - **Version**: 2.0.0 (Modular Architecture)
-- **Status**: ✅ Production-Ready
-- **Tests**: 482 tests, 87% average coverage
-- **Documentation**: Comprehensive (5 complete guides)
+- **Status**: Production-Ready
+- **Documentation**: Comprehensive guides and API reference
 - **Backward Compatibility**: 100% maintained
 
 ---
@@ -607,3 +370,24 @@ MIT License - see [LICENSE](LICENSE) file for details.
 **Last Updated**: November 2025
 **Maintained By**: Your Lab Group
 **Contact**: your-email@university.edu
+
+---
+
+## Data Formats
+
+The project supports three data format variants:
+
+| Format | Location | Use Case |
+|--------|----------|----------|
+| **Unified Master** | `data/products_master.json` | Default experiments (recommended) |
+| **Category Groups** | `data/categories/*.json` | Category-specific analysis |
+| **Individual Products** | `data/products/*.json` | Fine-grained access |
+
+```python
+# Load unified master (default)
+from src.utils.data_loading import load_products
+products = load_products("data/products_master.json")
+```
+
+For complete documentation, see [Developer Guide](docs/DEVELOPER_GUIDE.md).
+

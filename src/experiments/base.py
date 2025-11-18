@@ -300,3 +300,40 @@ class BaseExperiment(ABC):
         Default implementation does nothing. Override if needed.
         """
         pass
+
+    def _dict_to_product(self, product_dict: Dict[str, Any]) -> 'Product':
+        """
+        Convert product dictionary to Product instance, filtering extra fields.
+
+        This helper method ensures compatibility between product dictionaries
+        (which may contain extra fields like 'price', 'rating') and the Product
+        dataclass (which only accepts specific fields).
+
+        Args:
+            product_dict: Dictionary with product data
+
+        Returns:
+            Product instance with extra fields moved to metadata
+
+        Example:
+            >>> product_dict = {
+            ...     "id": "prod_1",
+            ...     "name": "Product 1",
+            ...     "description": "Great product",
+            ...     "price": 99.99,
+            ...     "rating": 4.5,
+            ...     "category": "Electronics"
+            ... }
+            >>> product = self._dict_to_product(product_dict)
+            >>> # product.metadata contains {'price': 99.99, 'rating': 4.5}
+        """
+        from ..ranking import Product
+
+        return Product(
+            id=product_dict["id"],
+            name=product_dict["name"],
+            description=product_dict["description"],
+            category=product_dict.get("category"),
+            metadata={k: v for k, v in product_dict.items()
+                     if k not in ["id", "name", "description", "category"]}
+        )
