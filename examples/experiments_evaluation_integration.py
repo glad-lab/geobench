@@ -7,10 +7,14 @@ comprehensive evaluation and reporting.
 
 import sys
 from pathlib import Path
+from dotenv import load_dotenv
 
 # Add project root to path
 project_root = Path(__file__).parent.parent
 sys.path.insert(0, str(project_root))
+
+# Load environment variables
+load_dotenv(project_root / ".env")
 
 from src.evaluation import (
     AttackEffectivenessEvaluator,

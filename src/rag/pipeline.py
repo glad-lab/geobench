@@ -98,11 +98,20 @@ class RAGPipeline(BaseRAG):
             raise ValueError("No retriever configured. Use with_retriever()")
 
         k = top_k if top_k is not None else self.config.retrieval_top_k
-        docs = self.retriever.retrieve(query, top_k=k)
 
-        # Notify observers
+        # Track timing for retrieval
+        start_time = time.time()
+        docs = self.retriever.retrieve(query, top_k=k)
+        duration = time.time() - start_time
+
+        # Notify observers with timing information
         self._notify_stage(
-            "retrieval", {"query": query, "top_k": k, "num_retrieved": len(docs)}
+            "retrieval", {
+                "query": query,
+                "top_k": k,
+                "num_retrieved": len(docs),
+                "duration": duration
+            }
         )
 
         return docs
@@ -123,12 +132,20 @@ class RAGPipeline(BaseRAG):
         if not self.generator:
             raise ValueError("No generator configured. Use with_generator()")
 
+        # Track timing for generation
+        start_time = time.time()
         response = self.generator.generate(query, documents)
+        duration = time.time() - start_time
 
-        # Notify observers
+        # Notify observers with timing information
         self._notify_stage(
             "generation",
-            {"query": query, "num_docs": len(documents), "response_length": len(response)},
+            {
+                "query": query,
+                "num_docs": len(documents),
+                "response_length": len(response),
+                "duration": duration
+            },
         )
 
         return response

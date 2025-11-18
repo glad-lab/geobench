@@ -8,6 +8,18 @@ This demonstrates the key features and design patterns:
 - Command pattern for different experiment types
 """
 
+import os
+import sys
+from pathlib import Path
+from dotenv import load_dotenv
+
+# Add project root to Python path
+project_root = Path(__file__).parent.parent
+sys.path.insert(0, str(project_root))
+
+# Load environment variables
+load_dotenv(project_root / ".env")
+
 from src.experiments import (
     ExperimentRunner,
     ExperimentFactory,

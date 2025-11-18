@@ -22,6 +22,30 @@ from .base import ExperimentResult, TrialResult, ExperimentConfig, ExperimentTyp
 logger = logging.getLogger(__name__)
 
 
+def convert_numpy_types(obj: Any) -> Any:
+    """
+    Convert numpy types to native Python types for JSON serialization.
+
+    Args:
+        obj: Object potentially containing numpy types
+
+    Returns:
+        Object with numpy types converted to native Python types
+    """
+    if isinstance(obj, dict):
+        return {k: convert_numpy_types(v) for k, v in obj.items()}
+    elif isinstance(obj, list):
+        return [convert_numpy_types(item) for item in obj]
+    elif isinstance(obj, np.integer):
+        return int(obj)
+    elif isinstance(obj, np.floating):
+        return float(obj)
+    elif isinstance(obj, np.ndarray):
+        return obj.tolist()
+    else:
+        return obj
+
+
 class ResultAggregator:
     """
     Aggregates results from multiple experiments.
@@ -223,6 +247,7 @@ class ResultAggregator:
         path.parent.mkdir(parents=True, exist_ok=True)
 
         data = self.to_dict()
+        data = convert_numpy_types(data)
 
         with open(path, 'w') as f:
             json.dump(data, f, indent=2)

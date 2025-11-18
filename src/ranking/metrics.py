@@ -350,3 +350,135 @@ class RankingMetrics:
         )
 
         return results
+
+    @staticmethod
+    def top_k_success_rate(positions: List[int], k: int = 3) -> float:
+        """
+        Calculate Top-K success rate (binary metric).
+
+        Measures what fraction of products reached top-K positions.
+        This is a binary threshold metric - did the product reach the threshold or not?
+
+        Args:
+            positions: List of final positions (1-indexed)
+            k: Position threshold (default: 3 for top-3)
+
+        Returns:
+            Success rate (0.0-1.0)
+
+        Examples:
+            >>> # 2 out of 3 products reached top-3
+            >>> RankingMetrics.top_k_success_rate([1, 2, 5], k=3)
+            0.6666666666666666
+
+            >>> # All products reached top-5
+            >>> RankingMetrics.top_k_success_rate([1, 3, 5], k=5)
+            1.0
+        """
+        if not positions:
+            return 0.0
+        if k <= 0:
+            raise ValueError("k must be positive")
+
+        successes = sum(1 for p in positions if p <= k)
+        return successes / len(positions)
+
+    @staticmethod
+    def absolute_position_improvement(
+        baseline_positions: List[int],
+        final_positions: List[int]
+    ) -> List[int]:
+        """
+        Calculate absolute position improvement (magnitude metric).
+
+        Measures how many positions each product improved.
+        Positive values indicate improvement (moved up in ranking).
+
+        Args:
+            baseline_positions: Original positions before attack (1-indexed)
+            final_positions: Final positions after attack (1-indexed)
+
+        Returns:
+            List of position changes (positive = improvement)
+
+        Examples:
+            >>> # Product improved from position 10 to 3 (+7 positions)
+            >>> RankingMetrics.absolute_position_improvement([10], [3])
+            [7]
+
+            >>> # Mixed results
+            >>> RankingMetrics.absolute_position_improvement([5, 10, 3], [2, 8, 5])
+            [3, 2, -2]
+        """
+        if len(baseline_positions) != len(final_positions):
+            raise ValueError("baseline and final positions must have same length")
+
+        return [baseline - final for baseline, final in zip(baseline_positions, final_positions)]
+
+    @staticmethod
+    def percentage_improvement(
+        baseline_positions: List[int],
+        final_positions: List[int],
+        total_items: int
+    ) -> List[float]:
+        """
+        Calculate percentage improvement (magnitude metric).
+
+        Measures improvement as a percentage of the total ranking space.
+        Example: Moving from position 10 to 3 in a 10-item list = 70% improvement.
+
+        Args:
+            baseline_positions: Original positions before attack (1-indexed)
+            final_positions: Final positions after attack (1-indexed)
+            total_items: Total number of items in ranking
+
+        Returns:
+            List of percentage improvements (0-100 range)
+
+        Examples:
+            >>> # 10→3 in 10 items = 7/10 = 70% improvement
+            >>> RankingMetrics.percentage_improvement([10], [3], 10)
+            [70.0]
+
+            >>> # Mixed results in 20-item ranking
+            >>> RankingMetrics.percentage_improvement([15, 10], [5, 15], 20)
+            [50.0, -25.0]
+        """
+        if len(baseline_positions) != len(final_positions):
+            raise ValueError("baseline and final positions must have same length")
+        if total_items <= 0:
+            raise ValueError("total_items must be positive")
+
+        percentages = []
+        for baseline, final in zip(baseline_positions, final_positions):
+            improvement = baseline - final
+            percentage = (improvement / total_items) * 100
+            percentages.append(percentage)
+
+        return percentages
+
+    @staticmethod
+    def mean_final_position(positions: List[int]) -> float:
+        """
+        Calculate mean final position (magnitude metric).
+
+        Measures the average final ranking position.
+        Lower values indicate better overall performance.
+
+        Args:
+            positions: List of final positions (1-indexed)
+
+        Returns:
+            Mean position
+
+        Examples:
+            >>> RankingMetrics.mean_final_position([1, 2, 3])
+            2.0
+
+            >>> RankingMetrics.mean_final_position([1, 5, 10])
+            5.333333333333333
+        """
+        if not positions:
+            return 0.0
+
+        return sum(positions) / len(positions)

@@ -57,6 +57,7 @@ data/results/
 qdrant_storage/
 *.log
 logs/
+outputs/
 
 # Docker
 .dockerignore
@@ -65,4 +66,10 @@ logs/
 tmp/
 temp/
 
-*.md
+.claude/
+
+# Testing
+.pytest_cache/
+.coverage
+coverage.json
+htmlcov/

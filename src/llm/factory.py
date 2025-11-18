@@ -99,7 +99,18 @@ class LLMClientFactory:
         try:
             # Dynamic import of provider module
             from importlib import import_module
-            module = import_module(f'.{module_name}', package='llm')
+
+            # Try to import from current package structure
+            try:
+                module = import_module(f'.{module_name}', package='src.llm')
+            except (ImportError, ValueError):
+                # Fallback to direct import
+                try:
+                    module = import_module(f'.{module_name}', package='llm')
+                except (ImportError, ValueError):
+                    # Last resort: absolute import
+                    module = import_module(f'src.llm.{module_name}')
+
             client_class = getattr(module, class_name)
 
             # Instantiate client
@@ -212,18 +223,23 @@ class LLMClientFactory:
             Resolved model name
         """
         if model:
-            return model
+            resolved_model = model
+        else:
+            # Check environment variable
+            resolved_model = os.getenv("LLM_MODEL")
 
-        # Check environment variable
-        model = os.getenv("LLM_MODEL")
-        if model:
-            return model
+        # Normalize model name for Bedrock provider
+        if provider == 'bedrock' and resolved_model:
+            resolved_model = LLMClientFactory._normalize_bedrock_model(resolved_model)
+
+        if resolved_model:
+            return resolved_model
 
         # Provider-specific defaults
         defaults = {
             'openai': 'gpt-3.5-turbo',
             'anthropic': 'claude-3-haiku-20240307',
-            'bedrock': 'meta.llama3-8b-instruct-v1:0',
+            'bedrock': 'anthropic.claude-3-haiku-20240307-v1:0',
             'llama': 'llama-2-70b-chat',
         }
 
@@ -240,6 +256,43 @@ class LLMClientFactory:
                 'hint': 'Set LLM_MODEL environment variable or pass model parameter'
             }
         )
+
+    @staticmethod
+    def _normalize_bedrock_model(model: str) -> str:
+        """
+        Normalize Anthropic model names to Bedrock format.
+
+        Converts Anthropic API model names (e.g., 'claude-3-haiku-20240307')
+        to Bedrock model IDs (e.g., 'anthropic.claude-3-haiku-20240307-v1:0').
+
+        Args:
+            model: Model name (Anthropic or Bedrock format)
+
+        Returns:
+            Bedrock-formatted model name
+        """
+        # If already in Bedrock format, return as-is
+        if model.startswith("anthropic.") or model.startswith("meta."):
+            return model
+
+        # Convert Anthropic model names to Bedrock format
+        anthropic_to_bedrock = {
+            "claude-3-haiku-20240307": "anthropic.claude-3-haiku-20240307-v1:0",
+            "claude-3-sonnet-20240229": "anthropic.claude-3-sonnet-20240229-v1:0",
+            "claude-3-opus-20240229": "anthropic.claude-3-opus-20240229-v1:0",
+            "claude-3-5-sonnet-20240620": "anthropic.claude-3-5-sonnet-20240620-v1:0",
+            "claude-3-5-sonnet-20241022": "anthropic.claude-3-5-sonnet-20241022-v2:0",
+            "claude-3-5-haiku-20241022": "anthropic.claude-3-5-haiku-20241022-v1:0",
+        }
+
+        bedrock_model = anthropic_to_bedrock.get(model)
+        if bedrock_model:
+            logger.info(f"Normalized Anthropic model '{model}' to Bedrock format: '{bedrock_model}'")
+            return bedrock_model
+
+        # If not recognized, assume it's already in correct format
+        logger.warning(f"Unknown model '{model}' for Bedrock - using as-is")
+        return model
 
     @staticmethod
     def get_available_models(provider: str) -> List[str]:
@@ -268,6 +321,8 @@ class LLMClientFactory:
                 "claude-3-5-sonnet-20240620", "claude-3-5-sonnet-20241022", "claude-3-5-haiku-20241022"
             ],
             'bedrock': [
+                "anthropic.claude-3-haiku-20240307-v1:0", "anthropic.claude-3-sonnet-20240229-v1:0",
+                "anthropic.claude-3-opus-20240229-v1:0", "anthropic.claude-3-5-sonnet-20240620-v1:0",
                 "meta.llama3-8b-instruct-v1:0", "meta.llama3-70b-instruct-v1:0",
                 "meta.llama2-13b-chat-v1", "meta.llama2-70b-chat-v1",
             ],

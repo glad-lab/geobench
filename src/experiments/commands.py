@@ -102,20 +102,20 @@ class BaselineExperiment(BaseExperiment):
                 # Rank products without any attacks
                 ranking = self.ranker.rank(
                     query=self.config.query,
-                    products=[Product(**p) for p in self.products]
+                    products=[self._dict_to_product(p) for p in self.products]
                 )
 
                 # Extract rankings
                 product_ranks = {
-                    product.product_id: rank + 1
-                    for rank, product in enumerate(ranking.ranked_products)
+                    product_id: rank + 1
+                    for rank, (product_id, score) in enumerate(ranking.rankings)
                 }
 
                 # Compute trial metrics
                 metrics = {
                     "has_attacks": 0.0,  # No attacks in baseline
-                    "ranking_valid": 1.0 if len(ranking.ranked_products) > 0 else 0.0,
-                    "num_products_ranked": len(ranking.ranked_products),
+                    "ranking_valid": 1.0 if len(ranking.rankings) > 0 else 0.0,
+                    "num_products_ranked": len(ranking.rankings),
                 }
 
                 trial = TrialResult(
@@ -148,8 +148,8 @@ class BaselineExperiment(BaseExperiment):
         # Extract rankings
         all_rankings = []
         for trial in results:
-            if trial.attacked_ranking and trial.attacked_ranking.ranked_products:
-                ranking = [p.product_id for p in trial.attacked_ranking.ranked_products]
+            if trial.attacked_ranking and trial.attacked_ranking.rankings:
+                ranking = [product_id for product_id, score in trial.attacked_ranking.rankings]
                 all_rankings.append(ranking)
 
         # Compute consistency (how often same ranking appears)
@@ -294,13 +294,13 @@ class SingleAttackExperiment(BaseExperiment):
                 # Get baseline ranking
                 baseline_ranking = self.ranker.rank(
                     query=self.config.query,
-                    products=[Product(**p) for p in self.products]
+                    products=[self._dict_to_product(p) for p in self.products]
                 )
 
                 # Get attacked ranking
                 attacked_ranking = self.ranker.rank(
                     query=self.config.query,
-                    products=[Product(**p) for p in attacked_products]
+                    products=[self._dict_to_product(p) for p in attacked_products]
                 )
 
                 # Compute metrics
@@ -376,10 +376,10 @@ class SingleAttackExperiment(BaseExperiment):
 
     def _get_product_position(self, ranking: RankingResult, product_id: str) -> int:
         """Get position of product in ranking (1-indexed)."""
-        for pos, product in enumerate(ranking.ranked_products):
-            if product.id == product_id:
+        for pos, (pid, score) in enumerate(ranking.rankings):
+            if pid == product_id:
                 return pos + 1
-        return len(ranking.ranked_products) + 1  # Not found
+        return len(ranking.rankings) + 1  # Not found
 
 
 class PrisonersDilemmaExperiment(BaseExperiment):
@@ -456,7 +456,7 @@ class PrisonersDilemmaExperiment(BaseExperiment):
                 # Get baseline ranking
                 baseline_ranking = self.ranker.rank(
                     query=self.config.query,
-                    products=[Product(**p) for p in self.products]
+                    products=[self._dict_to_product(p) for p in self.products]
                 )
 
                 # Create attacked version
@@ -470,11 +470,14 @@ class PrisonersDilemmaExperiment(BaseExperiment):
                         p["name"] for i, p in enumerate(self.products) if i != idx
                     ]
 
-                    # Generate attack
+                    # Select attack type and pass competitors only if needed
+                    attack_type = random.choice(list(AttackType))
+
+                    # Generate attack with competitors only for discreditation
                     attack = self.attack_gen.generate_attack(
-                        attack_type=random.choice(list(AttackType)),
+                        attack_type=attack_type,
                         target_product=target_product["name"],
-                        competitors=competitors if random.random() < 0.5 else None
+                        competitors=competitors if attack_type == AttackType.DISCREDITATION else None
                     )
 
                     # Inject attack
@@ -491,7 +494,7 @@ class PrisonersDilemmaExperiment(BaseExperiment):
                 # Get attacked ranking
                 attacked_ranking = self.ranker.rank(
                     query=self.config.query,
-                    products=[Product(**p) for p in attacked_products]
+                    products=[self._dict_to_product(p) for p in attacked_products]
                 )
 
                 # Compute metrics for each attacker
@@ -579,10 +582,10 @@ class PrisonersDilemmaExperiment(BaseExperiment):
 
     def _get_product_position(self, ranking: RankingResult, product_id: str) -> int:
         """Get position of product in ranking (1-indexed)."""
-        for pos, product in enumerate(ranking.ranked_products):
-            if product.product_id == product_id:
+        for pos, (pid, score) in enumerate(ranking.rankings):
+            if pid == product_id:
                 return pos + 1
-        return len(ranking.ranked_products) + 1
+        return len(ranking.rankings) + 1
 
 
 class PositionalBiasExperiment(BaseExperiment):
@@ -655,10 +658,14 @@ class PositionalBiasExperiment(BaseExperiment):
                 competitors = [
                     p["name"] for i, p in enumerate(self.products) if i != target_idx
                 ]
+
+                # Select attack type and pass competitors only if needed
+                attack_type = random.choice(list(AttackType))
+
                 attack = self.attack_gen.generate_attack(
-                    attack_type=random.choice(list(AttackType)),
+                    attack_type=attack_type,
                     target_product=target_product["name"],
-                    competitors=competitors if random.random() < 0.5 else None
+                    competitors=competitors if attack_type == AttackType.DISCREDITATION else None
                 )
 
                 # Inject at specified position
@@ -685,11 +692,11 @@ class PositionalBiasExperiment(BaseExperiment):
                 # Get rankings
                 baseline_ranking = self.ranker.rank(
                     query=self.config.query,
-                    products=[Product(**p) for p in self.products]
+                    products=[self._dict_to_product(p) for p in self.products]
                 )
                 attacked_ranking = self.ranker.rank(
                     query=self.config.query,
-                    products=[Product(**p) for p in attacked_products]
+                    products=[self._dict_to_product(p) for p in attacked_products]
                 )
 
                 # Compute metrics
@@ -783,10 +790,10 @@ class PositionalBiasExperiment(BaseExperiment):
 
     def _get_product_position(self, ranking: RankingResult, product_id: str) -> int:
         """Get position of product in ranking (1-indexed)."""
-        for pos, product in enumerate(ranking.ranked_products):
-            if product.product_id == product_id:
+        for pos, (pid, score) in enumerate(ranking.rankings):
+            if pid == product_id:
                 return pos + 1
-        return len(ranking.ranked_products) + 1
+        return len(ranking.rankings) + 1
 
 
 # Note: EXTERNAL_ATTACK removed from ExperimentType in base.py, so we skip it

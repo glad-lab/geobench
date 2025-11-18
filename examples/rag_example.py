@@ -1,6 +1,7 @@
 """Example demonstrating RAG package usage.
 
 This example shows how to use the RAG package for adversarial SEO research.
+Auto-populates the vector database if empty.
 """
 
 import os
@@ -15,6 +16,95 @@ from dotenv import load_dotenv
 load_dotenv()
 
 
+def ensure_database_populated():
+    """Ensure vector database is populated before running examples."""
+    print("\n" + "=" * 80)
+    print("Database Check")
+    print("=" * 80)
+
+    from vector_store import VectorStoreManager
+
+    # Get embedding provider from .env
+    embedding_provider = os.getenv("EMBEDDING_PROVIDER", "gemini")
+
+    vector_store = VectorStoreManager(
+        collection_name="adversarial_seo",
+        embedding_provider=embedding_provider
+    )
+
+    stats = vector_store.get_collection_stats()
+    doc_count = stats.get('points_count', 0)
+
+    print(f"Collection 'adversarial_seo' has {doc_count} documents")
+
+    if doc_count == 0:
+        print("\n⚠️  Database is empty! Populating with product data...")
+        print("This may take a few minutes...")
+
+        import json
+        import time
+
+        # Load products
+        data_path = Path(__file__).parent.parent / "data" / "products_master.json"
+
+        if not data_path.exists():
+            print(f"❌ Error: Product data not found at {data_path}")
+            print("Please ensure data/products_master.json exists")
+            sys.exit(1)
+
+        with open(data_path, 'r') as f:
+            data = json.load(f)
+
+        # Convert to flat list
+        products = []
+        for category_name, category_items in data.items():
+            for item in category_items:
+                item['category'] = category_name
+                products.append(item)
+
+        print(f"Loaded {len(products)} products from {len(data)} categories")
+
+        # Prepare documents
+        documents = []
+        for product in products:
+            doc = {
+                "id": product.get("id", product.get("name", "")).replace(" ", "_"),
+                "content": product.get("description", ""),
+                "name": product.get("name", ""),
+                "category": product.get("category", "Unknown"),
+                "type": "product",
+            }
+
+            # Add all other metadata
+            for key, value in product.items():
+                if key not in ["id", "description"]:
+                    doc[key] = value
+
+            documents.append(doc)
+
+        # Add to database
+        print(f"Adding {len(documents)} documents to vector store...")
+        start = time.time()
+
+        success = vector_store.add_documents(documents, batch_size=50)
+
+        elapsed = time.time() - start
+
+        if success:
+            print(f"✅ Successfully populated database in {elapsed:.2f}s")
+
+            # Verify
+            stats = vector_store.get_collection_stats()
+            print(f"Database now has {stats.get('points_count', 0)} documents")
+        else:
+            print("❌ Failed to populate database")
+            sys.exit(1)
+    else:
+        print(f"✅ Database ready with {doc_count} documents")
+
+    print("=" * 80)
+
+
 def example_basic_pipeline():
     """Example 1: Basic RAG pipeline with vector retrieval and LLM generation."""
     print("\n" + "=" * 80)
@@ -25,14 +115,20 @@ def example_basic_pipeline():
     from vector_store import VectorStoreManager
     from llm import create_llm_client
 
+    # Get configuration from .env
+    api_provider = os.getenv("API_PROVIDER", "anthropic")
+    llm_model = os.getenv("LLM_MODEL", "claude-3-haiku-20240307")
+    embedding_provider = os.getenv("EMBEDDING_PROVIDER", "gemini")
+
     # Initialize components
     vector_store = VectorStoreManager(
-        collection_name="adversarial_seo", embedding_provider="gemini"
+        collection_name="adversarial_seo",
+        embedding_provider=embedding_provider
     )
 
     llm_client = create_llm_client(
-        provider=os.getenv("API_PROVIDER", "anthropic"),
-        model=os.getenv("ANTHROPIC_MODEL", "claude-3-haiku-20240307"),
+        provider=api_provider,
+        model=llm_model
     )
 
     # Build pipeline
@@ -64,9 +160,21 @@ def example_hybrid_retrieval():
     from llm import create_llm_client
     from ranking import create_ranker
 
-    # Initialize components
-    vector_store = VectorStoreManager(collection_name="adversarial_seo")
-    llm_client = create_llm_client(provider="anthropic")
+    # Get configuration from .env (FIXED: use same provider as Example 1)
+    api_provider = os.getenv("API_PROVIDER", "anthropic")
+    llm_model = os.getenv("LLM_MODEL", "claude-3-haiku-20240307")
+    embedding_provider = os.getenv("EMBEDDING_PROVIDER", "gemini")
+
+    # Initialize components with consistent embedding provider
+    vector_store = VectorStoreManager(
+        collection_name="adversarial_seo",
+        embedding_provider=embedding_provider  # FIXED: was missing
+    )
+
+    llm_client = create_llm_client(
+        provider=api_provider,
+        model=llm_model
+    )
 
     # Create reranker for hybrid retrieval
     reranker = create_ranker("llm", llm_client=llm_client)
@@ -115,9 +223,21 @@ def example_observability():
     from vector_store import VectorStoreManager
     from llm import create_llm_client
 
+    # Get configuration from .env
+    api_provider = os.getenv("API_PROVIDER", "anthropic")
+    llm_model = os.getenv("LLM_MODEL", "claude-3-haiku-20240307")
+    embedding_provider = os.getenv("EMBEDDING_PROVIDER", "gemini")
+
     # Initialize components
-    vector_store = VectorStoreManager(collection_name="adversarial_seo")
-    llm_client = create_llm_client(provider="anthropic")
+    vector_store = VectorStoreManager(
+        collection_name="adversarial_seo",
+        embedding_provider=embedding_provider
+    )
+
+    llm_client = create_llm_client(
+        provider=api_provider,
+        model=llm_model
+    )
 
     # Create multiple observers
     console_observer = ConsoleObserver(verbose=True)
@@ -153,17 +273,15 @@ def example_observability():
 
     summary = metrics_collector.get_summary()
     print(f"Total queries: {summary['total_queries']}")
-    print(f"Avg retrieval time: {summary['avg_retrieval_time']:.3f}s")
-    print(f"Avg generation time: {summary['avg_generation_time']:.3f}s")
-    print(
-        f"Avg documents retrieved: {summary['avg_documents_retrieved']:.1f}"
-    )
+    print(f"Avg retrieval time: {summary.get('avg_retrieval_time', 0.0):.3f}s")
+    print(f"Avg generation time: {summary.get('avg_generation_time', 0.0):.3f}s")
+    print(f"Avg documents retrieved: {summary.get('avg_documents_retrieved', 0.0):.1f}")
 
     print(f"\nLogs written to: {log_file}")
 
 
 def example_custom_prompts():
-    """Example 4: Customizing system prompts and templates."""
+    """Example 4: Custom prompt templates."""
     print("\n" + "=" * 80)
     print("Example 4: Custom Prompts")
     print("=" * 80)
@@ -172,35 +290,51 @@ def example_custom_prompts():
     from vector_store import VectorStoreManager
     from llm import create_llm_client
 
+    # Get configuration from .env
+    api_provider = os.getenv("API_PROVIDER", "anthropic")
+    llm_model = os.getenv("LLM_MODEL", "claude-3-haiku-20240307")
+    embedding_provider = os.getenv("EMBEDDING_PROVIDER", "gemini")
+
     # Initialize components
-    vector_store = VectorStoreManager(collection_name="adversarial_seo")
-    llm_client = create_llm_client(provider="anthropic")
+    vector_store = VectorStoreManager(
+        collection_name="adversarial_seo",
+        embedding_provider=embedding_provider
+    )
 
-    # Custom system prompt
-    custom_system_prompt = """You are a product recommendation expert specializing in photography equipment.
-Provide detailed, technical recommendations based on the retrieved product information.
-Focus on image quality, sensor specifications, and value for money."""
+    llm_client = create_llm_client(
+        provider=api_provider,
+        model=llm_model
+    )
 
-    # Custom user template
-    custom_user_template = """User Question: {query}
+    # Custom user template for product recommendations
+    custom_user_template = """You are a professional product advisor. Based on the following product information,
+provide a detailed recommendation that addresses the user's query.
 
-Available Products:
+Query: {query}
+
+Product Information:
 {documents}
 
-Please provide a detailed recommendation with technical justification."""
+Provide a recommendation that:
+1. Directly answers the user's query
+2. Includes specific product features and benefits
+3. Provides technical justification for the recommendation
+4. Is concise but informative (2-3 paragraphs)
 
-    # Build pipeline with custom prompts
+Recommendation:"""
+
+    # Create generator with custom user template
+    generator = LLMGenerator(llm_client, user_template=custom_user_template)
+
+    # Create config with custom retrieval_top_k
+    from rag import RAGConfig
+    config = RAGConfig(retrieval_top_k=5)
+
+    # Build pipeline
     pipeline = (
-        RAGPipeline()
+        RAGPipeline(config=config)
         .with_retriever(VectorRetriever(vector_store))
-        .with_generator(
-            LLMGenerator(
-                llm_client,
-                system_prompt=custom_system_prompt,
-                user_template=custom_user_template,
-                temperature=0.3,  # More creative responses
-            )
-        )
+        .with_generator(generator)
     )
 
     # Execute query
@@ -211,7 +345,7 @@ Please provide a detailed recommendation with technical justification."""
 
 
 def example_attack_detection():
-    """Example 5: Using RAG pipeline for attack detection."""
+    """Example 5: Detecting adversarial attacks in retrieved documents."""
     print("\n" + "=" * 80)
     print("Example 5: Attack Detection")
     print("=" * 80)
@@ -220,13 +354,29 @@ def example_attack_detection():
     from vector_store import VectorStoreManager
     from llm import create_llm_client
 
+    # Get configuration from .env
+    api_provider = os.getenv("API_PROVIDER", "anthropic")
+    llm_model = os.getenv("LLM_MODEL", "claude-3-haiku-20240307")
+    embedding_provider = os.getenv("EMBEDDING_PROVIDER", "gemini")
+
     # Initialize components
-    vector_store = VectorStoreManager(collection_name="adversarial_seo")
-    llm_client = create_llm_client(provider="anthropic")
+    vector_store = VectorStoreManager(
+        collection_name="adversarial_seo",
+        embedding_provider=embedding_provider
+    )
+
+    llm_client = create_llm_client(
+        provider=api_provider,
+        model=llm_model
+    )
+
+    # Create config with custom retrieval_top_k
+    from rag import RAGConfig
+    config = RAGConfig(retrieval_top_k=10)
 
     # Build pipeline
     pipeline = (
-        RAGPipeline()
+        RAGPipeline(config=config)
         .with_retriever(VectorRetriever(vector_store))
         .with_generator(LLMGenerator(llm_client))
     )
@@ -234,73 +384,89 @@ def example_attack_detection():
     # Execute query
     result = pipeline.query("best camera for photography")
 
-    # Analyze retrieved documents for attacks
     print(f"\nQuery: {result.query}")
-    print(f"\nRetrieved Documents Analysis:")
 
-    attack_count = 0
+    # Analyze retrieved documents for attack patterns
+    attack_patterns = [
+        "[system]",
+        "ignore previous",
+        "warning:",
+        "blind puppies",
+        "nsfw",
+        "toxic",
+    ]
+
+    print("\nRetrieved Documents Analysis:")
+    attack_docs = []
+
     for i, doc in enumerate(result.retrieved_docs, 1):
-        # Check for attack indicators
-        is_attack = (
-            doc.get("___attack_type")
-            or doc.get("__attack_type")
-            or doc.get("_is_attack_document")
-        )
+        content = doc.get("content", "").lower()
+        name = doc.get("name", "Unknown")
 
-        if is_attack:
-            attack_count += 1
-            attack_type = doc.get("___attack_type") or doc.get("__attack_type", "unknown")
-            print(f"  {i}. {doc.get('name', 'Unknown')} - ATTACK DETECTED ({attack_type})")
-            print(f"     Retrieval score: {doc.get('retrieval_score', 'N/A')}")
-        else:
-            print(f"  {i}. {doc.get('name', 'Unknown')} - Clean")
+        # Check for attack patterns
+        detected_attacks = [pattern for pattern in attack_patterns if pattern in content]
 
-    print(f"\nAttack Detection Summary:")
-    print(f"  Total documents retrieved: {result.num_retrieved}")
-    print(f"  Attack documents detected: {attack_count}")
-    print(
-        f"  Attack rate: {attack_count / result.num_retrieved * 100:.1f}%"
-        if result.num_retrieved > 0
-        else "  Attack rate: N/A"
-    )
+        if detected_attacks:
+            attack_docs.append((name, detected_attacks))
+            print(f"\n⚠️  Document {i}: {name}")
+            print(f"   Detected patterns: {', '.join(detected_attacks)}")
+
+    # Summary
+    print("\nAttack Detection Summary:")
+    print(f"  Total documents retrieved: {len(result.retrieved_docs)}")
+    print(f"  Attack documents detected: {len(attack_docs)}")
+    if len(result.retrieved_docs) > 0:
+        attack_rate = len(attack_docs) / len(result.retrieved_docs) * 100
+        print(f"  Attack rate: {attack_rate:.1f}%")
+    else:
+        print(f"  Attack rate: N/A")
 
 
 def main():
-    """Run all examples."""
-    examples = [
-        ("Basic Pipeline", example_basic_pipeline),
-        ("Hybrid Retrieval", example_hybrid_retrieval),
-        ("Observability", example_observability),
-        ("Custom Prompts", example_custom_prompts),
-        ("Attack Detection", example_attack_detection),
-    ]
-
+    """Main entry point."""
     print("\n" + "=" * 80)
     print("RAG Package Examples")
     print("=" * 80)
+
+    # Check and populate database if needed
+    ensure_database_populated()
+
+    # Display menu
     print("\nAvailable examples:")
-    for i, (name, _) in enumerate(examples, 1):
-        print(f"  {i}. {name}")
+    print("  1. Basic Pipeline")
+    print("  2. Hybrid Retrieval")
+    print("  3. Observability")
+    print("  4. Custom Prompts")
+    print("  5. Attack Detection")
 
-    try:
-        choice = input("\nSelect example (1-5, or 'all'): ").strip().lower()
+    choice = input("\nSelect example (1-5, or 'all'): ").strip()
 
-        if choice == "all":
-            for _, func in examples:
+    examples = {
+        "1": example_basic_pipeline,
+        "2": example_hybrid_retrieval,
+        "3": example_observability,
+        "4": example_custom_prompts,
+        "5": example_attack_detection,
+    }
+
+    if choice.lower() == "all":
+        for func in examples.values():
+            try:
                 func()
                 input("\nPress Enter to continue to next example...")
-        elif choice.isdigit() and 1 <= int(choice) <= len(examples):
-            examples[int(choice) - 1][1]()
-        else:
-            print("Invalid choice")
-
-    except KeyboardInterrupt:
-        print("\n\nExamples interrupted")
-    except Exception as e:
-        print(f"\n\nError running example: {e}")
-        import traceback
-
-        traceback.print_exc()
+            except Exception as e:
+                print(f"\nError running example: {e}")
+                import traceback
+                traceback.print_exc()
+    elif choice in examples:
+        try:
+            examples[choice]()
+        except Exception as e:
+            print(f"\nError running example: {e}")
+            import traceback
+            traceback.print_exc()
+    else:
+        print("Invalid choice. Please select 1-5 or 'all'")
 
 
 if __name__ == "__main__":
