@@ -13,14 +13,14 @@ let us upload datasets to the github [Datasets](https://github.com/glad-lab/geob
 |  | [RAF](<https://arxiv.org/abs/2510.06732>) | same with Stealth Rank |  | [Original Code](https://github.com/glad-lab/RAF) | |
 
 ## Dataset Metadata Table
-| Dataset Name | Source Paper | Total Items | Number of Categories | Avg Items per Category | Domain/Field | Link |
-|--------------|--------------|-------------|---------------------|------------------------|--------------|------|
-| RewriteToRank | Rewrite-to-Rank | 250K (using 10K subset) | TBD | TBD | Products (Microsoft dataset) | [Data](https://github.com/glad-lab/geobench/tree/main/Datasets/RewriteToRank) |
-| StealthRank | Stealth Rank | TBD | TBD | TBD | Products | [Main](https://github.com/glad-lab/geobench/tree/main/Datasets/StealthRank), [Branch](https://github.com/glad-lab/geobench/tree/Stealth-Rank/data2) |
-| C-SEO Bench | C-SEO Bench | TBD | TBD | TBD | TBD | [Data](https://drive.google.com/drive/folders/1PePkMvDAeEEW0G53QPNafBAZj0uibJdj) |
-| Fictitious Product Catalogs | Manipulating LLMs to Increase Product Visibility | TBD | 3+ (coffee machines, books, cameras) | TBD | Products | [Data](https://github.com/glad-lab/geobench/tree/main/Datasets/llm-rank-optimizer) |
-| LLMRank | Large Language Models are Zero-Shot Rankers for Recommender Systems | TBD | TBD | TBD | Recommender Systems | [Data](https://drive.google.com/drive/folders/1lw478Vt1IdlXz0Kzqrzr6NzUbfL093qU?usp=drive_link) |
-| Adversarial SEO | Adversarial Search Engine Optimization for LLMs | TBD | 3+ (books, photography, furniture) | TBD | Products (real + attack) | [Data](https://github.com/glad-lab/geobench/tree/main/Datasets/AdversarialSEO) |
+| Source Paper | Total Items | Number of Categories | Avg Items per Category | Domain/Field | Link |
+|--------------|-------------|---------------------|------------------------|--------------|------|
+| Rewrite-to-Rank | 250K (using 10K subset) | TBD | TBD | Products (Microsoft dataset) | [Data](https://github.com/glad-lab/geobench/tree/main/Datasets/RewriteToRank) |
+| Stealth Rank | TBD | TBD | TBD | Products | [Main](https://github.com/glad-lab/geobench/tree/main/Datasets/StealthRank), [Branch](https://github.com/glad-lab/geobench/tree/Stealth-Rank/data2) |
+| C-SEO Bench | TBD | TBD | TBD | TBD | [Data](https://drive.google.com/drive/folders/1PePkMvDAeEEW0G53QPNafBAZj0uibJdj) |
+| Manipulating LLMs to Increase Product Visibility | TBD | 3+ (coffee machines, books, cameras) | TBD | Products | [Data](https://github.com/glad-lab/geobench/tree/main/Datasets/llm-rank-optimizer) |
+| Large Language Models are Zero-Shot Rankers for Recommender Systems | TBD | TBD | TBD | Recommender Systems | [Data](https://drive.google.com/drive/folders/1lw478Vt1IdlXz0Kzqrzr6NzUbfL093qU?usp=drive_link) |
+| Adversarial Search Engine Optimization for LLMs | TBD | 3+ (books, photography, furniture) | TBD | Products (real + attack) | [Data](https://github.com/glad-lab/geobench/tree/main/Datasets/AdversarialSEO) |
 
 ## Experiments
 <table border="1">
