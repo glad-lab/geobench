@@ -13,14 +13,15 @@ let us upload datasets to the github [Datasets](https://github.com/glad-lab/geob
 | Andrew Yu | [RAF](<https://arxiv.org/abs/2510.06732>) | same with Stealth Rank |  | [Original Code](https://github.com/glad-lab/RAF) | |
 
 ## Dataset Metadata Table
-| Source Paper | Total Items | Number of Categories | Avg Items per Category | Domain/Field | Link |
-|--------------|-------------|---------------------|------------------------|--------------|------|
-| Rewrite-to-Rank |  |  |  |  | [Data](https://github.com/glad-lab/geobench/tree/main/Datasets/RewriteToRank) |
-| Stealth Rank |  |  |  |  | [Main](https://github.com/glad-lab/geobench/tree/main/Datasets/StealthRank), [Branch](https://github.com/glad-lab/geobench/tree/Stealth-Rank/data2) |
-| C-SEO Bench |  |  |  |  | [Data](https://drive.google.com/drive/folders/1PePkMvDAeEEW0G53QPNafBAZj0uibJdj) |
-| Manipulating LLMs to Increase Product Visibility |  |  |  |  | [Data](https://github.com/glad-lab/geobench/tree/main/Datasets/llm-rank-optimizer) |
-| Large Language Models are Zero-Shot Rankers for Recommender Systems |  |  |  |  | [Data](https://drive.google.com/drive/folders/1lw478Vt1IdlXz0Kzqrzr6NzUbfL093qU?usp=drive_link) |
-| Adversarial Search Engine Optimization for LLMs |  |  |  |  | [Data](https://github.com/glad-lab/geobench/tree/main/Datasets/AdversarialSEO) |
+| Dataset Name | Source Paper | Total Items | Number of Categories | Avg Items per Category | Categories | Domain/Field | Link |
+|--------------|--------------|-------------|---------------------|------------------------|--------------|--------------|------|
+| Ragroll | Stealth Rank | 399 | 50 | 7.98 | air compressor, air purifier, automatic garden watering system, barbecue grill, beard trimmer, blender, coffee maker, computer monitor, computer power supply, cordless drill, curling iron, dishwasher, electric sander, electric toothbrush, eyeshadow, fascia gun, hair dryer, hair straightener, hammock, hedge trimmer, laptop, laser measure, lawn mower, leaf blower, lipstick, microwave oven, network attached storage, noise-canceling headphone, paint sprayer, pool cleaner, portable air conditioner, portable speaker, pressure washer, robot vacuum, screw driver, shampoo, skin cleansing brush, sleeping bag, slow cooker, smartphone, solid state drive, space heater, string trimmer, tablet, tent, tool chest, washing machine, wet-dry vacuum, wifi router, wood router | Products | [Branch](https://github.com/glad-lab/geobench/tree/Stealth-Rank/data2/ragroll) |
+| STSData | Stealth Rank | 30 | 3 | 10.00 | books, cameras, coffee_machines | Products | [Branch](https://github.com/glad-lab/geobench/tree/Stealth-Rank/data2/json) |
+| | Rewrite-to-Rank |  |  |  |  | | [Data](https://github.com/glad-lab/geobench/tree/main/Datasets/RewriteToRank) |
+| | C-SEO Bench |  |  |  |  | | [Data](https://drive.google.com/drive/folders/1PePkMvDAeEEW0G53QPNafBAZj0uibJdj) |
+| | Manipulating LLMs to Increase Product Visibility |  |  |  |  | | [Data](https://github.com/glad-lab/geobench/tree/main/Datasets/llm-rank-optimizer) |
+| | Large Language Models are Zero-Shot Rankers for Recommender Systems |  |  |  |  | | [Data](https://drive.google.com/drive/folders/1lw478Vt1IdlXz0Kzqrzr6NzUbfL093qU?usp=drive_link) |
+| | Adversarial Search Engine Optimization for LLMs |  |  |  |  | | [Data](https://github.com/glad-lab/geobench/tree/main/Datasets/AdversarialSEO) |
 
 ## Experiments
 <table border="1" style="width: 100%; table-layout: fixed;">
