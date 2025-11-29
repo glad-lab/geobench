@@ -15,124 +15,306 @@ let us upload datasets to the github [Datasets](https://github.com/glad-lab/geob
 ## Dataset Metadata Table
 | Source Paper | Total Items | Number of Categories | Avg Items per Category | Domain/Field | Link |
 |--------------|-------------|---------------------|------------------------|--------------|------|
-| Rewrite-to-Rank | 250K (using 10K subset) | TBD | TBD | Products (Microsoft dataset) | [Data](https://github.com/glad-lab/geobench/tree/main/Datasets/RewriteToRank) |
-| Stealth Rank | TBD | TBD | TBD | Products | [Main](https://github.com/glad-lab/geobench/tree/main/Datasets/StealthRank), [Branch](https://github.com/glad-lab/geobench/tree/Stealth-Rank/data2) |
-| C-SEO Bench | TBD | TBD | TBD | TBD | [Data](https://drive.google.com/drive/folders/1PePkMvDAeEEW0G53QPNafBAZj0uibJdj) |
-| Manipulating LLMs to Increase Product Visibility | TBD | 3+ (coffee machines, books, cameras) | TBD | Products | [Data](https://github.com/glad-lab/geobench/tree/main/Datasets/llm-rank-optimizer) |
-| Large Language Models are Zero-Shot Rankers for Recommender Systems | TBD | TBD | TBD | Recommender Systems | [Data](https://drive.google.com/drive/folders/1lw478Vt1IdlXz0Kzqrzr6NzUbfL093qU?usp=drive_link) |
-| Adversarial Search Engine Optimization for LLMs | TBD | 3+ (books, photography, furniture) | TBD | Products (real + attack) | [Data](https://github.com/glad-lab/geobench/tree/main/Datasets/AdversarialSEO) |
+| Rewrite-to-Rank |  |  |  |  | [Data](https://github.com/glad-lab/geobench/tree/main/Datasets/RewriteToRank) |
+| Stealth Rank |  |  |  |  | [Main](https://github.com/glad-lab/geobench/tree/main/Datasets/StealthRank), [Branch](https://github.com/glad-lab/geobench/tree/Stealth-Rank/data2) |
+| C-SEO Bench |  |  |  |  | [Data](https://drive.google.com/drive/folders/1PePkMvDAeEEW0G53QPNafBAZj0uibJdj) |
+| Manipulating LLMs to Increase Product Visibility |  |  |  |  | [Data](https://github.com/glad-lab/geobench/tree/main/Datasets/llm-rank-optimizer) |
+| Large Language Models are Zero-Shot Rankers for Recommender Systems |  |  |  |  | [Data](https://drive.google.com/drive/folders/1lw478Vt1IdlXz0Kzqrzr6NzUbfL093qU?usp=drive_link) |
+| Adversarial Search Engine Optimization for LLMs |  |  |  |  | [Data](https://github.com/glad-lab/geobench/tree/main/Datasets/AdversarialSEO) |
 
 ## Experiments
-<table border="1">
+<table border="1" style="width: 100%; table-layout: fixed;">
   <thead>
     <tr>
-      <th style="width: 15%;">Paper</th>
-      <th style="width: 25%;">Test Datasets</th>
-      <th style="width: 60%;">Results</th>
+      <th rowspan="2">Paper</th>
+      <th rowspan="2">Test Datasets</th>
+      <th colspan="6">Results</th>
+    </tr>
+    <tr>
+      <th>Original Description</th>
+      <th>Original Ranking</th>
+      <th>New Description</th>
+      <th>New Ranking</th>
+      <th>Metrics (Hits@X, Perplexity)</th>
+      <th>Rank Improvement</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <td rowspan="5">Rewrite-to-Rank</td>
       <td>Stealth Rank</td>
-      <td rowspan="5"></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
     </tr>
     <tr>
       <td>C-SEO Bench</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
     </tr>
     <tr>
       <td>Manipulating LLMs to Increase Product Visibility</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
     </tr>
     <tr>
       <td>Large Language Models are Zero-Shot Rankers for Recommender Systems</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
     </tr>
     <tr>
       <td>Adversarial Engine Optimization for LLMs</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
     </tr>
     <tr>
       <td rowspan="5">Stealth Rank</td>
       <td>C-SEO Bench</td>
-      <td rowspan="5"></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
     </tr>
     <tr>
       <td>Manipulating LLMs to Increase Product Visibility</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
     </tr>
     <tr>
       <td>Large Language Models are Zero-Shot Rankers for Recommender Systems</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
     </tr>
     <tr>
       <td>Adversarial Engine Optimization for LLMs</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
     </tr>
     <tr>
       <td><a href="https://github.com/glad-lab/geobench/tree/Stealth-Rank/benchmark_data/rewrite_to_rank">Rewrite-to-Rank</a></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
     </tr>
     <tr>
       <td rowspan="5">C-SEO Bench</td>
       <td>Stealth Rank</td>
-      <td rowspan="5"></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
     </tr>
     <tr>
       <td>Manipulating LLMs to Increase Product Visibility</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
     </tr>
     <tr>
       <td>Large Language Models are Zero-Shot Rankers for Recommender Systems</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
     </tr>
     <tr>
       <td>Adversarial Engine Optimization for LLMs</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
     </tr>
     <tr>
       <td>Rewrite-to-Rank</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
     </tr>
     <tr>
       <td rowspan="5">Manipulating LLMs to Increase Product Visibility</td>
       <td>Stealth Rank</td>
-      <td rowspan="5"></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
     </tr>
     <tr>
       <td>C-SEO Bench</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
     </tr>
     <tr>
       <td>Large Language Models are Zero-Shot Rankers for Recommender Systems</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
     </tr>
     <tr>
       <td>Adversarial Engine Optimization for LLMs</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
     </tr>
     <tr>
       <td>Rewrite-to-Rank</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
     </tr>
     <tr>
       <td rowspan="5">Large Language Models are Zero-Shot Rankers for Recommender Systems</td>
       <td>Stealth Rank</td>
-      <td rowspan="5"></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
     </tr>
     <tr>
       <td>C-SEO Bench</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
     </tr>
     <tr>
       <td>Manipulating LLMs to Increase Product Visibility</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
     </tr>
     <tr>
       <td>Adversarial Engine Optimization for LLMs</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
     </tr>
     <tr>
       <td>Rewrite-to-Rank</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
     </tr>
     <tr>
       <td rowspan="5">Adversarial Engine Optimization for LLMs</td>
       <td>Stealth Rank</td>
-      <td rowspan="5"></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
     </tr>
     <tr>
       <td>C-SEO Bench</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
     </tr>
     <tr>
       <td>Manipulating LLMs to Increase Product Visibility</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
     </tr>
     <tr>
       <td>Large Language Models are Zero-Shot Rankers for Recommender Systems</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
     </tr>
     <tr>
       <td>Rewrite-to-Rank</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
     </tr>
   </tbody>
 </table>
