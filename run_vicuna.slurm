@@ -15,4 +15,4 @@ conda activate controllable-seo
 export HF_HOME=/work/hdd/beaa/anonymous/hf_cache
 cd /work/hdd/beaa/anonymous/controllable-seo-project/geobench
 
-python -m experiment.main --model vicuna-7b --dataset rewrite_to_rank_to_rank --mode suffix
+python -m experiment.main --model vicuna-7b --dataset rewrite_to_rank --mode suffix
