@@ -11,82 +11,12 @@ metric:
 parameters: 
   seed:
     value: 42
-
-  model: 
-    value: llama-3.1-8b  #llama-3.1-8b # [llama-3.1-8b, deepseek-7b, vicuna-7b, mistral-7b] # can be ignored if using args 
-  mode:
-    value: "suffix" # Choices: ["paraphrase", "suffix"]
-
-  dataset:
-    value: "rewrite_to_rank" # Choices: ["ragroll", "jsonl"] # can be ignored if using args
-
-  batch_size: 
-    value: 5
-  length: 
-    value: 30 # 30 for suffix, 50 for paraphrase
-  temperature:
-    value: 0.1
-  lr: 
-    value: 0.03
-  topk: 
-    value: 10
-  num_iter: 
-    value: 2000 # For pilot, change to 20
-  test_iter: 
-    value: 100
-  precision: 
-    value: 16
-  fluency:
-    value: 1
-  ngram:
-    value: 5
-  target:
-    value: 50
-  similarity:
-    value: 1 # not used
-
-  iter_steps:
-    value: [0, 50, 200, 500, 1500]
-  noise_stds:
-    value: [0.1, 0.05, 0.01, 0.005, 0.001] # [1, 0.5, 0.1, 0.05, 0.01] 
-  # result_dir: 
-  #   value: "result"
-  catalog: 
-    value: "coffee_machines" # Choices: ["coffee_machines", "books", "cameras"] # can be ignored if using args
-  random_order: 
-    value: True 
-  random_inference:
-    value: True
-  target_product_idx: 
-    values: [10]
-
-  result_dir:
-    value: "results_new/benchmark_results/rewrite_to_rank/suffix/v1"
-
-  comment:
-    value: "main experiment"
-wandb:
-  entity: "nimase"
-  project: "controllable-seo"
-
-method: 'grid'
-name: 'seo_suffix'
-metric: 
-    name: 'eval/product_rank'
-    goal: 'minimize'   
-
-parameters: 
-  seed:
-    value: 42
-
   model: 
     value: llama-3.1-8b 
   mode:
     value: "suffix"
-
   dataset:
     value: "rewrite_to_rank"
-
   batch_size: 
     value: 5
   length: 
@@ -111,12 +41,10 @@ parameters:
     value: 50
   similarity:
     value: 1
-
   iter_steps:
     value: [0, 50, 200, 500, 1500]
   noise_stds:
     value: [0.1, 0.05, 0.01, 0.005, 0.001]
-    
   catalog: 
     values: ["3d_printers", "abdominal_support", "above_ground_pools", "absorbent_socks"]
   random_order: 
@@ -125,9 +53,7 @@ parameters:
     value: True
   target_product_idx: 
     values: [1, 2, 3, 4, 5, 6, 7, 8]
-
   result_dir:
     value: "results_new/benchmark_results/rewrite_to_rank/suffix/v1"
-
   comment:
     value: "main experiment"
