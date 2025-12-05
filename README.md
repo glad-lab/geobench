@@ -25,6 +25,25 @@ let us upload datasets to the github [Datasets](https://github.com/glad-lab/geob
 | | Large Language Models are Zero-Shot Rankers for Recommender Systems |  |  |  |  | | [Data](https://drive.google.com/drive/folders/1lw478Vt1IdlXz0Kzqrzr6NzUbfL093qU?usp=drive_link) |
 | | Adversarial Search Engine Optimization for LLMs |  |  |  |  | | [Data](https://github.com/glad-lab/geobench/tree/main/Datasets/AdversarialSEO) |
 
+### StealthRank requirement for unified JSONL datasets
+
+For StealthRank to run cleanly and comparably across categories, each `{catalog}.jsonl`
+must:
+
+1. Contain **more than one product**, and  
+2. Contain **the same number of products across all categories**.
+
+**Reasoning:**
+
+- StealthRank runs a separate optimization for each `target_product_idx`, i.e., for each
+  product line in `{catalog}.jsonl`. If a file has only one product, you can only run
+  StealthRank once for that category.
+- If different categories have different numbers of products, you get a different number of
+  StealthRank runs per category, making results harder to compare and aggregate.
+- By giving every category the same (>1) number of products, you can sweep `target_product_idx`
+  over the same range in all categories (e.g., `1..8`), obtaining a consistent number of
+  StealthRank runs and CSV outputs per category.
+
 ## Experiments
 <table border="1" style="width: 100%; table-layout: fixed;">
   <thead>
