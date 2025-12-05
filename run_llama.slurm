@@ -1,6 +1,6 @@
 #!/bin/bash
 #SBATCH --job-name=llama-rewrite_to_rank    
-#SBATCH --partition=gpuA40x4
+#SBATCH --partition=gpuA100x4
 #SBATCH --account=bdns-delta-gpu
 #SBATCH --nodes=1
 #SBATCH --gpus-per-node=1
@@ -15,4 +15,5 @@ conda activate controllable-seo
 export HF_HOME=/work/hdd/beaa/onimase/hf_cache
 cd /work/hdd/beaa/onimase/controllable-seo-project/geobench
 
+export WANDB_AGENT_MAX_INITIAL_FAILURES=0
 python -m experiment.main --model llama-3.1-8b --dataset rewrite_to_rank --mode suffix
