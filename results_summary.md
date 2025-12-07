@@ -1,6 +1,7 @@
 # StealthRank Replication Results
 
-<h2>Original Paper Results (Table 1)</h2>
+<details open>
+<summary><h2>Original Paper Results (Table 1)</h2></summary>
 
 <table style="border-collapse:collapse; font-variant-numeric: tabular-nums;">
   <thead>
@@ -129,7 +130,11 @@
 </table>
 
 Only replicated SRP because that's the paper's contribution method, TAP and STS are baselines.
-<h2>Replicated Results: STSData (json)</h2>
+
+</details>
+
+<details open>
+<summary><h2>Replicated Results: STSData (json)</h2></summary>
 
 <table style="border-collapse:collapse; font-variant-numeric: tabular-nums;">
   <thead>
@@ -203,10 +208,9 @@ Only replicated SRP because that's the paper's contribution method, TAP and STS 
   </tbody>
 </table>
 
+### Per-Category Breakdown (Replicated)
 
-## Per-Category Breakdown (Replicated)
-
-### Books
+#### Books
 | Model | Rank ± Std | Perplexity ± Std | Bad Word ± Std |
 |-------|------------|------------------|----------------|
 | deepseek-7b | 2.75 ± 2.31 | 40.29 ± 11.72 | 0.12 ± 0.35 |
@@ -214,7 +218,7 @@ Only replicated SRP because that's the paper's contribution method, TAP and STS 
 | mistral-7b | 3.12 ± 3.36 | 95.22 ± 83.45 | 0.25 ± 0.46 |
 | vicuna-7b | 4.88 ± 2.90 | 107.49 ± 156.60 | 0.12 ± 0.35 |
 
-### Cameras
+#### Cameras
 | Model | Rank ± Std | Perplexity ± Std | Bad Word ± Std |
 |-------|------------|------------------|----------------|
 | deepseek-7b | 1.88 ± 2.10 | 82.03 ± 39.56 | 0.50 ± 0.53 |
@@ -222,7 +226,7 @@ Only replicated SRP because that's the paper's contribution method, TAP and STS 
 | mistral-7b | 1.00 ± 0.00 | 110.95 ± 52.19 | 0.38 ± 0.52 |
 | vicuna-7b | 1.00 ± 0.00 | 34.35 ± 7.13 | 0.00 ± 0.00 |
 
-### Coffee Machines
+#### Coffee Machines
 | Model | Rank ± Std | Perplexity ± Std | Bad Word ± Std |
 |-------|------------|------------------|----------------|
 | deepseek-7b | 2.25 ± 2.12 | 78.53 ± 38.67 | 0.25 ± 0.46 |
@@ -230,8 +234,29 @@ Only replicated SRP because that's the paper's contribution method, TAP and STS 
 | mistral-7b | 1.00 ± 0.00 | 135.70 ± 54.56 | 0.25 ± 0.46 |
 | vicuna-7b | 2.12 ± 2.23 | 59.71 ± 38.41 | 0.12 ± 0.35 |
 
+</details>
+
+<details open>
+<summary><h2>Benchmark Results: Rewrite to Rank Dataset</h2></summary>
+
+| Model | Catalog | Rank ± Std | Perplexity ± Std | Bad Word ± Std |
+|-------|---------|------------|------------------|----------------|
+| deepseek-7b | electrical_supplies | 8.0 ± 2.83 | 47.73 ± 18.16 | 0.12 ± 0.35 |
+| deepseek-7b | gun_accessories | 6.12 ± 3.98 | 43.34 ± 24.62 | 0.12 ± 0.35 |
+| llama-3.1-8b | electrical_supplies | 8.0 ± 2.83 | 77.77 ± 29.29 | 0.38 ± 0.52 |
+| mistral-7b | electrical_supplies | 8.0 ± 2.83 | 115.17 ± 105.31 | 0.12 ± 0.35 |
+| mistral-7b | gun_accessories | 7.0 ± 3.7 | 96.3 ± 60.59 | 0.0 ± 0.0 |
+| vicuna-7b | electrical_supplies | 7.12 ± 3.48 | 69.97 ± 26.95 | 0.25 ± 0.46 |
+
+**Notes:**
+- Higher rank values indicate weaker attack performance (rank 8/8 products vs optimal rank 1)
+- Limited category coverage due to GPU memory constraints
+- Categories selected for shortest product descriptions to avoid OOM errors
+
+</details>
+
 ---
 
 **Notes:**
 - Lower values indicate better performance across all metrics
-- Minor differences maybe attributed to random seed variation and hardware differences
+- Minor differences may be attributed to random seed variation and hardware differences
