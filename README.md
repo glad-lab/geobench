@@ -38,4 +38,4 @@ Bad word ratio on ablation is quite different. Run ```ablatioin_bad_word.py``` f
 ## Benchmark Data Evaluation
 
 To evaluate on the benchmark data, use evaluate_benchmark.py with the following:
-```python experiment/evaluate_benchmark.py``` 
+```python -m experiment.evaluate_benchmark``` 
