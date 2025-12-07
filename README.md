@@ -24,7 +24,7 @@ If you want to do a grid search, we used a wandb sweep. Modify the parameters in
 
 ```value``` for a single hparam and ```values``` for a list of hparams
 
-## Evaluation
+## Original Data Evaluation
 Run main evaluation by 
 
 ```python -m experiment.evaluate --job=rank_perplexity```
@@ -35,4 +35,7 @@ or
 
 Bad word ratio on ablation is quite different. Run ```ablatioin_bad_word.py``` file.
 
+## Benchmark Data Evaluation
 
+To evaluate on the benchmark data, use evaluate_benchmark.py with the following:
+```python experiment/evaluate_benchmark.py``` 
