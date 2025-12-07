@@ -147,12 +147,12 @@ must:
     </tr>
     <tr>
       <td><a href="https://github.com/glad-lab/geobench/tree/Stealth-Rank/benchmark_data/rewrite_to_rank">Rewrite-to-Rank</a></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
+      <td>N/A</td>
+      <td>N/A</td>
+      <td>N/A</td>
+      <td>7.37 (avg)</td>
+      <td>Rank: 7.37, Perplexity: 75.05, Bad Word: 0.17</td>
+      <td>N/A</td>
     </tr>
     <tr>
       <td rowspan="5">C-SEO Bench</td>
