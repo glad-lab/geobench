@@ -1,5 +1,5 @@
 import pandas as pd
-import os, torch
+import os, torch, json
 from tabulate import tabulate
 import statistics
 from transformers import AutoModelForCausalLM, AutoTokenizer
@@ -87,6 +87,43 @@ def calculate_avg_bad_word_ratio(result_dir, model, catalog, random_inference, i
         return None, None
     return sum(bad_words_total) / len(bad_words_total), statistics.stdev(bad_words_total) if len(bad_words_total) > 1 else 0
 
+def extract_examples(result_dir, model, catalog, n_examples=1):
+    examples = []
+    
+    # Load original descriptions
+    jsonl_path = f"benchmark_data/rewrite_to_rank/{catalog}.jsonl"
+    products = []
+    with open(jsonl_path) as f:
+        for line in f:
+            products.append(json.loads(line))
+    
+    for idx in range(1, 9):
+        file_path = f"{result_dir}/{model}/rewrite_to_rank/{catalog}/{idx}/random_inference=True.csv"
+        if not os.path.exists(file_path):
+            continue
+        
+        df = pd.read_csv(file_path)
+        original_rank = df[df['iter']==0]['product_rank'].values[0]
+        best_row = df.loc[df['product_rank'].idxmin()]
+        
+        original_desc = products[idx-1]['Natural']
+        attack_prompt = best_row['attack_prompt'].lstrip('<span style="color:red;">').rstrip('</span>')
+        
+        examples.append({
+            'model': model,
+            'catalog': catalog,
+            'target_idx': idx,
+            'product_name': products[idx-1]['Name'],
+            'original_description': original_desc,
+            'original_rank': int(original_rank),
+            'new_description': original_desc + " " + attack_prompt,
+            'new_rank': int(best_row['product_rank']),
+            'improvement': int(original_rank - best_row['product_rank']),
+            'attack_suffix': attack_prompt
+        })
+    
+    return sorted(examples, key=lambda x: x['improvement'], reverse=True)[:n_examples]
+
 if __name__ == "__main__":
     output_dir = 'metric/benchmark'
     os.makedirs(output_dir, exist_ok=True)
@@ -104,6 +141,7 @@ if __name__ == "__main__":
     perplexity_model, perplexity_tokenizer = get_model("lmsys/vicuna-7b-v1.5", 16, device)
     
     all_results = []
+    all_examples = []
     
     for model, catalogs in model_catalogs.items():
         for catalog in catalogs:
@@ -122,10 +160,21 @@ if __name__ == "__main__":
                 "Average Perplexity": f'{round(avg_perplexity, 2)}±{round(std_perplexity, 2)}',
                 "Average Bad Word Ratio": f'{round(avg_bad_word_ratio, 2)}±{round(std_bad_word_ratio, 2)}'
             })
+            
+            # Extract best example
+            examples = extract_examples(result_dir, model, catalog, n_examples=1)
+            all_examples.extend(examples)
     
+    # Save metrics
     df_results = pd.DataFrame(all_results)
     print(tabulate(df_results, headers='keys', tablefmt='grid'))
     
     save_path = f"{output_dir}/rewrite_to_rank_results.csv"
     df_results.to_csv(save_path, index=False)
-    print(f"✅ Saved to {save_path}")
+    print(f"✅ Saved metrics to {save_path}")
+    
+    # Save examples
+    df_examples = pd.DataFrame(all_examples)
+    examples_path = f"{output_dir}/rewrite_to_rank_examples.csv"
+    df_examples.to_csv(examples_path, index=False)
+    print(f"✅ Saved examples to {examples_path}")
