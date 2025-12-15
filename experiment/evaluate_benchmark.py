@@ -24,6 +24,11 @@ def calculate_average_rank(result_dir, model, catalog, random_inference, indices
             print(f"File not found: {file_path}")
             continue
         df = pd.read_csv(file_path)
+        # Validate ranks are in range 1-8
+        df = df[df['product_rank'].between(1, 8)]
+        if len(df) == 0:
+            print(f"Warning: No valid ranks for {model}/{catalog}/{idx}")
+            continue
         df = df.tail(5)
         ranks.append(min(df['product_rank'].tolist()))
     
@@ -103,8 +108,20 @@ def extract_examples(result_dir, model, catalog, n_examples=1):
             continue
         
         df = pd.read_csv(file_path)
-        original_rank = df[df['iter']==0]['product_rank'].values[0]
-        best_row = df.loc[df['product_rank'].idxmin()]
+        
+        # Get original rank (iter 0)
+        iter_0 = df[df['iter'] == 0]
+        if len(iter_0) == 0:
+            continue
+        original_rank = iter_0['product_rank'].values[0]
+        
+        # Get best rank from valid ranks only
+        valid_df = df[df['product_rank'].between(1, 8)]
+        if len(valid_df) == 0:
+            print(f"Warning: No valid ranks for {model}/{catalog}/{idx}")
+            continue
+            
+        best_row = valid_df.loc[valid_df['product_rank'].idxmin()]
         
         original_desc = products[idx-1]['Natural']
         attack_prompt = best_row['attack_prompt'].lstrip('<span style="color:red;">').rstrip('</span>')
@@ -116,10 +133,9 @@ def extract_examples(result_dir, model, catalog, n_examples=1):
             'product_name': products[idx-1]['Name'],
             'original_description': original_desc,
             'original_rank': int(original_rank),
-            'new_description': original_desc + " " + attack_prompt,
+            'attack_suffix': attack_prompt,
             'new_rank': int(best_row['product_rank']),
-            'improvement': int(original_rank - best_row['product_rank']),
-            'attack_suffix': attack_prompt
+            'improvement': int(original_rank - best_row['product_rank'])
         })
     
     return sorted(examples, key=lambda x: x['improvement'], reverse=True)[:n_examples]
