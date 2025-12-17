@@ -69,7 +69,7 @@ AFFIRMATIVE_TEMPLATES = [
 ]
 
 
-MODEL_PATH_DICT = {'llama-3.1-8b': 'meta-llama/Meta-Llama-3.1-8B-Instruct',
+MODEL_PATH_DICT = {'llama-3.1-8b': 'unsloth/Meta-Llama-3.1-8B',
                    'llama-2-7b': "meta-llama/Llama-2-7b-chat-hf", 
                    'vicuna-7b': "lmsys/vicuna-7b-v1.5",
                    'mistral-7b': 'mistralai/Mistral-7B-Instruct-v0.3',
@@ -123,7 +123,7 @@ def main(config):
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
     model, tokenizer = get_model(MODEL_PATH_DICT[config['model']], config['precision'], device)
-
+    
     product_list, target_product, target_product_natural, target_str = get_product_list(
         config['catalog'], config['target_product_idx'], config['dataset']
     )

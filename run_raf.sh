@@ -1,7 +1,7 @@
 #!/bin/bash
 python -m experiment.main \
     --dataset json \
-    --model llama-3.1-8b \
+    --model vicuna-7b\
     --catalog coffee_machines \
     --target_product_idx 1 \
     --seed 42 \
