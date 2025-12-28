@@ -158,7 +158,7 @@ must:
     <tr>
       <td rowspan="5">C-SEO Bench Does Conversational SEO Work</td>
       <td>Stealth Rank</td>
-      <td></td>
+      <td><a href="https://github.com/glad-lab/geobench/blob/cseo/CSEO_Results.md"> all results </a></td>
       <td></td>
       <td></td>
       <td></td>
