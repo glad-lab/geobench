@@ -156,7 +156,7 @@ must:
       <td>N/A</td>
     </tr>
     <tr>
-      <td rowspan="5">C-SEO Bench</td>
+      <td rowspan="5">C-SEO Bench Does Conversational SEO Work</td>
       <td>Stealth Rank</td>
       <td></td>
       <td></td>
