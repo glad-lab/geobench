@@ -69,7 +69,7 @@ AFFIRMATIVE_TEMPLATES = [
 ]
 
 
-MODEL_PATH_DICT = {'llama-3.1-8b': 'unsloth/Meta-Llama-3.1-8B',
+MODEL_PATH_DICT = {'llama-3.1-8b': 'meta-llama/Meta-Llama-3.1-8B-Instruct',
                    'llama-2-7b': "meta-llama/Llama-2-7b-chat-hf", 
                    'vicuna-7b': "lmsys/vicuna-7b-v1.5",
                    'mistral-7b': 'mistralai/Mistral-7B-Instruct-v0.3',
