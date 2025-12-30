@@ -10,13 +10,13 @@ Official implementation of paper:
 
 
 ## Run
-python -m venv venv
-source venv/bin/activate
-pip install -r requirements.txt
-Create folder for each dataset, name unified file unified_dataset.json
-huggingface-cli login #Login to HuggingFace
-wandb login #Login to WandDB
-python pipeline.py
+python -m venv venv  
+source venv/bin/activate  
+pip install -r requirements.txt  
+Create folder for each dataset, name unified file unified_dataset.json  
+huggingface-cli login #Login to HuggingFace  
+wandb login #Login to WandDB  
+python pipeline.py  
 
 
 ## Citation
