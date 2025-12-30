@@ -3,10 +3,11 @@ import os
 from pathlib import Path
 
 datasets = ['json', 'ragroll']
-unified = {}
 
 for dataset in datasets:
+    unified = {}
     data_path = Path(f'data2/{dataset}')
+    
     for jsonl_file in data_path.glob('*.jsonl'):
         category = jsonl_file.stem
         items = []
@@ -20,9 +21,10 @@ for dataset in datasets:
                 })
         
         unified[category] = items
-
-# Save combined file
-with open('unified_dataset.json', 'w') as f:
-    json.dump(unified, f, indent=2)
-
-print(f"Created unified_dataset.json with {len(unified)} categories")
+    
+    # Save separate file for each dataset
+    output_file = f'unified_dataset_{dataset}.json'
+    with open(output_file, 'w') as f:
+        json.dump(unified, f, indent=2)
+    
+    print(f"Created {output_file} with {len(unified)} categories")
