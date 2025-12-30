@@ -16,7 +16,7 @@ pip install -r requirements.txt
 Create folder for each dataset in data2, name unified file unified_dataset.json  
 huggingface-cli login #Login to HuggingFace  
 wandb login #Login to WandDB  
-python pipeline.py --dataset_name <Folder Name> --model <check experiments main for models>
+python pipeline.py --dataset_name "Folder Name" --model "check experiments main for models"
 
 
 ## Citation
