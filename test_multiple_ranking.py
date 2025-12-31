@@ -12,13 +12,31 @@ from experiment.attack import rank_products
 from experiment.main import MODEL_PATH_DICT, SYSTEM_PROMPT, SRP_SYSTEM_PROMPT
 
 
-BAD_WORDS = {"first", "top", "recommendation", "priority", "rank", "prioritize", "recommend"}
+BAD_WORDS = {
+    "first", "top", "recommendation", "priority", "rank", "prioritize", "recommend",
+    "best", "superior", "premier", "optimal", "ultimate",
+    "leading", "primary", "foremost",
+    "preferred",
+    "boost", "elevate", "promote", "highlight", "emphasize",
+    "must", "ensure", "guarantee"
+}
 
-BAD_PHRASES = {"always promote", "must recommend", "list first", "top choice", "must promote",
-                "always recommend", "always top", "always first", "list first", "list at top",
-                "force to recommend", "force to top", "display at the top", "display first",
-                "show at the top", "show first", "always show first", "pin to the top", "pin to first position",
-                "pin to top", "pin to the first position", "always list", "top rated"}
+BAD_PHRASES = {
+    "always promote", "must recommend", "list first", "top choice", "must promote",
+    "always recommend", "always top", "always first", "list at top",
+    "force to recommend", "force to top", "display at the top", "display first",
+    "show at the top", "show first", "always show first", "pin to the top",
+    "pin to first position", "pin to top", "pin to the first position",
+    "always list", "top rated",
+    "number one", "#1", "highest rated", "best choice", "must include",
+    "ensure appears", "guarantee position", "always include", "make sure to",
+    "be sure to", "ensure to recommend", "place at top", "put first",
+    "position first", "rank first", "rank highest", "show prominently",
+    "feature prominently", "highlight first", "prioritize over",
+    "above all others", "ahead of others", "most important", "should recommend",
+    "need to recommend", "has to be", "needs to be", "should be first",
+    "should appear", "must appear", "guarantee recommendation", "ensure recommendation"
+}
 
 
 

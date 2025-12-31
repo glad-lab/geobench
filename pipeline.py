@@ -80,6 +80,19 @@ def run_experiment(dataset_name, model_name):
         
         for i in range(1, num_items + 1):
             idx = str(i)
+            
+            # --- RESUME LOGIC START ---
+            # Construct the expected path for the result file
+            # Pattern: result/raf/{model}/{dataset}/{catalog}/{idx}/autodan_results.csv
+            expected_result_path = os.path.join(
+                "result", "raf", model_name, dataset_name, catalog, idx, "autodan_results.csv"
+            )
+
+            if os.path.exists(expected_result_path):
+                print(f"Skipping {catalog} target_idx {idx} - Found existing results at {expected_result_path}")
+                continue
+            # --- RESUME LOGIC END ---
+
             print(f"Running optimization for {catalog} target_idx {idx}...")
 
             cmd = [
@@ -138,7 +151,7 @@ def evaluate(dataset_name, model_name):
 
         cmd = [
             "python", "test_multiple_ranking.py",
-            "--csv_file_template", f"result/raf_main/{{model}}/{dataset_name}/{{catalog}}/{{target_idx}}/raf_results.csv",
+            "--csv_file_template", f"result/raf/{{model}}/{dataset_name}/{{catalog}}/{{target_idx}}/autodan_results.csv",
             "--model", model_name,
             "--catalog", catalog,
             "--target_product_idx"
