@@ -231,7 +231,7 @@ def get_args():
     parser.add_argument("--mode", type=str, choices=['suffix', 'paraphrase'], default='suffix')
     parser.add_argument("--catalog", type=str, default='coffee_machines')
     parser.add_argument("--model", type=str, choices=['llama-3.1-8b', 'llama-2-7b', 'vicuna-7b', 'mistral-7b', 'deepseek-7b', 'qwen-4b', 'phi-2.7b'], default='vicuna-7b')
-    parser.add_argument("--dataset", type=str, default="ragroll", choices=["amazon", "json", "ragroll"])
+    parser.add_argument("--dataset", type=str, default="ragroll")
     parser.add_argument("--target_product_idx", type=int, default=8)
     parser.add_argument("--seed", type=int, default=42)
     parser.add_argument("--length", type=int, default=10, help="Maximum length of adversarial prompt")
