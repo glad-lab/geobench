@@ -46,28 +46,24 @@ must:
   StealthRank runs and CSV outputs per category.
 
 ## Experiments
-<table border="1" style="width: 100%; table-layout: fixed;">
+<table border="1" style="width: 100%; table-layout: fixed; border-collapse: collapse;">
   <thead>
     <tr>
-      <th rowspan="2">Paper</th>
-      <th rowspan="2">Test Datasets</th>
-      <th colspan="6">Results</th>
+      <th rowspan="2">Algorithm</th>
+      <th rowspan="2">Test Dataset</th>
+      <th colspan="4" style="text-align: center;">Evaluation Metrics</th>
     </tr>
     <tr>
-      <th>Original Description</th>
-      <th>Original Ranking</th>
-      <th>New Description</th>
-      <th>New Ranking</th>
-      <th>Metrics (Hits@X, Perplexity)</th>
-      <th>Rank Improvement</th>
+      <th>NRG</th>
+      <th>Success@0.1</th>
+      <th>KVR</th>
+      <th>PPL-R</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <td rowspan="5">Rewrite-to-Rank</td>
-      <td>Stealth Rank</td>
-      <td></td>
-      <td></td>
+      <td>Ragroll (StealthRank)</td>
       <td></td>
       <td></td>
       <td></td>
@@ -79,133 +75,103 @@ must:
       <td></td>
       <td></td>
       <td></td>
-      <td></td>
-      <td></td>
     </tr>
     <tr>
-      <td>Manipulating LLMs to Increase Product Visibility</td>
-      <td></td>
-      <td></td>
+      <td>llm-rank-optimizer</td>
       <td></td>
       <td></td>
       <td></td>
       <td></td>
     </tr>
     <tr>
-      <td>Large Language Models are Zero-Shot Rankers for Recommender Systems</td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-    </tr>
-    <tr>
-      <td>Adversarial Engine Optimization for LLMs</td>
-      <td></td>
-      <td></td>
+      <td>LLM-Rank</td>
       <td></td>
       <td></td>
       <td></td>
       <td></td>
     </tr>
     <tr>
-      <td rowspan="5">Stealth Rank</td>
+      <td>AdversarialSEO</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td rowspan="5">StealthRank</td>
       <td>C-SEO Bench</td>
       <td></td>
       <td></td>
       <td></td>
       <td></td>
-      <td></td>
-      <td></td>
     </tr>
     <tr>
-      <td>Manipulating LLMs to Increase Product Visibility</td>
-      <td></td>
-      <td></td>
+      <td>llm-rank-optimizer</td>
       <td></td>
       <td></td>
       <td></td>
       <td></td>
     </tr>
     <tr>
-      <td>Large Language Models are Zero-Shot Rankers for Recommender Systems</td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-    </tr>
-    <tr>
-      <td>Adversarial Engine Optimization for LLMs</td>
-      <td></td>
-      <td></td>
+      <td>LLM-Rank</td>
       <td></td>
       <td></td>
       <td></td>
       <td></td>
     </tr>
     <tr>
-      <td><a href="https://github.com/glad-lab/geobench/tree/Stealth-Rank/benchmark_data/rewrite_to_rank">Rewrite-to-Rank</a></td>
-      <td>N/A</td>
-      <td>N/A</td>
-      <td>N/A</td>
-      <td>7.37 (avg)</td>
-      <td>Rank: 7.37, Perplexity: 75.05, Bad Word: 0.17</td>
-      <td>N/A</td>
-    </tr>
-    <tr>
-      <td rowspan="5">C-SEO Bench Does Conversational SEO Work</td>
-      <td>Stealth Rank</td>
-      <td><a href="https://github.com/glad-lab/geobench/blob/cseo/CSEO_Results.md"> all results </a></td>
-      <td></td>
+      <td>AdversarialSEO</td>
       <td></td>
       <td></td>
       <td></td>
       <td></td>
     </tr>
     <tr>
-      <td>Manipulating LLMs to Increase Product Visibility</td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-    </tr>
-    <tr>
-      <td>Large Language Models are Zero-Shot Rankers for Recommender Systems</td>
-      <td></td>
-      <td></td>
+      <td>RewriteToRank</td>
       <td></td>
       <td></td>
       <td></td>
       <td></td>
     </tr>
     <tr>
-      <td>Adversarial Engine Optimization for LLMs</td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-    </tr>
-    <tr>
-      <td>Rewrite-to-Rank</td>
-      <td></td>
-      <td></td>
+      <td rowspan="5">C-SEO</td>
+      <td>Ragroll (StealthRank)</td>
       <td></td>
       <td></td>
       <td></td>
       <td></td>
     </tr>
     <tr>
-      <td rowspan="5">Manipulating LLMs to Increase Product Visibility</td>
-      <td>Stealth Rank</td>
+      <td>llm-rank-optimizer</td>
       <td></td>
       <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>LLM-Rank</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>AdversarialSEO</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>RewriteToRank</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td rowspan="5">STS (Kumar et al.)</td>
+      <td>Ragroll (StealthRank)</td>
       <td></td>
       <td></td>
       <td></td>
@@ -217,41 +183,31 @@ must:
       <td></td>
       <td></td>
       <td></td>
-      <td></td>
-      <td></td>
     </tr>
     <tr>
-      <td>Large Language Models are Zero-Shot Rankers for Recommender Systems</td>
-      <td></td>
-      <td></td>
+      <td>LLM-Rank</td>
       <td></td>
       <td></td>
       <td></td>
       <td></td>
     </tr>
     <tr>
-      <td>Adversarial Engine Optimization for LLMs</td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-    </tr>
-    <tr>
-      <td>Rewrite-to-Rank</td>
-      <td></td>
-      <td></td>
+      <td>AdversarialSEO</td>
       <td></td>
       <td></td>
       <td></td>
       <td></td>
     </tr>
     <tr>
-      <td rowspan="5">Large Language Models are Zero-Shot Rankers for Recommender Systems</td>
-      <td>Stealth Rank</td>
+      <td>RewriteToRank</td>
       <td></td>
       <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td rowspan="5">Baseline (Zero-Shot Ranker)</td>
+      <td>Ragroll (StealthRank)</td>
       <td></td>
       <td></td>
       <td></td>
@@ -263,41 +219,31 @@ must:
       <td></td>
       <td></td>
       <td></td>
-      <td></td>
-      <td></td>
     </tr>
     <tr>
-      <td>Manipulating LLMs to Increase Product Visibility</td>
-      <td></td>
-      <td></td>
+      <td>llm-rank-optimizer</td>
       <td></td>
       <td></td>
       <td></td>
       <td></td>
     </tr>
     <tr>
-      <td>Adversarial Engine Optimization for LLMs</td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-    </tr>
-    <tr>
-      <td>Rewrite-to-Rank</td>
-      <td></td>
-      <td></td>
+      <td>AdversarialSEO</td>
       <td></td>
       <td></td>
       <td></td>
       <td></td>
     </tr>
     <tr>
-      <td rowspan="5">Adversarial Engine Optimization for LLMs</td>
-      <td>Stealth Rank</td>
+      <td>RewriteToRank</td>
       <td></td>
       <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td rowspan="5">PMA (Nestaas et al.)</td>
+      <td>Ragroll (StealthRank)</td>
       <td></td>
       <td></td>
       <td></td>
@@ -309,31 +255,23 @@ must:
       <td></td>
       <td></td>
       <td></td>
-      <td></td>
-      <td></td>
     </tr>
     <tr>
-      <td>Manipulating LLMs to Increase Product Visibility</td>
-      <td></td>
-      <td></td>
+      <td>llm-rank-optimizer</td>
       <td></td>
       <td></td>
       <td></td>
       <td></td>
     </tr>
     <tr>
-      <td>Large Language Models are Zero-Shot Rankers for Recommender Systems</td>
-      <td></td>
-      <td></td>
+      <td>LLM-Rank</td>
       <td></td>
       <td></td>
       <td></td>
       <td></td>
     </tr>
     <tr>
-      <td>Rewrite-to-Rank</td>
-      <td></td>
-      <td></td>
+      <td>RewriteToRank</td>
       <td></td>
       <td></td>
       <td></td>
