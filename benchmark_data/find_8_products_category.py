@@ -2,7 +2,7 @@
 
 import os
 
-ROOT = "benchmark_data/rewrite_to_rank"
+ROOT = "benchmark_data/adversarialSEO"
 MIN_PRODUCTS = 8
 
 def main():
@@ -30,7 +30,7 @@ def main():
         print(f"{catalog}\t{n_products}")
 
     # Optional: write to a file for easy copy into YAML
-    out_path = "rewrite_to_rank_at_least_8.txt"
+    out_path = "benchmark_data/list_8_products/adversarialSEO_at_least_8.txt"
     with open(out_path, "w") as out:
         for catalog, n_products in ok_categories:
             out.write(f"{catalog}\t{n_products}\n")
