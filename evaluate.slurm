@@ -1,12 +1,11 @@
 #!/bin/bash
 #SBATCH --job-name=eval-benchmark-metrics
-#SBATCH --partition=gpuA40x4
-#SBATCH --account=bdns-delta-gpu
+#SBATCH --partition=cpu
+#SBATCH --account=bdns-delta-cpu
 #SBATCH --nodes=1
-#SBATCH --gpus-per-node=1
 #SBATCH --cpus-per-task=8
 #SBATCH --mem=64G
-#SBATCH --time=04:00:00
+#SBATCH --time=20:00:00
 #SBATCH --output=logs/eval-benchmark-metrics-%j.out
 #SBATCH --error=logs/eval-benchmark-metrics-%j.err
 
