@@ -71,9 +71,8 @@ def calculate_metrics(result_dir, model, catalog, random_inference, ppl_model, t
             continue
         
         df = pd.read_csv(file_path)
-        df = df[df['product_rank'].between(1, L)]
-        if len(df) == 0:
-            continue
+        # Clip invalid ranks to L (treat rank 9+ as "ranked last")
+        df['product_rank'] = df['product_rank'].clip(upper=L)
         
         iter_0 = df[df['iter'] == 0]
         if len(iter_0) == 0:
@@ -129,16 +128,14 @@ def extract_examples(result_dir, model, catalog, n_examples=1):
             continue
         
         df = pd.read_csv(file_path)
+        df['product_rank'] = df['product_rank'].clip(upper=8)
+        
         iter_0 = df[df['iter'] == 0]
         if len(iter_0) == 0:
             continue
         original_rank = iter_0['product_rank'].values[0]
         
-        valid_df = df[df['product_rank'].between(1, 8)]
-        if len(valid_df) == 0:
-            continue
-            
-        best_row = valid_df.loc[valid_df['product_rank'].idxmin()]
+        best_row = df.loc[df['product_rank'].idxmin()]
         original_desc = products[idx-1]['Natural']
         attack_prompt = best_row['attack_prompt'].lstrip('<span style="color:red;">').rstrip('</span>')
         

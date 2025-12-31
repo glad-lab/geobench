@@ -1,9 +1,9 @@
 import json
 import os
 
-os.makedirs('benchmark_data/rewrite_to_rank', exist_ok=True)
+os.makedirs('benchmark_data/llm_rank', exist_ok=True)
 
-with open('benchmark_data/raw_files/rewrite_to_rank_unified_dataset.json') as f:
+with open('benchmark_data/raw_files/llm_rank_unified_games.json') as f:
     data = json.load(f)
 
 for category, items in data.items():
@@ -16,7 +16,7 @@ for category, items in data.items():
     
     # Sanitize category name - replace / with _
     category_name = category.lower().replace(' ', '_').replace('/', '_')
-    with open(f'benchmark_data/rewrite_to_rank/{category_name}.jsonl', 'w') as f:
+    with open(f'benchmark_data/llm_rank/{category_name}.jsonl', 'w') as f:
         for entry in jsonl_data:
             f.write(json.dumps(entry) + '\n')
     
