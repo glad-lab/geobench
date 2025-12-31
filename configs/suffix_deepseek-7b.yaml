@@ -16,7 +16,7 @@ parameters:
   mode:
     value: "suffix"
   dataset:
-    value: "rewrite_to_rank"
+    value: "llm_rank"
   batch_size: 
     value: 5
   length: 
@@ -46,7 +46,7 @@ parameters:
   noise_stds:
     value: [0.1, 0.05, 0.01, 0.005, 0.001]
   catalog: 
-    values: ["electrical_supplies", "gun_accessories"] # ["air_compressors", "boat_covers", "calendars", "desktop_computers"]
+    values: ["action", "adventure", "automotive", "baby", "books", "children's", "comedy", "computers", "crime", "documentary", "drama", "film-noir", "horror", "musical", "mystery", "romance", "sci-fi", "software", "thriller", "war", "western"]
   random_order: 
     value: True 
   random_inference:
@@ -54,6 +54,6 @@ parameters:
   target_product_idx: 
     values: [1, 2, 3, 4, 5, 6, 7, 8]
   result_dir:
-    value: "results_new/benchmark_results/rewrite_to_rank/suffix/v1"
+    value: "results_new/benchmark_results/suffix/v1"
   comment:
     value: "main experiment"
