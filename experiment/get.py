@@ -35,8 +35,8 @@ def get_model(model_path, precision, device):
 
 def get_product_list(catalog, target_product_idx, dataset):
     # Check if using benchmark dataset or original datasets
-    if dataset == "rewrite_to_rank":
-        data_path = f'benchmark_data/rewrite_to_rank/{catalog}.jsonl'
+    if dataset in ["rewrite_to_rank", "ragdoll", "llm_rank", "llm_rank_optimizer"]:
+        data_path = f'benchmark_data/{dataset}/{catalog}.jsonl'
     else:
         data_path = f'data2/{dataset}/{catalog}.jsonl'
     
