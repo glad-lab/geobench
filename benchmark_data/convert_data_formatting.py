@@ -1,9 +1,9 @@
 import json
 import os
 
-os.makedirs('benchmark_data/adversarialSEO', exist_ok=True)
+os.makedirs('benchmark_data/llm_rank_optimizer', exist_ok=True)
 
-with open('benchmark_data/raw_files/adversarial-seo-unified.json') as f:
+with open('benchmark_data/raw_files/llm_rank_optimizer_unified.json') as f:
     data = json.load(f)
 
 for category, items in data.items():
@@ -16,7 +16,7 @@ for category, items in data.items():
     
     # Sanitize category name - replace special characters
     category_name = category.lower().replace(' ', '_').replace('/', '_').replace('&', 'and')
-    with open(f'benchmark_data/adversarialSEO/{category_name}.jsonl', 'w') as f:
+    with open(f'benchmark_data/llm_rank_optimizer/{category_name}.jsonl', 'w') as f:
         for entry in jsonl_data:
             f.write(json.dumps(entry) + '\n')
     
