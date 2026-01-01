@@ -127,7 +127,7 @@ must:
       <td></td>
     </tr>
     <tr>
-      <td>RewriteToRank</td>
+      <td>RewriteToRank (2 Categories: electrical supplies + gun accessories for DeepSeek 7B, Mistral 7B. Llama 3.1 8B, Vicuna 7B have one category: electrical supplies)</td>
       <td></td>
       <td></td>
       <td></td>
