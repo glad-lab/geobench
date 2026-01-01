@@ -62,101 +62,15 @@ must:
   </thead>
   <tbody>
     <tr>
-      <td rowspan="5">Rewrite-to-Rank</td>
-      <td>Ragroll (StealthRank)</td>
+      <td rowspan="7">Rewrite-to-Rank</td>
+      <td>Ragroll</td>
       <td></td>
       <td></td>
       <td></td>
       <td></td>
     </tr>
     <tr>
-      <td>C-SEO Bench</td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-    </tr>
-    <tr>
-      <td>llm-rank-optimizer</td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-    </tr>
-    <tr>
-      <td>LLM-Rank</td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-    </tr>
-    <tr>
-      <td>AdversarialSEO</td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-    </tr>
-    <tr>
-      <td rowspan="5">StealthRank</td>
-      <td>C-SEO Bench</td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-    </tr>
-    <tr>
-      <td>llm-rank-optimizer</td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-    </tr>
-    <tr>
-      <td>LLM-Rank</td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-    </tr>
-    <tr>
-      <td>AdversarialSEO</td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-    </tr>
-    <tr>
-      <td>RewriteToRank (2 Categories: electrical supplies + gun accessories for DeepSeek 7B, Mistral 7B. Llama 3.1 8B, Vicuna 7B have one category: electrical supplies)</td>
-      <td>0.13</td>
-      <td>0.27</td>
-      <td>0.34</td>
-      <td>1.26</td>
-    </tr>
-    <tr>
-      <td rowspan="5">C-SEO</td>
-      <td>Ragroll (StealthRank)</td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-    </tr>
-    <tr>
-      <td>llm-rank-optimizer</td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-    </tr>
-    <tr>
-      <td>LLM-Rank</td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-    </tr>
-    <tr>
-      <td>AdversarialSEO</td>
+      <td>STSData</td>
       <td></td>
       <td></td>
       <td></td>
@@ -170,22 +84,14 @@ must:
       <td></td>
     </tr>
     <tr>
-      <td rowspan="5">STS (Kumar et al.)</td>
-      <td>Ragroll (StealthRank)</td>
+      <td>LLM Rank Optimizer</td>
       <td></td>
       <td></td>
       <td></td>
       <td></td>
     </tr>
     <tr>
-      <td>C-SEO Bench</td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-    </tr>
-    <tr>
-      <td>LLM-Rank</td>
+      <td>LLM Rank</td>
       <td></td>
       <td></td>
       <td></td>
@@ -199,6 +105,28 @@ must:
       <td></td>
     </tr>
     <tr>
+      <td>Ragdoll</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td rowspan="7">StealthRank</td>
+      <td>Ragroll</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>STSData</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
       <td>RewriteToRank</td>
       <td></td>
       <td></td>
@@ -206,22 +134,14 @@ must:
       <td></td>
     </tr>
     <tr>
-      <td rowspan="5">Baseline (Zero-Shot Ranker)</td>
-      <td>Ragroll (StealthRank)</td>
+      <td>LLM Rank Optimizer</td>
       <td></td>
       <td></td>
       <td></td>
       <td></td>
     </tr>
     <tr>
-      <td>C-SEO Bench</td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-    </tr>
-    <tr>
-      <td>llm-rank-optimizer</td>
+      <td>LLM Rank</td>
       <td></td>
       <td></td>
       <td></td>
@@ -235,36 +155,22 @@ must:
       <td></td>
     </tr>
     <tr>
-      <td>RewriteToRank</td>
+      <td>Ragdoll</td>
       <td></td>
       <td></td>
       <td></td>
       <td></td>
     </tr>
     <tr>
-      <td rowspan="5">PMA (Nestaas et al.)</td>
-      <td>Ragroll (StealthRank)</td>
+      <td rowspan="7">C-SEO</td>
+      <td>Ragroll</td>
       <td></td>
       <td></td>
       <td></td>
       <td></td>
     </tr>
     <tr>
-      <td>C-SEO Bench</td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-    </tr>
-    <tr>
-      <td>llm-rank-optimizer</td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-    </tr>
-    <tr>
-      <td>LLM-Rank</td>
+      <td>STSData</td>
       <td></td>
       <td></td>
       <td></td>
@@ -272,6 +178,184 @@ must:
     </tr>
     <tr>
       <td>RewriteToRank</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>LLM Rank Optimizer</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>LLM Rank</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>AdversarialSEO</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Ragdoll</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td rowspan="7">STS (Kumar et al.)</td>
+      <td>Ragroll</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>STSData</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>RewriteToRank</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>LLM Rank Optimizer</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>LLM Rank</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>AdversarialSEO</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Ragdoll</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td rowspan="7">Baseline (Zero-Shot Ranker)</td>
+      <td>Ragroll</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>STSData</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>RewriteToRank</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>LLM Rank Optimizer</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>LLM Rank</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>AdversarialSEO</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Ragdoll</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td rowspan="7">PMA (Nestaas et al.)</td>
+      <td>Ragroll</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>STSData</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>RewriteToRank</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>LLM Rank Optimizer</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>LLM Rank</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>AdversarialSEO</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Ragdoll</td>
       <td></td>
       <td></td>
       <td></td>
