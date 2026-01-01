@@ -128,10 +128,10 @@ must:
     </tr>
     <tr>
       <td>RewriteToRank (2 Categories: electrical supplies + gun accessories for DeepSeek 7B, Mistral 7B. Llama 3.1 8B, Vicuna 7B have one category: electrical supplies)</td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
+      <td>0.13</td>
+      <td>0.27</td>
+      <td>0.34</td>
+      <td>1.26</td>
     </tr>
     <tr>
       <td rowspan="5">C-SEO</td>
