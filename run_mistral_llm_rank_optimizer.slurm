@@ -6,7 +6,7 @@
 #SBATCH --gpus-per-node=1
 #SBATCH --cpus-per-task=16
 #SBATCH --mem=150G
-#SBATCH --time=36:00:00
+#SBATCH --time=24:00:00
 #SBATCH --output=logs/mistral-llm-rank-optimizer-%j.out
 #SBATCH --error=logs/mistral-llm-rank-optimizer-%j.err
 
