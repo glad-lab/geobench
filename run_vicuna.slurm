@@ -16,4 +16,4 @@ export HF_HOME=/work/hdd/beaa/onimase/hf_cache
 cd /work/hdd/beaa/onimase/controllable-seo-project/geobench
 
 export WANDB_AGENT_MAX_INITIAL_FAILURES=0
-python -m experiment.main --model vicuna-7b --dataset llm_rank --mode suffix
+python -m experiment.main --model vicuna-7b --dataset llm_rank_subsampled --mode suffix
