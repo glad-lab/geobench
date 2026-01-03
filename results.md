@@ -1,1026 +1,390 @@
-# C-SEO Benchmark - All Datasets Metrics Results
+# C-SEO Benchmark - Comprehensive Metrics Analysis
 
-> Comprehensive metrics evaluation across all datasets
+> Detailed evaluation results across multiple datasets with comprehensive metrics
 
 ## Table of Contents
 
-- [Ragroll](#ragroll)
-- [Ragdoll](#ragdoll)
-- [STSData](#stsdata)
-- [RewriteToRank](#rewritetorank)
-- [LLM Rank Optimizer](#llm-rank-optimizer)
-- [LLM Rank](#llm-rank)
 - [AdversarialSEO](#adversarialseo)
-- [C-SEO](#c-seo)
-- [Cross-Dataset Comparison](#cross-dataset-method-comparison)
+- [LLMRank](#llmrank)
+- [Ragroll](#ragroll)
+- [STSData](#stsdata)
+- [llm-rank-optimizer](#llm-rank-optimizer)
+- [rewrite to rank](#rewrite-to-rank)
+- [Cross-Dataset Comparison](#cross-dataset-comparison)
+- [Metrics Explanation](#metrics-explanation)
+
 
 ---
 
-*Large-scale product review dataset*
+## Metrics Explanation
 
-## Ragroll
+| Metric | Description | Interpretation |
+|--------|-------------|----------------|
+| **Delta-Rank (ΔRank)** | Average change in ranking position | Higher is better. Positive values indicate ranking improvement |
+| **NRG** | Normalized Ranking Gain (ΔRank/cohort_size) | Range: 0-1, higher is better |
+| **Success@0.1** | Percentage of cases achieving ΔRank ≥ 0.1 | Indicates consistency of small improvements |
+| **Success@0.2** | Percentage of cases achieving ΔRank ≥ 0.2 | Indicates consistency of moderate improvements |
+| **Promote@0.1** | Percentage of cases promoted by ≥ 0.1 positions | Similar to Success@0.1 |
+| **KVR** | K-Value Ratio - ratio of top-K results | Indicates robustness |
+| **MRR** | Mean Reciprocal Rank | Range: 0-1, higher is better |
+| **P-value** | Statistical significance indicator | Lower is better (p < 0.05 = significant) |
 
-**Overall Statistics:**
-- Total Categories: 53
-- Total Samples: 2150
-- Model: llama-3.1-8b-instant
-
-<table>
-  <thead>
-    <tr>
-      <th align="left">Method</th>
-      <th align="center">Avg ΔRank</th>
-      <th align="center">Avg NRG</th>
-      <th align="center">Categories</th>
-      <th align="center">Success Rate</th>
-      <th align="center">Sig. Count</th>
-      <th align="center">Total Samples</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>Quotes</td>
-      <td align="center"><strong>0.9075</strong></td>
-      <td align="center">0.1815</td>
-      <td align="center">53</td>
-      <td align="center">96.23%</td>
-      <td align="center">2</td>
-      <td align="center">215</td>
-    </tr>
-    <tr>
-      <td>Statistics</td>
-      <td align="center"><strong>0.8170</strong></td>
-      <td align="center">0.1634</td>
-      <td align="center">53</td>
-      <td align="center">92.45%</td>
-      <td align="center">1</td>
-      <td align="center">215</td>
-    </tr>
-    <tr>
-      <td>Authoritative</td>
-      <td align="center"><strong>0.6623</strong></td>
-      <td align="center">0.1325</td>
-      <td align="center">53</td>
-      <td align="center">81.13%</td>
-      <td align="center">1</td>
-      <td align="center">215</td>
-    </tr>
-    <tr>
-      <td>Citations</td>
-      <td align="center">0.6245</td>
-      <td align="center">0.1249</td>
-      <td align="center">53</td>
-      <td align="center">73.58%</td>
-      <td align="center">1</td>
-      <td align="center">215</td>
-    </tr>
-    <tr>
-      <td>ContentImprovement</td>
-      <td align="center">0.6226</td>
-      <td align="center">0.1245</td>
-      <td align="center">53</td>
-      <td align="center">86.79%</td>
-      <td align="center">2</td>
-      <td align="center">215</td>
-    </tr>
-    <tr>
-      <td>LLMstxt</td>
-      <td align="center">0.5434</td>
-      <td align="center">0.1087</td>
-      <td align="center">53</td>
-      <td align="center">79.25%</td>
-      <td align="center">0</td>
-      <td align="center">215</td>
-    </tr>
-    <tr>
-      <td>TechnicalTerms</td>
-      <td align="center">0.1491</td>
-      <td align="center">0.0298</td>
-      <td align="center">53</td>
-      <td align="center">49.06%</td>
-      <td align="center">0</td>
-      <td align="center">215</td>
-    </tr>
-    <tr>
-      <td>UniqueWords</td>
-      <td align="center">0.0981</td>
-      <td align="center">0.0196</td>
-      <td align="center">53</td>
-      <td align="center">47.17%</td>
-      <td align="center">1</td>
-      <td align="center">215</td>
-    </tr>
-    <tr>
-      <td>Fluency</td>
-      <td align="center">0.0509</td>
-      <td align="center">0.0102</td>
-      <td align="center">53</td>
-      <td align="center">35.85%</td>
-      <td align="center">0</td>
-      <td align="center">215</td>
-    </tr>
-    <tr>
-      <td>SimpleLanguage</td>
-      <td align="center">0.0000</td>
-      <td align="center">0.0000</td>
-      <td align="center">53</td>
-      <td align="center">41.51%</td>
-      <td align="center">0</td>
-      <td align="center">215</td>
-    </tr>
-  </tbody>
-</table>
+> **Note:** ↑ indicates "higher is better", ↓ indicates "lower is better"
 
 ---
 
-*Product review dataset*
-
-## Ragdoll
-
-**Overall Statistics:**
-- Total Categories: 18
-- Total Samples: 0
-- Model: N/A
-
-<table>
-  <thead>
-    <tr>
-      <th align="left">Method</th>
-      <th align="center">Avg ΔRank</th>
-      <th align="center">Avg NRG</th>
-      <th align="center">Categories</th>
-      <th align="center">Success Rate</th>
-      <th align="center">Sig. Count</th>
-      <th align="center">Total Samples</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>Authoritative</td>
-      <td align="center"><strong>0.0000</strong></td>
-      <td align="center">0.0000</td>
-      <td align="center">18</td>
-      <td align="center">0.00%</td>
-      <td align="center">0</td>
-      <td align="center">0</td>
-    </tr>
-    <tr>
-      <td>Citations</td>
-      <td align="center"><strong>0.0000</strong></td>
-      <td align="center">0.0000</td>
-      <td align="center">18</td>
-      <td align="center">0.00%</td>
-      <td align="center">0</td>
-      <td align="center">0</td>
-    </tr>
-    <tr>
-      <td>Statistics</td>
-      <td align="center"><strong>0.0000</strong></td>
-      <td align="center">0.0000</td>
-      <td align="center">18</td>
-      <td align="center">0.00%</td>
-      <td align="center">0</td>
-      <td align="center">0</td>
-    </tr>
-    <tr>
-      <td>Fluency</td>
-      <td align="center">0.0000</td>
-      <td align="center">0.0000</td>
-      <td align="center">18</td>
-      <td align="center">0.00%</td>
-      <td align="center">0</td>
-      <td align="center">0</td>
-    </tr>
-    <tr>
-      <td>UniqueWords</td>
-      <td align="center">0.0000</td>
-      <td align="center">0.0000</td>
-      <td align="center">18</td>
-      <td align="center">0.00%</td>
-      <td align="center">0</td>
-      <td align="center">0</td>
-    </tr>
-    <tr>
-      <td>TechnicalTerms</td>
-      <td align="center">0.0000</td>
-      <td align="center">0.0000</td>
-      <td align="center">18</td>
-      <td align="center">0.00%</td>
-      <td align="center">0</td>
-      <td align="center">0</td>
-    </tr>
-    <tr>
-      <td>SimpleLanguage</td>
-      <td align="center">0.0000</td>
-      <td align="center">0.0000</td>
-      <td align="center">18</td>
-      <td align="center">0.00%</td>
-      <td align="center">0</td>
-      <td align="center">0</td>
-    </tr>
-    <tr>
-      <td>Quotes</td>
-      <td align="center">0.0000</td>
-      <td align="center">0.0000</td>
-      <td align="center">18</td>
-      <td align="center">0.00%</td>
-      <td align="center">0</td>
-      <td align="center">0</td>
-    </tr>
-    <tr>
-      <td>ContentImprovement</td>
-      <td align="center">0.0000</td>
-      <td align="center">0.0000</td>
-      <td align="center">18</td>
-      <td align="center">0.00%</td>
-      <td align="center">0</td>
-      <td align="center">0</td>
-    </tr>
-    <tr>
-      <td>LLMstxt</td>
-      <td align="center">0.0000</td>
-      <td align="center">0.0000</td>
-      <td align="center">18</td>
-      <td align="center">0.00%</td>
-      <td align="center">0</td>
-      <td align="center">0</td>
-    </tr>
-  </tbody>
-</table>
-
----
-
-*Scientific text dataset*
-
-## STSData
-
-**Overall Statistics:**
-- Total Categories: 3
-- Total Samples: 15
-- Model: llama-3.1-8b-instant
-
-<table>
-  <thead>
-    <tr>
-      <th align="left">Method</th>
-      <th align="center">Avg ΔRank</th>
-      <th align="center">Avg NRG</th>
-      <th align="center">Categories</th>
-      <th align="center">Success Rate</th>
-      <th align="center">Sig. Count</th>
-      <th align="center">Total Samples</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>LLMstxt</td>
-      <td align="center"><strong>3.0000</strong></td>
-      <td align="center">0.6000</td>
-      <td align="center">1</td>
-      <td align="center">100.00%</td>
-      <td align="center">0</td>
-      <td align="center">1</td>
-    </tr>
-    <tr>
-      <td>SimpleLanguage</td>
-      <td align="center"><strong>3.0000</strong></td>
-      <td align="center">0.6000</td>
-      <td align="center">1</td>
-      <td align="center">100.00%</td>
-      <td align="center">0</td>
-      <td align="center">1</td>
-    </tr>
-    <tr>
-      <td>TechnicalTerms</td>
-      <td align="center"><strong>3.0000</strong></td>
-      <td align="center">0.6000</td>
-      <td align="center">1</td>
-      <td align="center">100.00%</td>
-      <td align="center">0</td>
-      <td align="center">1</td>
-    </tr>
-    <tr>
-      <td>Citations</td>
-      <td align="center">2.5000</td>
-      <td align="center">0.5000</td>
-      <td align="center">2</td>
-      <td align="center">100.00%</td>
-      <td align="center">0</td>
-      <td align="center">2</td>
-    </tr>
-    <tr>
-      <td>ContentImprovement</td>
-      <td align="center">2.5000</td>
-      <td align="center">0.5000</td>
-      <td align="center">2</td>
-      <td align="center">100.00%</td>
-      <td align="center">0</td>
-      <td align="center">2</td>
-    </tr>
-    <tr>
-      <td>Quotes</td>
-      <td align="center">2.5000</td>
-      <td align="center">0.5000</td>
-      <td align="center">2</td>
-      <td align="center">100.00%</td>
-      <td align="center">0</td>
-      <td align="center">2</td>
-    </tr>
-    <tr>
-      <td>Authoritative</td>
-      <td align="center">2.0000</td>
-      <td align="center">0.4000</td>
-      <td align="center">2</td>
-      <td align="center">100.00%</td>
-      <td align="center">0</td>
-      <td align="center">2</td>
-    </tr>
-    <tr>
-      <td>Statistics</td>
-      <td align="center">2.0000</td>
-      <td align="center">0.4000</td>
-      <td align="center">3</td>
-      <td align="center">100.00%</td>
-      <td align="center">0</td>
-      <td align="center">3</td>
-    </tr>
-    <tr>
-      <td>Fluency</td>
-      <td align="center">1.0000</td>
-      <td align="center">0.2000</td>
-      <td align="center">1</td>
-      <td align="center">100.00%</td>
-      <td align="center">0</td>
-      <td align="center">1</td>
-    </tr>
-  </tbody>
-</table>
-
----
-
-*Text rewriting dataset*
-
-## RewriteToRank
-
-**Overall Statistics:**
-- Total Categories: 42
-- Total Samples: 16500
-- Model: llama-3.1-8b-instant
-
-<table>
-  <thead>
-    <tr>
-      <th align="left">Method</th>
-      <th align="center">Avg ΔRank</th>
-      <th align="center">Avg NRG</th>
-      <th align="center">Categories</th>
-      <th align="center">Success Rate</th>
-      <th align="center">Sig. Count</th>
-      <th align="center">Total Samples</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>Statistics</td>
-      <td align="center"><strong>0.5690</strong></td>
-      <td align="center">0.1138</td>
-      <td align="center">42</td>
-      <td align="center">100.00%</td>
-      <td align="center">41</td>
-      <td align="center">1650</td>
-    </tr>
-    <tr>
-      <td>Quotes</td>
-      <td align="center"><strong>0.3702</strong></td>
-      <td align="center">0.0740</td>
-      <td align="center">42</td>
-      <td align="center">97.62%</td>
-      <td align="center">35</td>
-      <td align="center">1650</td>
-    </tr>
-    <tr>
-      <td>Authoritative</td>
-      <td align="center"><strong>0.3476</strong></td>
-      <td align="center">0.0695</td>
-      <td align="center">42</td>
-      <td align="center">95.24%</td>
-      <td align="center">32</td>
-      <td align="center">1650</td>
-    </tr>
-    <tr>
-      <td>Citations</td>
-      <td align="center">0.3458</td>
-      <td align="center">0.0692</td>
-      <td align="center">42</td>
-      <td align="center">97.62%</td>
-      <td align="center">34</td>
-      <td align="center">1650</td>
-    </tr>
-    <tr>
-      <td>LLMstxt</td>
-      <td align="center">0.3089</td>
-      <td align="center">0.0618</td>
-      <td align="center">42</td>
-      <td align="center">100.00%</td>
-      <td align="center">31</td>
-      <td align="center">1650</td>
-    </tr>
-    <tr>
-      <td>ContentImprovement</td>
-      <td align="center">0.2911</td>
-      <td align="center">0.0582</td>
-      <td align="center">42</td>
-      <td align="center">97.62%</td>
-      <td align="center">29</td>
-      <td align="center">1650</td>
-    </tr>
-    <tr>
-      <td>Fluency</td>
-      <td align="center">0.1101</td>
-      <td align="center">0.0220</td>
-      <td align="center">42</td>
-      <td align="center">71.43%</td>
-      <td align="center">7</td>
-      <td align="center">1650</td>
-    </tr>
-    <tr>
-      <td>TechnicalTerms</td>
-      <td align="center">0.1101</td>
-      <td align="center">0.0220</td>
-      <td align="center">42</td>
-      <td align="center">78.57%</td>
-      <td align="center">8</td>
-      <td align="center">1650</td>
-    </tr>
-    <tr>
-      <td>UniqueWords</td>
-      <td align="center">0.1095</td>
-      <td align="center">0.0219</td>
-      <td align="center">42</td>
-      <td align="center">73.81%</td>
-      <td align="center">4</td>
-      <td align="center">1650</td>
-    </tr>
-    <tr>
-      <td>SimpleLanguage</td>
-      <td align="center">0.0417</td>
-      <td align="center">0.0083</td>
-      <td align="center">42</td>
-      <td align="center">59.52%</td>
-      <td align="center">2</td>
-      <td align="center">1650</td>
-    </tr>
-  </tbody>
-</table>
-
----
-
-*LLM ranking optimization dataset*
-
-## LLM Rank Optimizer
-
-**Overall Statistics:**
-- Total Categories: 4
-- Total Samples: 29
-- Model: llama-3.1-8b-instant
-
-<table>
-  <thead>
-    <tr>
-      <th align="left">Method</th>
-      <th align="center">Avg ΔRank</th>
-      <th align="center">Avg NRG</th>
-      <th align="center">Categories</th>
-      <th align="center">Success Rate</th>
-      <th align="center">Sig. Count</th>
-      <th align="center">Total Samples</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>Authoritative</td>
-      <td align="center"><strong>1.0000</strong></td>
-      <td align="center">0.2000</td>
-      <td align="center">2</td>
-      <td align="center">100.00%</td>
-      <td align="center">0</td>
-      <td align="center">2</td>
-    </tr>
-    <tr>
-      <td>ContentImprovement</td>
-      <td align="center"><strong>1.0000</strong></td>
-      <td align="center">0.2000</td>
-      <td align="center">3</td>
-      <td align="center">100.00%</td>
-      <td align="center">0</td>
-      <td align="center">3</td>
-    </tr>
-    <tr>
-      <td>LLMstxt</td>
-      <td align="center"><strong>1.0000</strong></td>
-      <td align="center">0.2000</td>
-      <td align="center">2</td>
-      <td align="center">100.00%</td>
-      <td align="center">0</td>
-      <td align="center">2</td>
-    </tr>
-    <tr>
-      <td>Quotes</td>
-      <td align="center">1.0000</td>
-      <td align="center">0.2000</td>
-      <td align="center">2</td>
-      <td align="center">100.00%</td>
-      <td align="center">0</td>
-      <td align="center">2</td>
-    </tr>
-    <tr>
-      <td>Statistics</td>
-      <td align="center">1.0000</td>
-      <td align="center">0.2000</td>
-      <td align="center">3</td>
-      <td align="center">100.00%</td>
-      <td align="center">0</td>
-      <td align="center">3</td>
-    </tr>
-    <tr>
-      <td>TechnicalTerms</td>
-      <td align="center">1.0000</td>
-      <td align="center">0.2000</td>
-      <td align="center">2</td>
-      <td align="center">100.00%</td>
-      <td align="center">0</td>
-      <td align="center">2</td>
-    </tr>
-    <tr>
-      <td>UniqueWords</td>
-      <td align="center">0.5000</td>
-      <td align="center">0.1000</td>
-      <td align="center">4</td>
-      <td align="center">75.00%</td>
-      <td align="center">0</td>
-      <td align="center">4</td>
-    </tr>
-    <tr>
-      <td>SimpleLanguage</td>
-      <td align="center">0.0000</td>
-      <td align="center">0.0000</td>
-      <td align="center">4</td>
-      <td align="center">50.00%</td>
-      <td align="center">0</td>
-      <td align="center">4</td>
-    </tr>
-    <tr>
-      <td>Citations</td>
-      <td align="center">-0.2500</td>
-      <td align="center">-0.0500</td>
-      <td align="center">4</td>
-      <td align="center">75.00%</td>
-      <td align="center">0</td>
-      <td align="center">4</td>
-    </tr>
-    <tr>
-      <td>Fluency</td>
-      <td align="center">-0.3333</td>
-      <td align="center">-0.0667</td>
-      <td align="center">3</td>
-      <td align="center">66.67%</td>
-      <td align="center">0</td>
-      <td align="center">3</td>
-    </tr>
-  </tbody>
-</table>
-
----
-
-*LLM ranking dataset*
-
-## LLM Rank
-
-**Overall Statistics:**
-- Total Categories: 5
-- Total Samples: 32
-- Model: llama-3.1-8b-instant
-
-<table>
-  <thead>
-    <tr>
-      <th align="left">Method</th>
-      <th align="center">Avg ΔRank</th>
-      <th align="center">Avg NRG</th>
-      <th align="center">Categories</th>
-      <th align="center">Success Rate</th>
-      <th align="center">Sig. Count</th>
-      <th align="center">Total Samples</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>Fluency</td>
-      <td align="center"><strong>2.5000</strong></td>
-      <td align="center">0.5000</td>
-      <td align="center">2</td>
-      <td align="center">100.00%</td>
-      <td align="center">0</td>
-      <td align="center">2</td>
-    </tr>
-    <tr>
-      <td>Authoritative</td>
-      <td align="center"><strong>2.0000</strong></td>
-      <td align="center">0.4000</td>
-      <td align="center">4</td>
-      <td align="center">100.00%</td>
-      <td align="center">0</td>
-      <td align="center">4</td>
-    </tr>
-    <tr>
-      <td>ContentImprovement</td>
-      <td align="center"><strong>2.0000</strong></td>
-      <td align="center">0.4000</td>
-      <td align="center">3</td>
-      <td align="center">100.00%</td>
-      <td align="center">0</td>
-      <td align="center">3</td>
-    </tr>
-    <tr>
-      <td>Quotes</td>
-      <td align="center">2.0000</td>
-      <td align="center">0.4000</td>
-      <td align="center">4</td>
-      <td align="center">100.00%</td>
-      <td align="center">0</td>
-      <td align="center">4</td>
-    </tr>
-    <tr>
-      <td>TechnicalTerms</td>
-      <td align="center">2.0000</td>
-      <td align="center">0.4000</td>
-      <td align="center">4</td>
-      <td align="center">100.00%</td>
-      <td align="center">0</td>
-      <td align="center">4</td>
-    </tr>
-    <tr>
-      <td>Citations</td>
-      <td align="center">1.7500</td>
-      <td align="center">0.3500</td>
-      <td align="center">4</td>
-      <td align="center">100.00%</td>
-      <td align="center">0</td>
-      <td align="center">4</td>
-    </tr>
-    <tr>
-      <td>Statistics</td>
-      <td align="center">1.7500</td>
-      <td align="center">0.3500</td>
-      <td align="center">4</td>
-      <td align="center">100.00%</td>
-      <td align="center">0</td>
-      <td align="center">4</td>
-    </tr>
-    <tr>
-      <td>LLMstxt</td>
-      <td align="center">1.5000</td>
-      <td align="center">0.3000</td>
-      <td align="center">2</td>
-      <td align="center">100.00%</td>
-      <td align="center">0</td>
-      <td align="center">2</td>
-    </tr>
-    <tr>
-      <td>UniqueWords</td>
-      <td align="center">1.5000</td>
-      <td align="center">0.3000</td>
-      <td align="center">2</td>
-      <td align="center">100.00%</td>
-      <td align="center">0</td>
-      <td align="center">2</td>
-    </tr>
-    <tr>
-      <td>SimpleLanguage</td>
-      <td align="center">1.3333</td>
-      <td align="center">0.2667</td>
-      <td align="center">3</td>
-      <td align="center">100.00%</td>
-      <td align="center">0</td>
-      <td align="center">3</td>
-    </tr>
-  </tbody>
-</table>
-
----
-
-*Adversarial SEO dataset*
 
 ## AdversarialSEO
 
-**Overall Statistics:**
+**Dataset Statistics:**
 - Total Categories: 7
-- Total Samples: 670
-- Model: llama-3.1-8b-instant
+- Total Samples: 70
 
-<table>
-  <thead>
-    <tr>
-      <th align="left">Method</th>
-      <th align="center">Avg ΔRank</th>
-      <th align="center">Avg NRG</th>
-      <th align="center">Categories</th>
-      <th align="center">Success Rate</th>
-      <th align="center">Sig. Count</th>
-      <th align="center">Total Samples</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>Quotes</td>
-      <td align="center"><strong>0.4405</strong></td>
-      <td align="center">0.0881</td>
-      <td align="center">7</td>
-      <td align="center">85.71%</td>
-      <td align="center">1</td>
-      <td align="center">67</td>
-    </tr>
-    <tr>
-      <td>Authoritative</td>
-      <td align="center"><strong>0.2286</strong></td>
-      <td align="center">0.0457</td>
-      <td align="center">7</td>
-      <td align="center">71.43%</td>
-      <td align="center">0</td>
-      <td align="center">67</td>
-    </tr>
-    <tr>
-      <td>ContentImprovement</td>
-      <td align="center"><strong>0.2167</strong></td>
-      <td align="center">0.0433</td>
-      <td align="center">7</td>
-      <td align="center">57.14%</td>
-      <td align="center">0</td>
-      <td align="center">67</td>
-    </tr>
-    <tr>
-      <td>UniqueWords</td>
-      <td align="center">0.2000</td>
-      <td align="center">0.0400</td>
-      <td align="center">7</td>
-      <td align="center">71.43%</td>
-      <td align="center">0</td>
-      <td align="center">67</td>
-    </tr>
-    <tr>
-      <td>Citations</td>
-      <td align="center">0.1524</td>
-      <td align="center">0.0305</td>
-      <td align="center">7</td>
-      <td align="center">71.43%</td>
-      <td align="center">0</td>
-      <td align="center">67</td>
-    </tr>
-    <tr>
-      <td>Statistics</td>
-      <td align="center">0.1405</td>
-      <td align="center">0.0281</td>
-      <td align="center">7</td>
-      <td align="center">71.43%</td>
-      <td align="center">0</td>
-      <td align="center">67</td>
-    </tr>
-    <tr>
-      <td>LLMstxt</td>
-      <td align="center">0.0714</td>
-      <td align="center">0.0143</td>
-      <td align="center">7</td>
-      <td align="center">28.57%</td>
-      <td align="center">0</td>
-      <td align="center">67</td>
-    </tr>
-    <tr>
-      <td>Fluency</td>
-      <td align="center">-0.1071</td>
-      <td align="center">-0.0214</td>
-      <td align="center">7</td>
-      <td align="center">28.57%</td>
-      <td align="center">0</td>
-      <td align="center">67</td>
-    </tr>
-    <tr>
-      <td>TechnicalTerms</td>
-      <td align="center">-0.1190</td>
-      <td align="center">-0.0238</td>
-      <td align="center">7</td>
-      <td align="center">14.29%</td>
-      <td align="center">0</td>
-      <td align="center">67</td>
-    </tr>
-    <tr>
-      <td>SimpleLanguage</td>
-      <td align="center">-0.1619</td>
-      <td align="center">-0.0324</td>
-      <td align="center">7</td>
-      <td align="center">14.29%</td>
-      <td align="center">0</td>
-      <td align="center">67</td>
-    </tr>
-  </tbody>
-</table>
+### Method Performance Overview
+
+| Method | Delta-Rank ↑ | NRG ↑ | Success@0.1 ↑ | Success@0.2 ↑ | Promote@0.1 ↑ | KVR ↑ | MRR ↑ | P-value ↓ | Categories | Samples |
+|--------|--------------|-------|----------------|----------------|----------------|-------|-------|-----------|------------|---------|
+| **Quotes** | 0.4405 | 0.0881 | 85.7% | 85.7% | 85.7% | 0.4286 | 0.3704 | 0.3158 | 7 | 7 |
+| **Authoritative** | 0.2286 | 0.0457 | 71.4% | 71.4% | 71.4% | 0.4286 | 0.3704 | 0.4479 | 7 | 7 |
+| **ContentImprovement** | 0.2167 | 0.0433 | 57.1% | 57.1% | 57.1% | 0.4286 | 0.3704 | 0.5596 | 7 | 7 |
+| UniqueWords | 0.2000 | 0.0400 | 71.4% | 42.9% | 71.4% | 0.4286 | 0.3704 | 0.4929 | 7 | 7 |
+| Citations | 0.1524 | 0.0305 | 71.4% | 42.9% | 71.4% | 0.4286 | 0.3704 | 0.5070 | 7 | 7 |
+| Statistics | 0.1405 | 0.0281 | 71.4% | 42.9% | 71.4% | 0.4286 | 0.3704 | 0.5038 | 7 | 7 |
+| LLMstxt | 0.0714 | 0.0143 | 28.6% | 14.3% | 28.6% | 0.4286 | 0.3704 | 0.6659 | 7 | 7 |
+| Fluency | -0.1071 | -0.0214 | 14.3% | 0.0% | 14.3% | 0.4286 | 0.3704 | 0.7989 | 7 | 7 |
+| TechnicalTerms | -0.1190 | -0.0238 | 14.3% | 14.3% | 14.3% | 0.4286 | 0.3704 | 0.7328 | 7 | 7 |
+| SimpleLanguage | -0.1619 | -0.0324 | 14.3% | 14.3% | 14.3% | 0.4286 | 0.3704 | 0.7686 | 7 | 7 |
+
+### Category-Level Breakdown
+
+<details>
+<summary>Click to expand category details</summary>
+
+| Category | Method | Delta-Rank | NRG | P-value | Samples |
+|----------|--------|------------|-----|---------|---------|
+| accessories | Quotes | 0.3333 | 0.0667 | 0.5000 | 3 |
+| accessories | Statistics | 0.3333 | 0.0667 | 0.5000 | 3 |
+| accessories | Authoritative | 0.0000 | 0.0000 | 1.0000 | 3 |
+| accessories | Fluency | 0.0000 | 0.0000 | 1.0000 | 3 |
+| accessories | LLMstxt | 0.0000 | 0.0000 | 1.0000 | 3 |
+| accessories | UniqueWords | 0.0000 | 0.0000 | 1.0000 | 3 |
+| accessories | Citations | -0.3333 | -0.0667 | 1.0000 | 3 |
+| accessories | ContentImprovement | -0.3333 | -0.0667 | 1.0000 | 3 |
+| accessories | SimpleLanguage | -0.3333 | -0.0667 | 1.0000 | 3 |
+| accessories | TechnicalTerms | -0.3333 | -0.0667 | 1.0000 | 3 |
+| books_and_media | Quotes | 0.6000 | 0.1200 | 0.2500 | 10 |
+| books_and_media | Authoritative | 0.5000 | 0.1000 | 0.3750 | 10 |
+| books_and_media | ContentImprovement | 0.5000 | 0.1000 | 0.5000 | 10 |
+| books_and_media | UniqueWords | 0.5000 | 0.1000 | 0.3750 | 10 |
+| books_and_media | TechnicalTerms | 0.2000 | 0.0400 | 0.5000 | 10 |
+| books_and_media | Statistics | 0.1000 | 0.0200 | 0.5000 | 10 |
+| books_and_media | Citations | 0.0000 | 0.0000 | 0.6875 | 10 |
+| books_and_media | LLMstxt | -0.2000 | -0.0400 | 0.8438 | 10 |
+| books_and_media | Fluency | -0.3000 | -0.0600 | 1.0000 | 10 |
+| books_and_media | SimpleLanguage | -0.3000 | -0.0600 | 1.0000 | 10 |
+| cameras | Authoritative | 0.5000 | 0.1000 | 0.0625 | 10 |
+| cameras | SimpleLanguage | 0.3000 | 0.0600 | 0.2656 | 10 |
+| cameras | Quotes | 0.2000 | 0.0400 | 0.3125 | 10 |
+| cameras | Citations | 0.1000 | 0.0200 | 0.5000 | 10 |
+| cameras | LLMstxt | 0.0000 | 0.0000 | 0.7500 | 10 |
+| cameras | Statistics | 0.0000 | 0.0000 | 0.6875 | 10 |
+| cameras | TechnicalTerms | 0.0000 | 0.0000 | 0.6250 | 10 |
+| cameras | UniqueWords | 0.0000 | 0.0000 | 0.3906 | 10 |
+| cameras | ContentImprovement | -0.1000 | -0.0200 | 1.0000 | 10 |
+| cameras | Fluency | -0.1000 | -0.0200 | 1.0000 | 10 |
+| computing_hardware | Quotes | 0.7500 | 0.1500 | 0.0233 | 20 |
+| computing_hardware | ContentImprovement | 0.6000 | 0.1200 | 0.1046 | 20 |
+| computing_hardware | Citations | 0.5000 | 0.1000 | 0.1116 | 20 |
+| computing_hardware | UniqueWords | 0.4500 | 0.0900 | 0.1848 | 20 |
+| computing_hardware | Authoritative | 0.3500 | 0.0700 | 0.2135 | 20 |
+| computing_hardware | Fluency | 0.0500 | 0.0100 | 0.4676 | 20 |
+| computing_hardware | TechnicalTerms | -0.1000 | -0.0200 | 0.8171 | 20 |
+| computing_hardware | LLMstxt | -0.1500 | -0.0300 | 0.6928 | 20 |
+| computing_hardware | SimpleLanguage | -0.3000 | -0.0600 | 0.7476 | 20 |
+| computing_hardware | Statistics | -0.4000 | -0.0800 | 0.7455 | 20 |
+| home_furniture | Quotes | 0.2000 | 0.0400 | 0.2500 | 10 |
+| home_furniture | Citations | 0.1000 | 0.0200 | 0.5000 | 10 |
+| home_furniture | Fluency | 0.1000 | 0.0200 | 0.5000 | 10 |
+| home_furniture | Statistics | 0.1000 | 0.0200 | 0.5000 | 10 |
+| home_furniture | UniqueWords | 0.1000 | 0.0200 | 0.5000 | 10 |
+| home_furniture | ContentImprovement | 0.0000 | 0.0000 | 0.7500 | 10 |
+| home_furniture | LLMstxt | 0.0000 | 0.0000 | 0.7500 | 10 |
+| home_furniture | SimpleLanguage | 0.0000 | 0.0000 | 1.0000 | 10 |
+| home_furniture | TechnicalTerms | -0.1000 | -0.0200 | 0.7500 | 10 |
+| home_furniture | Authoritative | -0.3000 | -0.0600 | 0.7344 | 10 |
+| kitchen_appliances | ContentImprovement | 0.6000 | 0.1200 | 0.0625 | 10 |
+| kitchen_appliances | Statistics | 0.6000 | 0.1200 | 0.0938 | 10 |
+| kitchen_appliances | Authoritative | 0.3000 | 0.0600 | 0.2500 | 10 |
+| kitchen_appliances | Citations | 0.2000 | 0.0400 | 0.5000 | 10 |
+| kitchen_appliances | LLMstxt | 0.1000 | 0.0200 | 0.5000 | 10 |
+| kitchen_appliances | UniqueWords | 0.1000 | 0.0200 | 0.5000 | 10 |
+| kitchen_appliances | Fluency | 0.0000 | 0.0000 | 0.7500 | 10 |
+| kitchen_appliances | Quotes | 0.0000 | 0.0000 | 0.7500 | 10 |
+| kitchen_appliances | SimpleLanguage | 0.0000 | 0.0000 | 0.6172 | 10 |
+| kitchen_appliances | TechnicalTerms | 0.0000 | 0.0000 | 0.6875 | 10 |
+| lenses | Quotes | 1.0000 | 0.2000 | 0.1250 | 4 |
+| lenses | LLMstxt | 0.7500 | 0.1500 | 0.1250 | 4 |
+| lenses | Citations | 0.5000 | 0.1000 | 0.2500 | 4 |
+| lenses | Authoritative | 0.2500 | 0.0500 | 0.5000 | 4 |
+| lenses | ContentImprovement | 0.2500 | 0.0500 | 0.5000 | 4 |
+| lenses | Statistics | 0.2500 | 0.0500 | 0.5000 | 4 |
+| lenses | UniqueWords | 0.2500 | 0.0500 | 0.5000 | 4 |
+| lenses | Fluency | -0.5000 | -0.1000 | 0.8750 | 4 |
+| lenses | SimpleLanguage | -0.5000 | -0.1000 | 0.7500 | 4 |
+| lenses | TechnicalTerms | -0.5000 | -0.1000 | 0.7500 | 4 |
+
+</details>
 
 ---
 
-*Conversational SEO dataset*
+## LLMRank
 
-## C-SEO
+**Dataset Statistics:**
+- Total Categories: 5
+- Total Samples: 32
 
-**Overall Statistics:**
-- Total Categories: 6
-- Total Samples: 3600
-- Model: llama-3.1-8b-instant
+### Method Performance Overview
 
-<table>
-  <thead>
-    <tr>
-      <th align="left">Method</th>
-      <th align="center">Avg ΔRank</th>
-      <th align="center">Avg NRG</th>
-      <th align="center">Categories</th>
-      <th align="center">Success Rate</th>
-      <th align="center">Sig. Count</th>
-      <th align="center">Total Samples</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>Quotes</td>
-      <td align="center"><strong>0.1500</strong></td>
-      <td align="center">0.0300</td>
-      <td align="center">6</td>
-      <td align="center">83.33%</td>
-      <td align="center">2</td>
-      <td align="center">360</td>
-    </tr>
-    <tr>
-      <td>Statistics</td>
-      <td align="center"><strong>0.1333</strong></td>
-      <td align="center">0.0267</td>
-      <td align="center">6</td>
-      <td align="center">100.00%</td>
-      <td align="center">2</td>
-      <td align="center">360</td>
-    </tr>
-    <tr>
-      <td>Citations</td>
-      <td align="center"><strong>0.1194</strong></td>
-      <td align="center">0.0239</td>
-      <td align="center">6</td>
-      <td align="center">83.33%</td>
-      <td align="center">3</td>
-      <td align="center">360</td>
-    </tr>
-    <tr>
-      <td>ContentImprovement</td>
-      <td align="center">0.1139</td>
-      <td align="center">0.0228</td>
-      <td align="center">6</td>
-      <td align="center">83.33%</td>
-      <td align="center">2</td>
-      <td align="center">360</td>
-    </tr>
-    <tr>
-      <td>TechnicalTerms</td>
-      <td align="center">0.1000</td>
-      <td align="center">0.0200</td>
-      <td align="center">6</td>
-      <td align="center">66.67%</td>
-      <td align="center">2</td>
-      <td align="center">360</td>
-    </tr>
-    <tr>
-      <td>Authoritative</td>
-      <td align="center">0.0611</td>
-      <td align="center">0.0122</td>
-      <td align="center">6</td>
-      <td align="center">66.67%</td>
-      <td align="center">1</td>
-      <td align="center">360</td>
-    </tr>
-    <tr>
-      <td>UniqueWords</td>
-      <td align="center">0.0417</td>
-      <td align="center">0.0083</td>
-      <td align="center">6</td>
-      <td align="center">66.67%</td>
-      <td align="center">0</td>
-      <td align="center">360</td>
-    </tr>
-    <tr>
-      <td>Fluency</td>
-      <td align="center">0.0361</td>
-      <td align="center">0.0072</td>
-      <td align="center">6</td>
-      <td align="center">66.67%</td>
-      <td align="center">0</td>
-      <td align="center">360</td>
-    </tr>
-    <tr>
-      <td>LLMstxt</td>
-      <td align="center">0.0250</td>
-      <td align="center">0.0050</td>
-      <td align="center">6</td>
-      <td align="center">66.67%</td>
-      <td align="center">0</td>
-      <td align="center">360</td>
-    </tr>
-    <tr>
-      <td>SimpleLanguage</td>
-      <td align="center">0.0028</td>
-      <td align="center">0.0006</td>
-      <td align="center">6</td>
-      <td align="center">33.33%</td>
-      <td align="center">0</td>
-      <td align="center">360</td>
-    </tr>
-  </tbody>
-</table>
+| Method | Delta-Rank ↑ | NRG ↑ | Success@0.1 ↑ | Success@0.2 ↑ | Promote@0.1 ↑ | KVR ↑ | MRR ↑ | P-value ↓ | Categories | Samples |
+|--------|--------------|-------|----------------|----------------|----------------|-------|-------|-----------|------------|---------|
+| **Fluency** | 2.5000 | 0.5000 | 100.0% | 100.0% | 100.0% | 1.0000 | 0.7500 | 0.5000 | 2 | 2 |
+| **Authoritative** | 2.0000 | 0.4000 | 100.0% | 100.0% | 100.0% | 0.7500 | 0.5208 | 0.5000 | 4 | 4 |
+| **ContentImprovement** | 2.0000 | 0.4000 | 100.0% | 100.0% | 100.0% | 1.0000 | 0.6111 | 0.5000 | 3 | 3 |
+| Quotes | 2.0000 | 0.4000 | 100.0% | 100.0% | 100.0% | 0.7500 | 0.5208 | 0.5000 | 4 | 4 |
+| TechnicalTerms | 2.0000 | 0.4000 | 100.0% | 100.0% | 100.0% | 0.7500 | 0.5208 | 0.5000 | 4 | 4 |
+| Citations | 1.7500 | 0.3500 | 100.0% | 100.0% | 100.0% | 0.7500 | 0.5208 | 0.5000 | 4 | 4 |
+| Statistics | 1.7500 | 0.3500 | 100.0% | 100.0% | 100.0% | 0.7500 | 0.5208 | 0.5000 | 4 | 4 |
+| LLMstxt | 1.5000 | 0.3000 | 100.0% | 100.0% | 100.0% | 1.0000 | 0.7500 | 0.5000 | 2 | 2 |
+| UniqueWords | 1.5000 | 0.3000 | 100.0% | 100.0% | 100.0% | 1.0000 | 0.7500 | 0.5000 | 2 | 2 |
+| SimpleLanguage | 1.3333 | 0.2667 | 100.0% | 100.0% | 100.0% | 1.0000 | 0.6111 | 0.5000 | 3 | 3 |
+
+### Category-Level Breakdown
+
+<details>
+<summary>Click to expand category details</summary>
+
+| Category | Method | Delta-Rank | NRG | P-value | Samples |
+|----------|--------|------------|-----|---------|---------|
+| automotive | Authoritative | 1.0000 | 0.2000 | 0.5000 | 1 |
+| automotive | Citations | 1.0000 | 0.2000 | 0.5000 | 1 |
+| automotive | ContentImprovement | 1.0000 | 0.2000 | 0.5000 | 1 |
+| automotive | LLMstxt | 1.0000 | 0.2000 | 0.5000 | 1 |
+| automotive | Quotes | 1.0000 | 0.2000 | 0.5000 | 1 |
+| automotive | SimpleLanguage | 1.0000 | 0.2000 | 0.5000 | 1 |
+| automotive | Statistics | 1.0000 | 0.2000 | 0.5000 | 1 |
+| automotive | TechnicalTerms | 1.0000 | 0.2000 | 0.5000 | 1 |
+| baby | Authoritative | 2.0000 | 0.4000 | 0.5000 | 1 |
+| baby | Citations | 2.0000 | 0.4000 | 0.5000 | 1 |
+| baby | LLMstxt | 2.0000 | 0.4000 | 0.5000 | 1 |
+| baby | Quotes | 2.0000 | 0.4000 | 0.5000 | 1 |
+| baby | Statistics | 2.0000 | 0.4000 | 0.5000 | 1 |
+| baby | TechnicalTerms | 2.0000 | 0.4000 | 0.5000 | 1 |
+| baby | UniqueWords | 2.0000 | 0.4000 | 0.5000 | 1 |
+| books | Authoritative | 2.0000 | 0.4000 | 0.5000 | 1 |
+| books | ContentImprovement | 2.0000 | 0.4000 | 0.5000 | 1 |
+| books | Fluency | 2.0000 | 0.4000 | 0.5000 | 1 |
+| books | Statistics | 2.0000 | 0.4000 | 0.5000 | 1 |
+| books | SimpleLanguage | 1.0000 | 0.2000 | 0.5000 | 1 |
+| computers | Authoritative | 3.0000 | 0.6000 | 0.5000 | 1 |
+| computers | Citations | 3.0000 | 0.6000 | 0.5000 | 1 |
+| computers | ContentImprovement | 3.0000 | 0.6000 | 0.5000 | 1 |
+| computers | Fluency | 3.0000 | 0.6000 | 0.5000 | 1 |
+| computers | Quotes | 3.0000 | 0.6000 | 0.5000 | 1 |
+| computers | TechnicalTerms | 3.0000 | 0.6000 | 0.5000 | 1 |
+| software | Quotes | 2.0000 | 0.4000 | 0.5000 | 1 |
+| software | SimpleLanguage | 2.0000 | 0.4000 | 0.5000 | 1 |
+| software | Statistics | 2.0000 | 0.4000 | 0.5000 | 1 |
+| software | TechnicalTerms | 2.0000 | 0.4000 | 0.5000 | 1 |
+| software | Citations | 1.0000 | 0.2000 | 0.5000 | 1 |
+| software | UniqueWords | 1.0000 | 0.2000 | 0.5000 | 1 |
+
+</details>
 
 ---
 
-## 🏆 Cross-Dataset Method Comparison
+## Ragroll
 
-<table>
-  <thead>
-    <tr>
-      <th align="left">Rank</th>
-      <th align="left">Method</th>
-      <th align="center">Avg ΔRank (All Datasets)</th>
-      <th align="center">Datasets Tested</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>🥇 1</td>
-      <td><strong>Quotes</strong></td>
-      <td align="center"><strong>0.9210</strong></td>
-      <td align="center">8</td>
-    </tr>
-    <tr>
-      <td>🥈 2</td>
-      <td><strong>ContentImprovement</strong></td>
-      <td align="center"><strong>0.8430</strong></td>
-      <td align="center">8</td>
-    </tr>
-    <tr>
-      <td>🥉 3</td>
-      <td><strong>LLMstxt</strong></td>
-      <td align="center"><strong>0.8061</strong></td>
-      <td align="center">8</td>
-    </tr>
-    <tr>
-      <td> 4</td>
-      <td><strong>Statistics</strong></td>
-      <td align="center">0.8012</td>
-      <td align="center">8</td>
-    </tr>
-    <tr>
-      <td> 5</td>
-      <td><strong>Authoritative</strong></td>
-      <td align="center">0.7874</td>
-      <td align="center">8</td>
-    </tr>
-    <tr>
-      <td> 6</td>
-      <td><strong>TechnicalTerms</strong></td>
-      <td align="center">0.7800</td>
-      <td align="center">8</td>
-    </tr>
-    <tr>
-      <td> 7</td>
-      <td><strong>Citations</strong></td>
-      <td align="center">0.6553</td>
-      <td align="center">8</td>
-    </tr>
-    <tr>
-      <td> 8</td>
-      <td><strong>SimpleLanguage</strong></td>
-      <td align="center">0.5270</td>
-      <td align="center">8</td>
-    </tr>
-    <tr>
-      <td> 9</td>
-      <td><strong>Fluency</strong></td>
-      <td align="center">0.4071</td>
-      <td align="center">8</td>
-    </tr>
-    <tr>
-      <td> 10</td>
-      <td><strong>UniqueWords</strong></td>
-      <td align="center">0.3499</td>
-      <td align="center">7</td>
-    </tr>
-  </tbody>
-</table>
+**Dataset Statistics:**
+- Total Categories: 53
+- Total Samples: 530
 
-> **Note:**
-> - **ΔRank**: Delta Rank - Average change in ranking position (higher is better)
-> - **NRG**: Normalized Ranking Gain
-> - **Success Rate**: Percentage of categories with positive ΔRank
-> - **Sig. Count**: Number of statistically significant results (p < 0.05)
+### Method Performance Overview
 
+| Method | Delta-Rank ↑ | NRG ↑ | Success@0.1 ↑ | Success@0.2 ↑ | Promote@0.1 ↑ | KVR ↑ | MRR ↑ | P-value ↓ | Categories | Samples |
+|--------|--------------|-------|----------------|----------------|----------------|-------|-------|-----------|------------|---------|
+| **Quotes** | 0.9075 | 0.1815 | 96.2% | 96.2% | 96.2% | 0.0566 | 0.0860 | 0.2182 | 53 | 53 |
+| **Statistics** | 0.8170 | 0.1634 | 92.5% | 92.5% | 92.5% | 0.0566 | 0.0860 | 0.2412 | 53 | 53 |
+| **Authoritative** | 0.6623 | 0.1325 | 81.1% | 81.1% | 81.1% | 0.0566 | 0.0860 | 0.3485 | 53 | 53 |
+| Citations | 0.6245 | 0.1249 | 73.6% | 73.6% | 73.6% | 0.0566 | 0.0860 | 0.3909 | 53 | 53 |
+| ContentImprovement | 0.6226 | 0.1245 | 86.8% | 86.8% | 86.8% | 0.0566 | 0.0860 | 0.3726 | 53 | 53 |
+| LLMstxt | 0.5434 | 0.1087 | 79.2% | 79.2% | 79.2% | 0.0566 | 0.0860 | 0.4163 | 53 | 53 |
+| TechnicalTerms | 0.1491 | 0.0298 | 49.1% | 49.1% | 49.1% | 0.0566 | 0.0860 | 0.6474 | 53 | 53 |
+| UniqueWords | 0.0981 | 0.0196 | 47.2% | 47.2% | 47.2% | 0.0566 | 0.0860 | 0.6445 | 53 | 53 |
+| Fluency | 0.0509 | 0.0102 | 35.8% | 35.8% | 35.8% | 0.0566 | 0.0860 | 0.7075 | 53 | 53 |
+| SimpleLanguage | 0.0000 | 0.0000 | 41.5% | 41.5% | 41.5% | 0.0566 | 0.0860 | 0.7064 | 53 | 53 |
+
+---
+
+## STSData
+
+**Dataset Statistics:**
+- Total Categories: 3
+- Total Samples: 15
+
+### Method Performance Overview
+
+| Method | Delta-Rank ↑ | NRG ↑ | Success@0.1 ↑ | Success@0.2 ↑ | Promote@0.1 ↑ | KVR ↑ | MRR ↑ | P-value ↓ | Categories | Samples |
+|--------|--------------|-------|----------------|----------------|----------------|-------|-------|-----------|------------|---------|
+| **LLMstxt** | 3.0000 | 0.6000 | 100.0% | 100.0% | 100.0% | 1.0000 | 1.0000 | 0.5000 | 1 | 1 |
+| **SimpleLanguage** | 3.0000 | 0.6000 | 100.0% | 100.0% | 100.0% | 1.0000 | 1.0000 | 0.5000 | 1 | 1 |
+| **TechnicalTerms** | 3.0000 | 0.6000 | 100.0% | 100.0% | 100.0% | 1.0000 | 1.0000 | 0.5000 | 1 | 1 |
+| Citations | 2.5000 | 0.5000 | 100.0% | 100.0% | 100.0% | 1.0000 | 0.7500 | 0.5000 | 2 | 2 |
+| ContentImprovement | 2.5000 | 0.5000 | 100.0% | 100.0% | 100.0% | 1.0000 | 0.7500 | 0.5000 | 2 | 2 |
+| Quotes | 2.5000 | 0.5000 | 100.0% | 100.0% | 100.0% | 1.0000 | 0.7500 | 0.5000 | 2 | 2 |
+| Authoritative | 2.0000 | 0.4000 | 100.0% | 100.0% | 100.0% | 1.0000 | 0.7500 | 0.5000 | 2 | 2 |
+| Statistics | 2.0000 | 0.4000 | 100.0% | 100.0% | 100.0% | 1.0000 | 0.6111 | 0.5000 | 3 | 3 |
+| Fluency | 1.0000 | 0.2000 | 100.0% | 100.0% | 100.0% | 1.0000 | 1.0000 | 0.5000 | 1 | 1 |
+
+### Category-Level Breakdown
+
+<details>
+<summary>Click to expand category details</summary>
+
+| Category | Method | Delta-Rank | NRG | P-value | Samples |
+|----------|--------|------------|-----|---------|---------|
+| books | Authoritative | 3.0000 | 0.6000 | 0.5000 | 1 |
+| books | Citations | 3.0000 | 0.6000 | 0.5000 | 1 |
+| books | ContentImprovement | 3.0000 | 0.6000 | 0.5000 | 1 |
+| books | LLMstxt | 3.0000 | 0.6000 | 0.5000 | 1 |
+| books | Quotes | 3.0000 | 0.6000 | 0.5000 | 1 |
+| books | SimpleLanguage | 3.0000 | 0.6000 | 0.5000 | 1 |
+| books | Statistics | 3.0000 | 0.6000 | 0.5000 | 1 |
+| books | TechnicalTerms | 3.0000 | 0.6000 | 0.5000 | 1 |
+| cameras | Authoritative | 1.0000 | 0.2000 | 0.5000 | 1 |
+| cameras | Statistics | 1.0000 | 0.2000 | 0.5000 | 1 |
+| coffee_machines | Citations | 2.0000 | 0.4000 | 0.5000 | 1 |
+| coffee_machines | ContentImprovement | 2.0000 | 0.4000 | 0.5000 | 1 |
+| coffee_machines | Quotes | 2.0000 | 0.4000 | 0.5000 | 1 |
+| coffee_machines | Statistics | 2.0000 | 0.4000 | 0.5000 | 1 |
+| coffee_machines | Fluency | 1.0000 | 0.2000 | 0.5000 | 1 |
+
+</details>
+
+---
+
+## llm-rank-optimizer
+
+**Dataset Statistics:**
+- Total Categories: 4
+- Total Samples: 29
+
+### Method Performance Overview
+
+| Method | Delta-Rank ↑ | NRG ↑ | Success@0.1 ↑ | Success@0.2 ↑ | Promote@0.1 ↑ | KVR ↑ | MRR ↑ | P-value ↓ | Categories | Samples |
+|--------|--------------|-------|----------------|----------------|----------------|-------|-------|-----------|------------|---------|
+| **Authoritative** | 1.0000 | 0.2000 | 100.0% | 100.0% | 100.0% | 1.0000 | 0.7500 | 0.5000 | 2 | 2 |
+| **ContentImprovement** | 1.0000 | 0.2000 | 100.0% | 100.0% | 100.0% | 1.0000 | 0.6111 | 0.5000 | 3 | 3 |
+| **LLMstxt** | 1.0000 | 0.2000 | 100.0% | 100.0% | 100.0% | 1.0000 | 0.7500 | 0.5000 | 2 | 2 |
+| Quotes | 1.0000 | 0.2000 | 100.0% | 100.0% | 100.0% | 1.0000 | 0.7500 | 0.5000 | 2 | 2 |
+| Statistics | 1.0000 | 0.2000 | 100.0% | 100.0% | 100.0% | 1.0000 | 0.6111 | 0.5000 | 3 | 3 |
+| TechnicalTerms | 1.0000 | 0.2000 | 100.0% | 100.0% | 100.0% | 1.0000 | 0.7500 | 0.5000 | 2 | 2 |
+| UniqueWords | 0.5000 | 0.1000 | 75.0% | 75.0% | 75.0% | 0.7500 | 0.5208 | 0.6250 | 4 | 4 |
+| SimpleLanguage | 0.0000 | 0.0000 | 50.0% | 50.0% | 50.0% | 0.7500 | 0.5208 | 0.7500 | 4 | 4 |
+| Citations | -0.2500 | -0.0500 | 75.0% | 75.0% | 75.0% | 0.7500 | 0.5208 | 0.6250 | 4 | 4 |
+| Fluency | -0.3333 | -0.0667 | 66.7% | 66.7% | 66.7% | 1.0000 | 0.6111 | 0.6667 | 3 | 3 |
+
+### Category-Level Breakdown
+
+<details>
+<summary>Click to expand category details</summary>
+
+| Category | Method | Delta-Rank | NRG | P-value | Samples |
+|----------|--------|------------|-----|---------|---------|
+| books | Authoritative | 1.0000 | 0.2000 | 0.5000 | 1 |
+| books | Citations | 1.0000 | 0.2000 | 0.5000 | 1 |
+| books | ContentImprovement | 1.0000 | 0.2000 | 0.5000 | 1 |
+| books | Fluency | 1.0000 | 0.2000 | 0.5000 | 1 |
+| books | LLMstxt | 1.0000 | 0.2000 | 0.5000 | 1 |
+| books | Quotes | 1.0000 | 0.2000 | 0.5000 | 1 |
+| books | SimpleLanguage | 1.0000 | 0.2000 | 0.5000 | 1 |
+| books | Statistics | 1.0000 | 0.2000 | 0.5000 | 1 |
+| books | TechnicalTerms | 1.0000 | 0.2000 | 0.5000 | 1 |
+| books | UniqueWords | 1.0000 | 0.2000 | 0.5000 | 1 |
+| cameras | SimpleLanguage | -1.0000 | -0.2000 | 1.0000 | 1 |
+| cameras | UniqueWords | -1.0000 | -0.2000 | 1.0000 | 1 |
+| cameras | Fluency | -3.0000 | -0.6000 | 1.0000 | 1 |
+| cameras | Citations | -4.0000 | -0.8000 | 1.0000 | 1 |
+| coffee_machines | Citations | 1.0000 | 0.2000 | 0.5000 | 1 |
+| coffee_machines | ContentImprovement | 1.0000 | 0.2000 | 0.5000 | 1 |
+| coffee_machines | LLMstxt | 1.0000 | 0.2000 | 0.5000 | 1 |
+| coffee_machines | Statistics | 1.0000 | 0.2000 | 0.5000 | 1 |
+| coffee_machines | UniqueWords | 1.0000 | 0.2000 | 0.5000 | 1 |
+| coffee_machines | SimpleLanguage | -1.0000 | -0.2000 | 1.0000 | 1 |
+| election_articles | Authoritative | 1.0000 | 0.2000 | 0.5000 | 1 |
+| election_articles | Citations | 1.0000 | 0.2000 | 0.5000 | 1 |
+| election_articles | ContentImprovement | 1.0000 | 0.2000 | 0.5000 | 1 |
+| election_articles | Fluency | 1.0000 | 0.2000 | 0.5000 | 1 |
+| election_articles | Quotes | 1.0000 | 0.2000 | 0.5000 | 1 |
+| election_articles | SimpleLanguage | 1.0000 | 0.2000 | 0.5000 | 1 |
+| election_articles | Statistics | 1.0000 | 0.2000 | 0.5000 | 1 |
+| election_articles | TechnicalTerms | 1.0000 | 0.2000 | 0.5000 | 1 |
+| election_articles | UniqueWords | 1.0000 | 0.2000 | 0.5000 | 1 |
+
+</details>
+
+---
+
+## rewrite to rank
+
+**Dataset Statistics:**
+- Total Categories: 42
+- Total Samples: 420
+
+### Method Performance Overview
+
+| Method | Delta-Rank ↑ | NRG ↑ | Success@0.1 ↑ | Success@0.2 ↑ | Promote@0.1 ↑ | KVR ↑ | MRR ↑ | P-value ↓ | Categories | Samples |
+|--------|--------------|-------|----------------|----------------|----------------|-------|-------|-----------|------------|---------|
+| **Statistics** | 0.5690 | 0.1138 | 100.0% | 100.0% | 100.0% | 0.0714 | 0.1030 | 0.0042 | 42 | 42 |
+| **Quotes** | 0.3702 | 0.0740 | 95.2% | 88.1% | 95.2% | 0.0714 | 0.1030 | 0.0462 | 42 | 42 |
+| **Authoritative** | 0.3476 | 0.0695 | 90.5% | 83.3% | 90.5% | 0.0714 | 0.1030 | 0.0556 | 42 | 42 |
+| Citations | 0.3458 | 0.0692 | 95.2% | 83.3% | 95.2% | 0.0714 | 0.1030 | 0.0422 | 42 | 42 |
+| LLMstxt | 0.3089 | 0.0618 | 92.9% | 81.0% | 92.9% | 0.0714 | 0.1030 | 0.0603 | 42 | 42 |
+| ContentImprovement | 0.2911 | 0.0582 | 92.9% | 73.8% | 92.9% | 0.0714 | 0.1030 | 0.0756 | 42 | 42 |
+| Fluency | 0.1101 | 0.0220 | 47.6% | 33.3% | 47.6% | 0.0714 | 0.1030 | 0.3016 | 42 | 42 |
+| TechnicalTerms | 0.1101 | 0.0220 | 54.8% | 26.2% | 54.8% | 0.0714 | 0.1030 | 0.2879 | 42 | 42 |
+| UniqueWords | 0.1095 | 0.0219 | 50.0% | 26.2% | 50.0% | 0.0714 | 0.1030 | 0.2803 | 42 | 42 |
+| SimpleLanguage | 0.0417 | 0.0083 | 28.6% | 11.9% | 28.6% | 0.0714 | 0.1030 | 0.4086 | 42 | 42 |
+
+---
+
+## Cross-Dataset Comparison
+
+Average performance of each method across all datasets.
+
+| Rank | Method | Avg Delta-Rank | Avg NRG | Datasets Tested |
+|------|--------|----------------|---------|-----------------|
+| 🥇 1 | **Quotes** | 1.2030 | 0.2406 | 6 |
+| 🥈 2 | **ContentImprovement** | 1.1051 | 0.2210 | 6 |
+| 🥉 3 | **LLMstxt** | 1.0706 | 0.2141 | 6 |
+|  4 | Statistics | 1.0461 | 0.2092 | 6 |
+|  5 | Authoritative | 1.0397 | 0.2079 | 6 |
+|  6 | TechnicalTerms | 1.0234 | 0.2047 | 6 |
+|  7 | Citations | 0.8538 | 0.1708 | 6 |
+|  8 | SimpleLanguage | 0.7022 | 0.1404 | 6 |
+|  9 | Fluency | 0.5368 | 0.1074 | 6 |
+|  10 | UniqueWords | 0.4815 | 0.0963 | 5 |
+
+
+---
+
+## Summary
+
+- **Total Datasets Analyzed:** 6
+- **Total Methods Evaluated:** 10
+- **Total Categories:** 114
+- **Total Samples:** 1096
+
+
+---
+
+*Generated automatically from benchmark results*
