@@ -64,7 +64,7 @@ must:
 
   <tbody>
     <tr>
-      <td rowspan="7">Rewrite-to-Rank</td>
+      <td rowspan="8">Rewrite-to-Rank</td>
       <td>Ragroll</td>
       <td></td><td></td><td></td><td></td><td></td>
     </tr>
@@ -89,11 +89,15 @@ must:
       <td></td><td></td><td></td><td></td><td></td>
     </tr>
     <tr>
+      <td>C-SEO</td>
+      <td></td><td></td><td></td><td></td><td></td>
+    </tr>
+    <tr>
       <td>Ragdoll</td>
       <td></td><td></td><td></td><td></td><td></td>
     </tr>
     <tr>
-      <td rowspan="7">StealthRank</td>
+      <td rowspan="8">StealthRank</td>
       <td>Ragroll</td>
       <td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td>
     </tr>
@@ -101,6 +105,7 @@ must:
       <td>STSData</td>
       <td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td>
     </tr>
+    <!-- StealthRank × RewriteToRank with nested table -->
     <tr>
       <td>
         RewriteToRank
@@ -212,11 +217,15 @@ must:
       <td></td><td></td><td></td><td></td><td></td>
     </tr>
     <tr>
+      <td>C-SEO</td>
+      <td></td><td></td><td></td><td></td><td></td>
+    </tr>
+    <tr>
       <td>Ragdoll</td>
       <td></td><td></td><td></td><td></td><td></td>
     </tr>
     <tr>
-      <td rowspan="7">C-SEO</td>
+      <td rowspan="8">C-SEO</td>
       <td>Ragroll</td>
       <td></td><td></td><td></td><td></td><td></td>
     </tr>
@@ -241,11 +250,15 @@ must:
       <td></td><td></td><td></td><td></td><td></td>
     </tr>
     <tr>
+      <td>C-SEO</td>
+      <td></td><td></td><td></td><td></td><td></td>
+    </tr>
+    <tr>
       <td>Ragdoll</td>
       <td></td><td></td><td></td><td></td><td></td>
     </tr>
     <tr>
-      <td rowspan="7">STS (Kumar et al.)</td>
+      <td rowspan="8">STS (Kumar et al.)</td>
       <td>Ragroll</td>
       <td></td><td></td><td></td><td></td><td></td>
     </tr>
@@ -270,11 +283,15 @@ must:
       <td></td><td></td><td></td><td></td><td></td>
     </tr>
     <tr>
+      <td>C-SEO</td>
+      <td></td><td></td><td></td><td></td><td></td>
+    </tr>
+    <tr>
       <td>Ragdoll</td>
       <td></td><td></td><td></td><td></td><td></td>
     </tr>
     <tr>
-      <td rowspan="7">Baseline (Zero-Shot Ranker)</td>
+      <td rowspan="8">Baseline (Zero-Shot Ranker)</td>
       <td>Ragroll</td>
       <td></td><td></td><td></td><td></td><td></td>
     </tr>
@@ -299,11 +316,15 @@ must:
       <td></td><td></td><td></td><td></td><td></td>
     </tr>
     <tr>
+      <td>C-SEO</td>
+      <td></td><td></td><td></td><td></td><td></td>
+    </tr>
+    <tr>
       <td>Ragdoll</td>
       <td></td><td></td><td></td><td></td><td></td>
     </tr>
     <tr>
-      <td rowspan="7">PMA (Nestaas et al.)</td>
+      <td rowspan="8">PMA (Nestaas et al.)</td>
       <td>Ragroll</td>
       <td></td><td></td><td></td><td></td><td></td>
     </tr>
@@ -328,11 +349,19 @@ must:
       <td></td><td></td><td></td><td></td><td></td>
     </tr>
     <tr>
-      <td>Ragdoll</td>
+      <td>C-SEO</td>
       <td></td><td></td><td></td><td></td><td></td>
     </tr>
     <tr>
-      <td rowspan="7">Ranking Manipulation for Conversational Search Engines</td>
+      <td>Ragdoll</td>
+      <td></td><td></td><td></td><td></td><td></td>
+    </tr>
+
+    <!-- ========================================================================= -->
+    <!-- Ranking Manipulation for Conversational Search Engines (New Algorithm)   -->
+    <!-- ========================================================================= -->
+    <tr>
+      <td rowspan="8">Ranking Manipulation for Conversational Search Engines</td>
       <td>
         Ragroll
         (groq-llama3-8b: 49 categories)
@@ -341,12 +370,14 @@ must:
         <table border="1" style="width: 100%; border-collapse: collapse; table-layout: fixed; font-size: 12px; line-height: 1.25;">
           <thead>
             <tr>
-              <th style="width: 20%;">Model</th>
-              <th style="width: 20%;">Category</th>
-              <th style="width: 15%;">NRG</th>
-              <th style="width: 15%;">Success@0.1</th>
-              <th style="width: 15%;">Promote@0.1</th>
-              <th style="width: 15%;">KVR</th>
+              <th style="width: 14%;">Model</th>
+              <th style="width: 14%;">Category</th>
+              <th style="width: 12%;">NRG</th>
+              <th style="width: 12%;">Success@0.1</th>
+              <th style="width: 12%;">Promote@0.1</th>
+              <th style="width: 12%;">KVR</th>
+              <th style="width: 12%;">MRR</th>
+              <th style="width: 12%;">PPL-R</th>
             </tr>
           </thead>
           <tbody>
@@ -357,15 +388,15 @@ must:
               <td>0.84</td>
               <td>0.84</td>
               <td>0.92</td>
+              <td>0.8835</td>
+              <td>NA</td>
             </tr>
           </tbody>
         </table>
-        <div style="margin-top: 6px; font-size: 11px;">
-          <em>Note: MRR (attack): 0.8835. NRG and PPL-R metrics not available (NA) due to different experimental setup.</em>
-        </div>
       </td>
     </tr>
     <tr>
+      <!-- STSData dataset with expanded categories -->
       <td>
         STSData
         (groq-llama3-8b: 3 categories)
@@ -374,28 +405,59 @@ must:
         <table border="1" style="width: 100%; border-collapse: collapse; table-layout: fixed; font-size: 12px; line-height: 1.25;">
           <thead>
             <tr>
-              <th style="width: 20%;">Model</th>
-              <th style="width: 20%;">Category</th>
-              <th style="width: 15%;">NRG</th>
-              <th style="width: 15%;">Success@0.1</th>
-              <th style="width: 15%;">Promote@0.1</th>
-              <th style="width: 15%;">KVR</th>
+              <th style="width: 14%;">Model</th>
+              <th style="width: 14%;">Category</th>
+              <th style="width: 12%;">NRG</th>
+              <th style="width: 12%;">Success@0.1</th>
+              <th style="width: 12%;">Promote@0.1</th>
+              <th style="width: 12%;">KVR</th>
+              <th style="width: 12%;">MRR</th>
+              <th style="width: 12%;">PPL-R</th>
             </tr>
           </thead>
           <tbody>
             <tr>
               <td>groq-llama3-8b</td>
-              <td>All categories</td>
+              <td>books</td>
               <td>NA</td>
-              <td>0.33</td>
-              <td>0.33</td>
-              <td>0.67</td>
+              <td>1.00</td>
+              <td>1.00</td>
+              <td>1.00</td>
+              <td>1.0000</td>
+              <td>NA</td>
+            </tr>
+            <tr>
+              <td>groq-llama3-8b</td>
+              <td>cameras</td>
+              <td>NA</td>
+              <td>0.00</td>
+              <td>0.00</td>
+              <td>1.00</td>
+              <td>0.1000</td>
+              <td>NA</td>
+            </tr>
+            <tr>
+              <td>groq-llama3-8b</td>
+              <td>coffee_machines</td>
+              <td>NA</td>
+              <td>0.00</td>
+              <td>0.00</td>
+              <td>0.00</td>
+              <td>0.1111</td>
+              <td>NA</td>
+            </tr>
+            <tr>
+              <td><strong>groq-llama3-8b</strong></td>
+              <td><strong>Overall</strong></td>
+              <td><strong>NA</strong></td>
+              <td><strong>0.33</strong></td>
+              <td><strong>0.33</strong></td>
+              <td><strong>0.67</strong></td>
+              <td><strong>0.4037</strong></td>
+              <td><strong>NA</strong></td>
             </tr>
           </tbody>
         </table>
-        <div style="margin-top: 6px; font-size: 11px;">
-          <em>Note: MRR (attack): 0.4037. NRG and PPL-R metrics not available (NA) due to different experimental setup.</em>
-        </div>
       </td>
     </tr>
     <tr>
@@ -407,12 +469,14 @@ must:
         <table border="1" style="width: 100%; border-collapse: collapse; table-layout: fixed; font-size: 12px; line-height: 1.25;">
           <thead>
             <tr>
-              <th style="width: 20%;">Model</th>
-              <th style="width: 20%;">Category</th>
-              <th style="width: 15%;">NRG</th>
-              <th style="width: 15%;">Success@0.1</th>
-              <th style="width: 15%;">Promote@0.1</th>
-              <th style="width: 15%;">KVR</th>
+              <th style="width: 14%;">Model</th>
+              <th style="width: 14%;">Category</th>
+              <th style="width: 12%;">NRG</th>
+              <th style="width: 12%;">Success@0.1</th>
+              <th style="width: 12%;">Promote@0.1</th>
+              <th style="width: 12%;">KVR</th>
+              <th style="width: 12%;">MRR</th>
+              <th style="width: 12%;">PPL-R</th>
             </tr>
           </thead>
           <tbody>
@@ -423,15 +487,15 @@ must:
               <td>0.78</td>
               <td>0.78</td>
               <td>0.86</td>
+              <td>0.8354</td>
+              <td>NA</td>
             </tr>
           </tbody>
         </table>
-        <div style="margin-top: 6px; font-size: 11px;">
-          <em>Note: MRR (attack): 0.8354. NRG and PPL-R metrics not available (NA) due to different experimental setup.</em>
-        </div>
       </td>
     </tr>
     <tr>
+      <!-- LLM Rank Optimizer with expanded categories -->
       <td>
         LLM Rank Optimizer
         (groq-llama3-8b: 4 categories)
@@ -440,31 +504,73 @@ must:
         <table border="1" style="width: 100%; border-collapse: collapse; table-layout: fixed; font-size: 12px; line-height: 1.25;">
           <thead>
             <tr>
-              <th style="width: 20%;">Model</th>
-              <th style="width: 20%;">Category</th>
-              <th style="width: 15%;">NRG</th>
-              <th style="width: 15%;">Success@0.1</th>
-              <th style="width: 15%;">Promote@0.1</th>
-              <th style="width: 15%;">KVR</th>
+              <th style="width: 14%;">Model</th>
+              <th style="width: 14%;">Category</th>
+              <th style="width: 12%;">NRG</th>
+              <th style="width: 12%;">Success@0.1</th>
+              <th style="width: 12%;">Promote@0.1</th>
+              <th style="width: 12%;">KVR</th>
+              <th style="width: 12%;">MRR</th>
+              <th style="width: 12%;">PPL-R</th>
             </tr>
           </thead>
           <tbody>
             <tr>
               <td>groq-llama3-8b</td>
-              <td>All categories</td>
+              <td>books</td>
               <td>NA</td>
               <td>1.00</td>
               <td>1.00</td>
-              <td>0.75</td>
+              <td>1.00</td>
+              <td>1.0000</td>
+              <td>NA</td>
+            </tr>
+            <tr>
+              <td>groq-llama3-8b</td>
+              <td>cameras</td>
+              <td>NA</td>
+              <td>1.00</td>
+              <td>1.00</td>
+              <td>1.00</td>
+              <td>1.0000</td>
+              <td>NA</td>
+            </tr>
+            <tr>
+              <td>groq-llama3-8b</td>
+              <td>coffee_machines</td>
+              <td>NA</td>
+              <td>1.00</td>
+              <td>1.00</td>
+              <td>1.00</td>
+              <td>1.0000</td>
+              <td>NA</td>
+            </tr>
+            <tr>
+              <td>groq-llama3-8b</td>
+              <td>election_articles</td>
+              <td>NA</td>
+              <td>1.00</td>
+              <td>1.00</td>
+              <td>0.00</td>
+              <td>1.0000</td>
+              <td>NA</td>
+            </tr>
+            <tr>
+              <td><strong>groq-llama3-8b</strong></td>
+              <td><strong>Overall</strong></td>
+              <td><strong>NA</strong></td>
+              <td><strong>1.00</strong></td>
+              <td><strong>1.00</strong></td>
+              <td><strong>0.75</strong></td>
+              <td><strong>1.0000</strong></td>
+              <td><strong>NA</strong></td>
             </tr>
           </tbody>
         </table>
-        <div style="margin-top: 6px; font-size: 11px;">
-          <em>Note: MRR (attack): 1.0000. NRG and PPL-R metrics not available (NA) due to different experimental setup.</em>
-        </div>
       </td>
     </tr>
     <tr>
+      <!-- LLM Rank with expanded categories -->
       <td>
         LLM Rank
         (groq-llama3-8b: 7 categories)
@@ -473,33 +579,300 @@ must:
         <table border="1" style="width: 100%; border-collapse: collapse; table-layout: fixed; font-size: 12px; line-height: 1.25;">
           <thead>
             <tr>
-              <th style="width: 20%;">Model</th>
-              <th style="width: 20%;">Category</th>
-              <th style="width: 15%;">NRG</th>
-              <th style="width: 15%;">Success@0.1</th>
-              <th style="width: 15%;">Promote@0.1</th>
-              <th style="width: 15%;">KVR</th>
+              <th style="width: 14%;">Model</th>
+              <th style="width: 14%;">Category</th>
+              <th style="width: 12%;">NRG</th>
+              <th style="width: 12%;">Success@0.1</th>
+              <th style="width: 12%;">Promote@0.1</th>
+              <th style="width: 12%;">KVR</th>
+              <th style="width: 12%;">MRR</th>
+              <th style="width: 12%;">PPL-R</th>
             </tr>
           </thead>
           <tbody>
             <tr>
               <td>groq-llama3-8b</td>
-              <td>All categories</td>
+              <td>computers</td>
               <td>NA</td>
-              <td>0.71</td>
-              <td>0.71</td>
-              <td>0.57</td>
+              <td>1.00</td>
+              <td>1.00</td>
+              <td>1.00</td>
+              <td>1.0000</td>
+              <td>NA</td>
+            </tr>
+            <tr>
+              <td>groq-llama3-8b</td>
+              <td>software</td>
+              <td>NA</td>
+              <td>1.00</td>
+              <td>1.00</td>
+              <td>0.00</td>
+              <td>1.0000</td>
+              <td>NA</td>
+            </tr>
+            <tr>
+              <td>groq-llama3-8b</td>
+              <td>books</td>
+              <td>NA</td>
+              <td>0.00</td>
+              <td>0.00</td>
+              <td>1.00</td>
+              <td>0.2000</td>
+              <td>NA</td>
+            </tr>
+            <tr>
+              <td>groq-llama3-8b</td>
+              <td>automotive</td>
+              <td>NA</td>
+              <td>1.00</td>
+              <td>1.00</td>
+              <td>1.00</td>
+              <td>1.0000</td>
+              <td>NA</td>
+            </tr>
+            <tr>
+              <td>groq-llama3-8b</td>
+              <td>baby</td>
+              <td>NA</td>
+              <td>1.00</td>
+              <td>1.00</td>
+              <td>0.00</td>
+              <td>1.0000</td>
+              <td>NA</td>
+            </tr>
+            <tr>
+              <td>groq-llama3-8b</td>
+              <td>grocery</td>
+              <td>NA</td>
+              <td>0.00</td>
+              <td>0.00</td>
+              <td>1.00</td>
+              <td>0.1429</td>
+              <td>NA</td>
+            </tr>
+            <tr>
+              <td>groq-llama3-8b</td>
+              <td>appliances</td>
+              <td>NA</td>
+              <td>1.00</td>
+              <td>1.00</td>
+              <td>0.00</td>
+              <td>1.0000</td>
+              <td>NA</td>
+            </tr>
+            <tr>
+              <td><strong>groq-llama3-8b</strong></td>
+              <td><strong>Overall</strong></td>
+              <td><strong>NA</strong></td>
+              <td><strong>0.71</strong></td>
+              <td><strong>0.71</strong></td>
+              <td><strong>0.57</strong></td>
+              <td><strong>0.7633</strong></td>
+              <td><strong>NA</strong></td>
             </tr>
           </tbody>
         </table>
-        <div style="margin-top: 6px; font-size: 11px;">
-          <em>Note: MRR (attack): 0.7633. NRG and PPL-R metrics not available (NA) due to different experimental setup.</em>
-        </div>
       </td>
     </tr>
     <tr>
-      <td>AdversarialSEO</td>
-      <td></td><td></td><td></td><td></td><td></td>
+      <!-- AdversarialSEO with expanded categories -->
+      <td>
+        AdversarialSEO
+        (groq-llama3-8b: 7 categories)
+      </td>
+      <td colspan="5" style="padding: 8px;">
+        <table border="1" style="width: 100%; border-collapse: collapse; table-layout: fixed; font-size: 12px; line-height: 1.25;">
+          <thead>
+            <tr>
+              <th style="width: 14%;">Model</th>
+              <th style="width: 14%;">Category</th>
+              <th style="width: 12%;">NRG</th>
+              <th style="width: 12%;">Success@0.1</th>
+              <th style="width: 12%;">Promote@0.1</th>
+              <th style="width: 12%;">KVR</th>
+              <th style="width: 12%;">MRR</th>
+              <th style="width: 12%;">PPL-R</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>groq-llama3-8b</td>
+              <td>cameras</td>
+              <td>NA</td>
+              <td>1.00</td>
+              <td>1.00</td>
+              <td>1.00</td>
+              <td>1.0000</td>
+              <td>NA</td>
+            </tr>
+            <tr>
+              <td>groq-llama3-8b</td>
+              <td>books_and_media</td>
+              <td>NA</td>
+              <td>0.00</td>
+              <td>0.00</td>
+              <td>1.00</td>
+              <td>0.1250</td>
+              <td>NA</td>
+            </tr>
+            <tr>
+              <td>groq-llama3-8b</td>
+              <td>computing_hardware</td>
+              <td>NA</td>
+              <td>1.00</td>
+              <td>1.00</td>
+              <td>1.00</td>
+              <td>1.0000</td>
+              <td>NA</td>
+            </tr>
+            <tr>
+              <td>groq-llama3-8b</td>
+              <td>home_furniture</td>
+              <td>NA</td>
+              <td>1.00</td>
+              <td>1.00</td>
+              <td>1.00</td>
+              <td>1.0000</td>
+              <td>NA</td>
+            </tr>
+            <tr>
+              <td>groq-llama3-8b</td>
+              <td>kitchen_appliances</td>
+              <td>NA</td>
+              <td>1.00</td>
+              <td>1.00</td>
+              <td>1.00</td>
+              <td>1.0000</td>
+              <td>NA</td>
+            </tr>
+            <tr>
+              <td>groq-llama3-8b</td>
+              <td>lenses</td>
+              <td>NA</td>
+              <td>0.00</td>
+              <td>0.00</td>
+              <td>1.00</td>
+              <td>0.2500</td>
+              <td>NA</td>
+            </tr>
+            <tr>
+              <td>groq-llama3-8b</td>
+              <td>accessories</td>
+              <td>NA</td>
+              <td>0.00</td>
+              <td>0.00</td>
+              <td>1.00</td>
+              <td>0.5000</td>
+              <td>NA</td>
+            </tr>
+            <tr>
+              <td><strong>groq-llama3-8b</strong></td>
+              <td><strong>Overall</strong></td>
+              <td><strong>NA</strong></td>
+              <td><strong>0.57</strong></td>
+              <td><strong>0.57</strong></td>
+              <td><strong>1.00</strong></td>
+              <td><strong>0.6964</strong></td>
+              <td><strong>NA</strong></td>
+            </tr>
+          </tbody>
+        </table>
+      </td>
+    </tr>
+    <tr>
+      <!-- C-SEO with expanded categories -->
+      <td>
+        C-SEO
+        (groq-llama3-8b: 6 categories)
+      </td>
+      <td colspan="5" style="padding: 8px;">
+        <table border="1" style="width: 100%; border-collapse: collapse; table-layout: fixed; font-size: 12px; line-height: 1.25;">
+          <thead>
+            <tr>
+              <th style="width: 14%;">Model</th>
+              <th style="width: 14%;">Category</th>
+              <th style="width: 12%;">NRG</th>
+              <th style="width: 12%;">Success@0.1</th>
+              <th style="width: 12%;">Promote@0.1</th>
+              <th style="width: 12%;">KVR</th>
+              <th style="width: 12%;">MRR</th>
+              <th style="width: 12%;">PPL-R</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>groq-llama3-8b</td>
+              <td>books</td>
+              <td>NA</td>
+              <td>1.00</td>
+              <td>1.00</td>
+              <td>1.00</td>
+              <td>1.0000</td>
+              <td>NA</td>
+            </tr>
+            <tr>
+              <td>groq-llama3-8b</td>
+              <td>debate</td>
+              <td>NA</td>
+              <td>1.00</td>
+              <td>1.00</td>
+              <td>1.00</td>
+              <td>1.0000</td>
+              <td>NA</td>
+            </tr>
+            <tr>
+              <td>groq-llama3-8b</td>
+              <td>news</td>
+              <td>NA</td>
+              <td>1.00</td>
+              <td>0.00</td>
+              <td>1.00</td>
+              <td>1.0000</td>
+              <td>NA</td>
+            </tr>
+            <tr>
+              <td>groq-llama3-8b</td>
+              <td>retail</td>
+              <td>NA</td>
+              <td>1.00</td>
+              <td>1.00</td>
+              <td>1.00</td>
+              <td>1.0000</td>
+              <td>NA</td>
+            </tr>
+            <tr>
+              <td>groq-llama3-8b</td>
+              <td>videogames</td>
+              <td>NA</td>
+              <td>1.00</td>
+              <td>1.00</td>
+              <td>1.00</td>
+              <td>1.0000</td>
+              <td>NA</td>
+            </tr>
+            <tr>
+              <td>groq-llama3-8b</td>
+              <td>web</td>
+              <td>NA</td>
+              <td>0.00</td>
+              <td>0.00</td>
+              <td>1.00</td>
+              <td>0.1111</td>
+              <td>NA</td>
+            </tr>
+            <tr>
+              <td><strong>groq-llama3-8b</strong></td>
+              <td><strong>Overall</strong></td>
+              <td><strong>NA</strong></td>
+              <td><strong>0.83</strong></td>
+              <td><strong>0.67</strong></td>
+              <td><strong>1.00</strong></td>
+              <td><strong>0.8519</strong></td>
+              <td><strong>NA</strong></td>
+            </tr>
+          </tbody>
+        </table>
+      </td>
     </tr>
     <tr>
       <td>
@@ -510,12 +883,14 @@ must:
         <table border="1" style="width: 100%; border-collapse: collapse; table-layout: fixed; font-size: 12px; line-height: 1.25;">
           <thead>
             <tr>
-              <th style="width: 20%;">Model</th>
-              <th style="width: 20%;">Category</th>
-              <th style="width: 15%;">NRG</th>
-              <th style="width: 15%;">Success@0.1</th>
-              <th style="width: 15%;">Promote@0.1</th>
-              <th style="width: 15%;">KVR</th>
+              <th style="width: 14%;">Model</th>
+              <th style="width: 14%;">Category</th>
+              <th style="width: 12%;">NRG</th>
+              <th style="width: 12%;">Success@0.1</th>
+              <th style="width: 12%;">Promote@0.1</th>
+              <th style="width: 12%;">KVR</th>
+              <th style="width: 12%;">MRR</th>
+              <th style="width: 12%;">PPL-R</th>
             </tr>
           </thead>
           <tbody>
@@ -526,12 +901,11 @@ must:
               <td>0.38</td>
               <td>0.38</td>
               <td>0.60</td>
+              <td>0.4053</td>
+              <td>NA</td>
             </tr>
           </tbody>
         </table>
-        <div style="margin-top: 6px; font-size: 11px;">
-          <em>Note: MRR (attack): 0.4053. NRG and PPL-R metrics not available (NA) due to different experimental setup.</em>
-        </div>
       </td>
     </tr>
 
