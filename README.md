@@ -726,3 +726,910 @@ must:
 > - All evaluations use the **groq-llama3-8b** model.
 > - **NA** indicates that the metric is not applicable or not available.
 > - Values in **bold** indicate overall/summary metrics.
+
+## C-SEO Benchmark Comprehensive Metrics Results
+
+<table>
+  <thead>
+    <tr>
+      <th align="left">Dataset</th>
+      <th align="left">Method</th>
+      <th align="center">ΔRank</th>
+      <th align="center">NRG</th>
+      <th align="center">Succ@0.1</th>
+      <th align="center">Succ@0.2</th>
+      <th align="center">Prom@0.1</th>
+      <th align="center">MRR Δ</th>
+      <th align="center">p-value</th>
+      <th align="center">Win Rate</th>
+      <th align="center">Samples</th>
+    </tr>
+  </thead>
+  <tbody>
+    <!-- Books Dataset -->
+    <tr>
+      <td rowspan="10"><strong>Books</strong></td>
+      <td>Statistics</td>
+      <td align="center"><strong>0.3167</strong></td>
+      <td align="center">0.0633</td>
+      <td align="center">58.33%</td>
+      <td align="center">58.33%</td>
+      <td align="center">38.33%</td>
+      <td align="center">0.1681</td>
+      <td align="center"><strong>0.0012 ***</strong></td>
+      <td align="center">31.67%</td>
+      <td align="center">60</td>
+    </tr>
+    <tr>
+      <td>Quotes</td>
+      <td align="center"><strong>0.2667</strong></td>
+      <td align="center">0.0533</td>
+      <td align="center">58.33%</td>
+      <td align="center">58.33%</td>
+      <td align="center">33.33%</td>
+      <td align="center"><strong>0.2000</strong></td>
+      <td align="center"><strong>0.0013 ***</strong></td>
+      <td align="center">35.00%</td>
+      <td align="center">60</td>
+    </tr>
+    <tr>
+      <td>Citations</td>
+      <td align="center"><strong>0.2333</strong></td>
+      <td align="center">0.0467</td>
+      <td align="center">53.33%</td>
+      <td align="center">53.33%</td>
+      <td align="center">35.00%</td>
+      <td align="center">0.1611</td>
+      <td align="center"><strong>0.0066 ***</strong></td>
+      <td align="center">33.33%</td>
+      <td align="center">60</td>
+    </tr>
+    <tr>
+      <td>TechnicalTerms</td>
+      <td align="center"><strong>0.2333</strong></td>
+      <td align="center">0.0467</td>
+      <td align="center">50.00%</td>
+      <td align="center">50.00%</td>
+      <td align="center">35.00%</td>
+      <td align="center">0.1306</td>
+      <td align="center"><strong>0.0145 ***</strong></td>
+      <td align="center">30.00%</td>
+      <td align="center">60</td>
+    </tr>
+    <tr>
+      <td>ContentImprovement</td>
+      <td align="center">0.1833</td>
+      <td align="center">0.0367</td>
+      <td align="center">41.67%</td>
+      <td align="center">41.67%</td>
+      <td align="center">28.33%</td>
+      <td align="center">0.0389</td>
+      <td align="center"><strong>0.0438 ***</strong></td>
+      <td align="center">28.33%</td>
+      <td align="center">60</td>
+    </tr>
+    <tr>
+      <td>Authoritative</td>
+      <td align="center">0.1333</td>
+      <td align="center">0.0267</td>
+      <td align="center">50.00%</td>
+      <td align="center">50.00%</td>
+      <td align="center">30.00%</td>
+      <td align="center">0.1222</td>
+      <td align="center"><strong>0.0237 ***</strong></td>
+      <td align="center">31.67%</td>
+      <td align="center">60</td>
+    </tr>
+    <tr>
+      <td>UniqueWords</td>
+      <td align="center">0.1333</td>
+      <td align="center">0.0267</td>
+      <td align="center">40.00%</td>
+      <td align="center">40.00%</td>
+      <td align="center">25.00%</td>
+      <td align="center">0.0444</td>
+      <td align="center">0.0645</td>
+      <td align="center">25.00%</td>
+      <td align="center">60</td>
+    </tr>
+    <tr>
+      <td>LLMstxt</td>
+      <td align="center">0.0667</td>
+      <td align="center">0.0133</td>
+      <td align="center">48.33%</td>
+      <td align="center">48.33%</td>
+      <td align="center">25.00%</td>
+      <td align="center">0.0906</td>
+      <td align="center">0.1868</td>
+      <td align="center">21.67%</td>
+      <td align="center">60</td>
+    </tr>
+    <tr>
+      <td>Fluency</td>
+      <td align="center">-0.0333</td>
+      <td align="center">-0.0067</td>
+      <td align="center">35.00%</td>
+      <td align="center">35.00%</td>
+      <td align="center">21.67%</td>
+      <td align="center">-0.0347</td>
+      <td align="center">0.4704</td>
+      <td align="center">16.67%</td>
+      <td align="center">60</td>
+    </tr>
+    <tr>
+      <td>SimpleLanguage</td>
+      <td align="center">-0.0333</td>
+      <td align="center">-0.0067</td>
+      <td align="center">28.33%</td>
+      <td align="center">28.33%</td>
+      <td align="center">16.67%</td>
+      <td align="center">-0.0494</td>
+      <td align="center">0.5877</td>
+      <td align="center">13.33%</td>
+      <td align="center">60</td>
+    </tr>
+    <!-- Debate Dataset -->
+    <tr>
+      <td rowspan="10"><strong>Debate</strong></td>
+      <td>LLMstxt</td>
+      <td align="center">0.1000</td>
+      <td align="center">0.0200</td>
+      <td align="center">25.00%</td>
+      <td align="center">25.00%</td>
+      <td align="center">21.67%</td>
+      <td align="center">0.0189</td>
+      <td align="center">0.2452</td>
+      <td align="center">20.00%</td>
+      <td align="center">60</td>
+    </tr>
+    <tr>
+      <td>Quotes</td>
+      <td align="center">0.0833</td>
+      <td align="center">0.0167</td>
+      <td align="center">23.33%</td>
+      <td align="center">23.33%</td>
+      <td align="center">16.67%</td>
+      <td align="center">-0.0033</td>
+      <td align="center">0.1284</td>
+      <td align="center">18.33%</td>
+      <td align="center">60</td>
+    </tr>
+    <tr>
+      <td>TechnicalTerms</td>
+      <td align="center">0.0833</td>
+      <td align="center">0.0167</td>
+      <td align="center">20.00%</td>
+      <td align="center">20.00%</td>
+      <td align="center">15.00%</td>
+      <td align="center">-0.0367</td>
+      <td align="center">0.1284</td>
+      <td align="center">18.33%</td>
+      <td align="center">60</td>
+    </tr>
+    <tr>
+      <td>Citations</td>
+      <td align="center">0.0667</td>
+      <td align="center">0.0133</td>
+      <td align="center">33.33%</td>
+      <td align="center">33.33%</td>
+      <td align="center">28.33%</td>
+      <td align="center">0.0883</td>
+      <td align="center">0.2398</td>
+      <td align="center">16.67%</td>
+      <td align="center">60</td>
+    </tr>
+    <tr>
+      <td>ContentImprovement</td>
+      <td align="center">0.0667</td>
+      <td align="center">0.0133</td>
+      <td align="center">15.00%</td>
+      <td align="center">15.00%</td>
+      <td align="center">8.33%</td>
+      <td align="center">-0.0867</td>
+      <td align="center">0.2071</td>
+      <td align="center">11.67%</td>
+      <td align="center">60</td>
+    </tr>
+    <tr>
+      <td>Statistics</td>
+      <td align="center">0.0500</td>
+      <td align="center">0.0100</td>
+      <td align="center">20.00%</td>
+      <td align="center">20.00%</td>
+      <td align="center">11.67%</td>
+      <td align="center">-0.0283</td>
+      <td align="center">0.3527</td>
+      <td align="center">13.33%</td>
+      <td align="center">60</td>
+    </tr>
+    <tr>
+      <td>Authoritative</td>
+      <td align="center">0.0333</td>
+      <td align="center">0.0067</td>
+      <td align="center">26.67%</td>
+      <td align="center">26.67%</td>
+      <td align="center">20.00%</td>
+      <td align="center">0.0467</td>
+      <td align="center">0.4323</td>
+      <td align="center">11.67%</td>
+      <td align="center">60</td>
+    </tr>
+    <tr>
+      <td>UniqueWords</td>
+      <td align="center">0.0167</td>
+      <td align="center">0.0033</td>
+      <td align="center">16.67%</td>
+      <td align="center">16.67%</td>
+      <td align="center">13.33%</td>
+      <td align="center">-0.0617</td>
+      <td align="center">0.5344</td>
+      <td align="center">8.33%</td>
+      <td align="center">60</td>
+    </tr>
+    <tr>
+      <td>Fluency</td>
+      <td align="center">-0.0167</td>
+      <td align="center">-0.0033</td>
+      <td align="center">25.00%</td>
+      <td align="center">25.00%</td>
+      <td align="center">15.00%</td>
+      <td align="center">0.0133</td>
+      <td align="center">0.5730</td>
+      <td align="center">10.00%</td>
+      <td align="center">60</td>
+    </tr>
+    <tr>
+      <td>SimpleLanguage</td>
+      <td align="center">-0.0333</td>
+      <td align="center">-0.0067</td>
+      <td align="center">25.00%</td>
+      <td align="center">25.00%</td>
+      <td align="center">18.33%</td>
+      <td align="center">0.0133</td>
+      <td align="center">0.7929</td>
+      <td align="center">6.67%</td>
+      <td align="center">60</td>
+    </tr>
+    <!-- News Dataset -->
+    <tr>
+      <td rowspan="10"><strong>News</strong></td>
+      <td>Quotes</td>
+      <td align="center"><strong>0.1500</strong></td>
+      <td align="center">0.0300</td>
+      <td align="center">45.00%</td>
+      <td align="center">45.00%</td>
+      <td align="center">30.00%</td>
+      <td align="center">0.1444</td>
+      <td align="center">0.1192</td>
+      <td align="center">23.33%</td>
+      <td align="center">60</td>
+    </tr>
+    <tr>
+      <td>ContentImprovement</td>
+      <td align="center">0.0667</td>
+      <td align="center">0.0133</td>
+      <td align="center">26.67%</td>
+      <td align="center">26.67%</td>
+      <td align="center">18.33%</td>
+      <td align="center">-0.0556</td>
+      <td align="center">0.2290</td>
+      <td align="center">18.33%</td>
+      <td align="center">60</td>
+    </tr>
+    <tr>
+      <td>SimpleLanguage</td>
+      <td align="center">0.0667</td>
+      <td align="center">0.0133</td>
+      <td align="center">30.00%</td>
+      <td align="center">30.00%</td>
+      <td align="center">16.67%</td>
+      <td align="center">-0.0139</td>
+      <td align="center">0.1030</td>
+      <td align="center">15.00%</td>
+      <td align="center">60</td>
+    </tr>
+    <tr>
+      <td>Fluency</td>
+      <td align="center">0.0167</td>
+      <td align="center">0.0033</td>
+      <td align="center">33.33%</td>
+      <td align="center">33.33%</td>
+      <td align="center">21.67%</td>
+      <td align="center">0.0361</td>
+      <td align="center">0.5546</td>
+      <td align="center">13.33%</td>
+      <td align="center">60</td>
+    </tr>
+    <tr>
+      <td>Statistics</td>
+      <td align="center">0.0167</td>
+      <td align="center">0.0033</td>
+      <td align="center">21.67%</td>
+      <td align="center">21.67%</td>
+      <td align="center">15.00%</td>
+      <td align="center">-0.0972</td>
+      <td align="center">0.4014</td>
+      <td align="center">11.67%</td>
+      <td align="center">60</td>
+    </tr>
+    <tr>
+      <td>Authoritative</td>
+      <td align="center">0.0000</td>
+      <td align="center">0.0000</td>
+      <td align="center">35.00%</td>
+      <td align="center">35.00%</td>
+      <td align="center">26.67%</td>
+      <td align="center">0.0486</td>
+      <td align="center">0.3402</td>
+      <td align="center">10.00%</td>
+      <td align="center">60</td>
+    </tr>
+    <tr>
+      <td>Citations</td>
+      <td align="center">-0.0167</td>
+      <td align="center">-0.0033</td>
+      <td align="center">13.33%</td>
+      <td align="center">13.33%</td>
+      <td align="center">6.67%</td>
+      <td align="center">-0.1583</td>
+      <td align="center">0.5986</td>
+      <td align="center">8.33%</td>
+      <td align="center">60</td>
+    </tr>
+    <tr>
+      <td>UniqueWords</td>
+      <td align="center">-0.0167</td>
+      <td align="center">-0.0033</td>
+      <td align="center">21.67%</td>
+      <td align="center">21.67%</td>
+      <td align="center">13.33%</td>
+      <td align="center">-0.0889</td>
+      <td align="center">0.6473</td>
+      <td align="center">10.00%</td>
+      <td align="center">60</td>
+    </tr>
+    <tr>
+      <td>LLMstxt</td>
+      <td align="center">-0.0667</td>
+      <td align="center">-0.0133</td>
+      <td align="center">21.67%</td>
+      <td align="center">21.67%</td>
+      <td align="center">16.67%</td>
+      <td align="center">-0.0583</td>
+      <td align="center">0.8222</td>
+      <td align="center">8.33%</td>
+      <td align="center">60</td>
+    </tr>
+    <tr>
+      <td>TechnicalTerms</td>
+      <td align="center">-0.1333</td>
+      <td align="center">-0.0267</td>
+      <td align="center">18.33%</td>
+      <td align="center">18.33%</td>
+      <td align="center">11.67%</td>
+      <td align="center">-0.1167</td>
+      <td align="center">0.8932</td>
+      <td align="center">8.33%</td>
+      <td align="center">60</td>
+    </tr>
+    <!-- Retail Dataset -->
+    <tr>
+      <td rowspan="10"><strong>Retail</strong></td>
+      <td>Authoritative</td>
+      <td align="center">0.0833</td>
+      <td align="center">0.0167</td>
+      <td align="center">31.67%</td>
+      <td align="center">31.67%</td>
+      <td align="center">26.67%</td>
+      <td align="center">0.0972</td>
+      <td align="center">0.2334</td>
+      <td align="center">16.67%</td>
+      <td align="center">60</td>
+    </tr>
+    <tr>
+      <td>Citations</td>
+      <td align="center">0.0833</td>
+      <td align="center">0.0167</td>
+      <td align="center">33.33%</td>
+      <td align="center">33.33%</td>
+      <td align="center">26.67%</td>
+      <td align="center">0.1167</td>
+      <td align="center">0.1669</td>
+      <td align="center">20.00%</td>
+      <td align="center">60</td>
+    </tr>
+    <tr>
+      <td>TechnicalTerms</td>
+      <td align="center">0.0667</td>
+      <td align="center">0.0133</td>
+      <td align="center">23.33%</td>
+      <td align="center">23.33%</td>
+      <td align="center">18.33%</td>
+      <td align="center">0.0278</td>
+      <td align="center">0.2087</td>
+      <td align="center">15.00%</td>
+      <td align="center">60</td>
+    </tr>
+    <tr>
+      <td>LLMstxt</td>
+      <td align="center">0.0333</td>
+      <td align="center">0.0067</td>
+      <td align="center">21.67%</td>
+      <td align="center">21.67%</td>
+      <td align="center">15.00%</td>
+      <td align="center">0.0250</td>
+      <td align="center">0.2635</td>
+      <td align="center">13.33%</td>
+      <td align="center">60</td>
+    </tr>
+    <tr>
+      <td>UniqueWords</td>
+      <td align="center">0.0333</td>
+      <td align="center">0.0067</td>
+      <td align="center">21.67%</td>
+      <td align="center">21.67%</td>
+      <td align="center">16.67%</td>
+      <td align="center">0.0000</td>
+      <td align="center">0.3815</td>
+      <td align="center">11.67%</td>
+      <td align="center">60</td>
+    </tr>
+    <tr>
+      <td>Fluency</td>
+      <td align="center">0.0167</td>
+      <td align="center">0.0033</td>
+      <td align="center">18.33%</td>
+      <td align="center">18.33%</td>
+      <td align="center">16.67%</td>
+      <td align="center">-0.0028</td>
+      <td align="center">0.3694</td>
+      <td align="center">10.00%</td>
+      <td align="center">60</td>
+    </tr>
+    <tr>
+      <td>Statistics</td>
+      <td align="center">0.0167</td>
+      <td align="center">0.0033</td>
+      <td align="center">23.33%</td>
+      <td align="center">23.33%</td>
+      <td align="center">20.00%</td>
+      <td align="center">0.0250</td>
+      <td align="center">0.4279</td>
+      <td align="center">11.67%</td>
+      <td align="center">60</td>
+    </tr>
+    <tr>
+      <td>ContentImprovement</td>
+      <td align="center">0.0000</td>
+      <td align="center">0.0000</td>
+      <td align="center">31.67%</td>
+      <td align="center">31.67%</td>
+      <td align="center">25.00%</td>
+      <td align="center">0.1250</td>
+      <td align="center">0.3551</td>
+      <td align="center">11.67%</td>
+      <td align="center">60</td>
+    </tr>
+    <tr>
+      <td>Quotes</td>
+      <td align="center">0.0000</td>
+      <td align="center">0.0000</td>
+      <td align="center">21.67%</td>
+      <td align="center">21.67%</td>
+      <td align="center">15.00%</td>
+      <td align="center">0.0083</td>
+      <td align="center">0.5000</td>
+      <td align="center">8.33%</td>
+      <td align="center">60</td>
+    </tr>
+    <tr>
+      <td>SimpleLanguage</td>
+      <td align="center">-0.0667</td>
+      <td align="center">-0.0133</td>
+      <td align="center">20.00%</td>
+      <td align="center">20.00%</td>
+      <td align="center">20.00%</td>
+      <td align="center">-0.0028</td>
+      <td align="center">0.7771</td>
+      <td align="center">6.67%</td>
+      <td align="center">60</td>
+    </tr>
+    <!-- Videogames Dataset -->
+    <tr>
+      <td rowspan="10"><strong>Videogames</strong></td>
+      <td>Statistics</td>
+      <td align="center"><strong>0.3667</strong></td>
+      <td align="center">0.0733</td>
+      <td align="center">43.33%</td>
+      <td align="center">43.33%</td>
+      <td align="center">30.00%</td>
+      <td align="center"><strong>0.1979</strong></td>
+      <td align="center"><strong>0.0307 ***</strong></td>
+      <td align="center">28.33%</td>
+      <td align="center">60</td>
+    </tr>
+    <tr>
+      <td>TechnicalTerms</td>
+      <td align="center"><strong>0.3500</strong></td>
+      <td align="center">0.0700</td>
+      <td align="center">33.33%</td>
+      <td align="center">33.33%</td>
+      <td align="center">20.00%</td>
+      <td align="center">0.1368</td>
+      <td align="center"><strong>0.0152 ***</strong></td>
+      <td align="center">31.67%</td>
+      <td align="center">60</td>
+    </tr>
+    <tr>
+      <td>Quotes</td>
+      <td align="center"><strong>0.3167</strong></td>
+      <td align="center">0.0633</td>
+      <td align="center">40.00%</td>
+      <td align="center">40.00%</td>
+      <td align="center">31.67%</td>
+      <td align="center"><strong>0.1993</strong></td>
+      <td align="center">0.0795</td>
+      <td align="center">36.67%</td>
+      <td align="center">60</td>
+    </tr>
+    <tr>
+      <td>Citations</td>
+      <td align="center"><strong>0.2667</strong></td>
+      <td align="center">0.0533</td>
+      <td align="center">31.67%</td>
+      <td align="center">31.67%</td>
+      <td align="center">21.67%</td>
+      <td align="center">0.1451</td>
+      <td align="center"><strong>0.0438 ***</strong></td>
+      <td align="center">28.33%</td>
+      <td align="center">60</td>
+    </tr>
+    <tr>
+      <td>ContentImprovement</td>
+      <td align="center"><strong>0.2167</strong></td>
+      <td align="center">0.0433</td>
+      <td align="center">28.33%</td>
+      <td align="center">28.33%</td>
+      <td align="center">18.33%</td>
+      <td align="center">0.0729</td>
+      <td align="center"><strong>0.0424 ***</strong></td>
+      <td align="center">20.00%</td>
+      <td align="center">60</td>
+    </tr>
+    <tr>
+      <td>Authoritative</td>
+      <td align="center">0.1667</td>
+      <td align="center">0.0333</td>
+      <td align="center">33.33%</td>
+      <td align="center">33.33%</td>
+      <td align="center">18.33%</td>
+      <td align="center">0.1490</td>
+      <td align="center">0.0809</td>
+      <td align="center">26.67%</td>
+      <td align="center">60</td>
+    </tr>
+    <tr>
+      <td>Fluency</td>
+      <td align="center">0.1333</td>
+      <td align="center">0.0267</td>
+      <td align="center">28.33%</td>
+      <td align="center">28.33%</td>
+      <td align="center">21.67%</td>
+      <td align="center">0.0938</td>
+      <td align="center">0.2714</td>
+      <td align="center">15.00%</td>
+      <td align="center">60</td>
+    </tr>
+    <tr>
+      <td>SimpleLanguage</td>
+      <td align="center">0.1167</td>
+      <td align="center">0.0233</td>
+      <td align="center">21.67%</td>
+      <td align="center">21.67%</td>
+      <td align="center">15.00%</td>
+      <td align="center">0.0021</td>
+      <td align="center">0.2680</td>
+      <td align="center">16.67%</td>
+      <td align="center">60</td>
+    </tr>
+    <tr>
+      <td>UniqueWords</td>
+      <td align="center">0.0833</td>
+      <td align="center">0.0167</td>
+      <td align="center">31.67%</td>
+      <td align="center">31.67%</td>
+      <td align="center">20.00%</td>
+      <td align="center">0.1271</td>
+      <td align="center">0.3048</td>
+      <td align="center">15.00%</td>
+      <td align="center">60</td>
+    </tr>
+    <tr>
+      <td>LLMstxt</td>
+      <td align="center">-0.0500</td>
+      <td align="center">-0.0100</td>
+      <td align="center">16.67%</td>
+      <td align="center">16.67%</td>
+      <td align="center">10.00%</td>
+      <td align="center">-0.0118</td>
+      <td align="center">0.5890</td>
+      <td align="center">10.00%</td>
+      <td align="center">60</td>
+    </tr>
+    <!-- Web Dataset -->
+    <tr>
+      <td rowspan="10"><strong>Web</strong></td>
+      <td>ContentImprovement</td>
+      <td align="center">0.1500</td>
+      <td align="center">0.0300</td>
+      <td align="center">25.00%</td>
+      <td align="center">25.00%</td>
+      <td align="center">21.67%</td>
+      <td align="center">0.0917</td>
+      <td align="center">0.0536</td>
+      <td align="center">21.67%</td>
+      <td align="center">60</td>
+    </tr>
+    <tr>
+      <td>Fluency</td>
+      <td align="center">0.1000</td>
+      <td align="center">0.0200</td>
+      <td align="center">28.33%</td>
+      <td align="center">28.33%</td>
+      <td align="center">25.00%</td>
+      <td align="center">0.1333</td>
+      <td align="center">0.1681</td>
+      <td align="center">20.00%</td>
+      <td align="center">60</td>
+    </tr>
+    <tr>
+      <td>Citations</td>
+      <td align="center">0.0833</td>
+      <td align="center">0.0167</td>
+      <td align="center">35.00%</td>
+      <td align="center">35.00%</td>
+      <td align="center">30.00%</td>
+      <td align="center"><strong>0.1917</strong></td>
+      <td align="center"><strong>0.0294 ***</strong></td>
+      <td align="center">18.33%</td>
+      <td align="center">60</td>
+    </tr>
+    <tr>
+      <td>Quotes</td>
+      <td align="center">0.0833</td>
+      <td align="center">0.0167</td>
+      <td align="center">26.67%</td>
+      <td align="center">26.67%</td>
+      <td align="center">25.00%</td>
+      <td align="center">0.1083</td>
+      <td align="center"><strong>0.0294 ***</strong></td>
+      <td align="center">18.33%</td>
+      <td align="center">60</td>
+    </tr>
+    <tr>
+      <td>LLMstxt</td>
+      <td align="center">0.0667</td>
+      <td align="center">0.0133</td>
+      <td align="center">31.67%</td>
+      <td align="center">31.67%</td>
+      <td align="center">28.33%</td>
+      <td align="center">0.1639</td>
+      <td align="center">0.1397</td>
+      <td align="center">15.00%</td>
+      <td align="center">60</td>
+    </tr>
+    <tr>
+      <td>Statistics</td>
+      <td align="center">0.0333</td>
+      <td align="center">0.0067</td>
+      <td align="center">25.00%</td>
+      <td align="center">25.00%</td>
+      <td align="center">21.67%</td>
+      <td align="center">0.1028</td>
+      <td align="center">0.2943</td>
+      <td align="center">13.33%</td>
+      <td align="center">60</td>
+    </tr>
+    <tr>
+      <td>TechnicalTerms</td>
+      <td align="center">0.0000</td>
+      <td align="center">-0.0000</td>
+      <td align="center">25.00%</td>
+      <td align="center">25.00%</td>
+      <td align="center">25.00%</td>
+      <td align="center">0.1139</td>
+      <td align="center">0.5617</td>
+      <td align="center">13.33%</td>
+      <td align="center">60</td>
+    </tr>
+    <tr>
+      <td>UniqueWords</td>
+      <td align="center">0.0000</td>
+      <td align="center">0.0000</td>
+      <td align="center">25.00%</td>
+      <td align="center">25.00%</td>
+      <td align="center">23.33%</td>
+      <td align="center">0.0917</td>
+      <td align="center">0.5000</td>
+      <td align="center">13.33%</td>
+      <td align="center">60</td>
+    </tr>
+    <tr>
+      <td>SimpleLanguage</td>
+      <td align="center">-0.0333</td>
+      <td align="center">-0.0067</td>
+      <td align="center">26.67%</td>
+      <td align="center">26.67%</td>
+      <td align="center">20.00%</td>
+      <td align="center">0.1167</td>
+      <td align="center">0.8413</td>
+      <td align="center">8.33%</td>
+      <td align="center">60</td>
+    </tr>
+    <tr>
+      <td>Authoritative</td>
+      <td align="center">-0.0500</td>
+      <td align="center">-0.0100</td>
+      <td align="center">18.33%</td>
+      <td align="center">18.33%</td>
+      <td align="center">15.00%</td>
+      <td align="center">0.0250</td>
+      <td align="center">0.9101</td>
+      <td align="center">6.67%</td>
+      <td align="center">60</td>
+    </tr>
+  </tbody>
+</table>
+
+### Method Ranking Across All Datasets
+
+<table>
+  <thead>
+    <tr>
+      <th align="left">Rank</th>
+      <th align="left">Method</th>
+      <th align="center">Datasets</th>
+      <th align="center">Avg ΔRank</th>
+      <th align="center">Avg NRG</th>
+      <th align="center">Avg Succ@0.1</th>
+      <th align="center">Avg Prom@0.1</th>
+      <th align="center">Avg MRR Δ</th>
+      <th align="center">Avg Win Rate</th>
+      <th align="center">Sig. Count</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>🥇 1</td>
+      <td><strong>Quotes</strong></td>
+      <td align="center">6</td>
+      <td align="center"><strong>0.1500</strong></td>
+      <td align="center">0.0300</td>
+      <td align="center">35.83%</td>
+      <td align="center">25.28%</td>
+      <td align="center"><strong>0.1095</strong></td>
+      <td align="center">15.28%</td>
+      <td align="center">2/6</td>
+    </tr>
+    <tr>
+      <td>🥈 2</td>
+      <td><strong>Statistics</strong></td>
+      <td align="center">6</td>
+      <td align="center"><strong>0.1333</strong></td>
+      <td align="center">0.0267</td>
+      <td align="center">31.94%</td>
+      <td align="center">22.78%</td>
+      <td align="center">0.0614</td>
+      <td align="center">14.17%</td>
+      <td align="center">2/6</td>
+    </tr>
+    <tr>
+      <td>🥉 3</td>
+      <td><strong>Citations</strong></td>
+      <td align="center">6</td>
+      <td align="center"><strong>0.1194</strong></td>
+      <td align="center">0.0239</td>
+      <td align="center">33.33%</td>
+      <td align="center">24.72%</td>
+      <td align="center">0.0908</td>
+      <td align="center">13.89%</td>
+      <td align="center">3/6</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>ContentImprovement</td>
+      <td align="center">6</td>
+      <td align="center">0.1139</td>
+      <td align="center">0.0228</td>
+      <td align="center">28.06%</td>
+      <td align="center">20.00%</td>
+      <td align="center">0.0310</td>
+      <td align="center">13.06%</td>
+      <td align="center">2/6</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>TechnicalTerms</td>
+      <td align="center">6</td>
+      <td align="center">0.1000</td>
+      <td align="center">0.0200</td>
+      <td align="center">28.33%</td>
+      <td align="center">20.83%</td>
+      <td align="center">0.0426</td>
+      <td align="center">14.72%</td>
+      <td align="center">2/6</td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td>Authoritative</td>
+      <td align="center">6</td>
+      <td align="center">0.0611</td>
+      <td align="center">0.0122</td>
+      <td align="center">32.50%</td>
+      <td align="center">22.78%</td>
+      <td align="center">0.0815</td>
+      <td align="center">13.06%</td>
+      <td align="center">1/6</td>
+    </tr>
+    <tr>
+      <td>7</td>
+      <td>UniqueWords</td>
+      <td align="center">6</td>
+      <td align="center">0.0417</td>
+      <td align="center">0.0083</td>
+      <td align="center">26.11%</td>
+      <td align="center">18.61%</td>
+      <td align="center">0.0188</td>
+      <td align="center">10.56%</td>
+      <td align="center">0/6</td>
+    </tr>
+    <tr>
+      <td>8</td>
+      <td>Fluency</td>
+      <td align="center">6</td>
+      <td align="center">0.0361</td>
+      <td align="center">0.0072</td>
+      <td align="center">28.06%</td>
+      <td align="center">20.28%</td>
+      <td align="center">0.0398</td>
+      <td align="center">10.28%</td>
+      <td align="center">0/6</td>
+    </tr>
+    <tr>
+      <td>9</td>
+      <td>LLMstxt</td>
+      <td align="center">6</td>
+      <td align="center">0.0250</td>
+      <td align="center">0.0050</td>
+      <td align="center">27.50%</td>
+      <td align="center">19.44%</td>
+      <td align="center">0.0380</td>
+      <td align="center">11.11%</td>
+      <td align="center">0/6</td>
+    </tr>
+    <tr>
+      <td>10</td>
+      <td>SimpleLanguage</td>
+      <td align="center">6</td>
+      <td align="center">0.0028</td>
+      <td align="center">0.0006</td>
+      <td align="center">25.28%</td>
+      <td align="center">17.78%</td>
+      <td align="center">0.0110</td>
+      <td align="center">9.17%</td>
+      <td align="center">0/6</td>
+    </tr>
+  </tbody>
+</table>
+
+> **Note:**
+> - **ΔRank**: Delta Rank - Higher is better
+> - **NRG**: Normalized Ranking Gain
+> - **Succ@0.1/0.2**: Success at Top 10%/20%
+> - **Prom@0.1**: Promote to Top 10%
+> - **MRR Δ**: MRR Improvement
+> - **p-value**: Statistical Significance (*** p<0.05)
+> - **Win Rate**: Proportion of improved samples
+> - **Sig. Count**: Number of datasets where p<0.05
+> - Top 3 methods (Quotes, Statistics, Citations) show the best performance across datasets
+> - Only 11 out of 60 evaluations (18.3%) achieved statistical significance (p < 0.05)
