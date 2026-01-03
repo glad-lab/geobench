@@ -335,3 +335,415 @@ must:
   </tbody>
 </table>
 
+<!-- ========================================================================= -->
+<!-- Ranking Manipulation for Conversational Search Engines Results          -->
+<!-- ========================================================================= -->
+
+<h2 style="margin-top: 40px; margin-bottom: 20px; font-family: Arial, sans-serif; color: #333;">
+  Ranking Manipulation for Conversational Search Engines - Evaluation Results
+</h2>
+
+<table style="width: 100%; border-collapse: collapse; font-family: Arial, sans-serif; font-size: 14px;">
+  <thead>
+    <tr style="background: linear-gradient(to bottom, #4a90e2, #357abd); color: white;">
+      <th style="padding: 12px 8px; text-align: left; border: 1px solid #ddd; font-weight: 600;">Test Dataset</th>
+      <th style="padding: 12px 8px; text-align: left; border: 1px solid #ddd; font-weight: 600;">Model</th>
+      <th style="padding: 12px 8px; text-align: left; border: 1px solid #ddd; font-weight: 600;">Category</th>
+      <th style="padding: 12px 8px; text-align: center; border: 1px solid #ddd; font-weight: 600;">NRG</th>
+      <th style="padding: 12px 8px; text-align: center; border: 1px solid #ddd; font-weight: 600;">Success@0.1</th>
+      <th style="padding: 12px 8px; text-align: center; border: 1px solid #ddd; font-weight: 600;">Promote@0.1</th>
+      <th style="padding: 12px 8px; text-align: center; border: 1px solid #ddd; font-weight: 600;">KVR</th>
+      <th style="padding: 12px 8px; text-align: center; border: 1px solid #ddd; font-weight: 600;">MRR</th>
+      <th style="padding: 12px 8px; text-align: center; border: 1px solid #ddd; font-weight: 600;">PPL-R</th>
+    </tr>
+  </thead>
+  <tbody>
+    <!-- Ragroll Dataset -->
+    <tr style="background-color: #f8f9fa;">
+      <td style="padding: 10px 8px; border: 1px solid #ddd; font-weight: 600; color: #2c3e50;">Ragroll</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd;">groq-llama3-8b</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd; font-style: italic;">All categories (49)</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd; text-align: center; color: #999;">NA</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd; text-align: center; background-color: #d4edda;">0.84</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd; text-align: center; background-color: #d4edda;">0.84</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd; text-align: center; background-color: #d4edda;">0.92</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd; text-align: center; background-color: #d4edda;">0.8835</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd; text-align: center; color: #999;">NA</td>
+    </tr>
+
+    <!-- STSData Dataset -->
+    <tr style="background-color: #fff;">
+      <td rowspan="4" style="padding: 10px 8px; border: 1px solid #ddd; font-weight: 600; vertical-align: top; color: #2c3e50;">STSData</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd;">groq-llama3-8b</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd;">books</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd; text-align: center; color: #999;">NA</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd; text-align: center; background-color: #d4edda;">1.00</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd; text-align: center; background-color: #d4edda;">1.00</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd; text-align: center; background-color: #d4edda;">1.00</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd; text-align: center; background-color: #d4edda;">1.0000</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd; text-align: center; color: #999;">NA</td>
+    </tr>
+    <tr style="background-color: #fff;">
+      <td style="padding: 10px 8px; border: 1px solid #ddd;">groq-llama3-8b</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd;">cameras</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd; text-align: center; color: #999;">NA</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd; text-align: center; background-color: #f8d7da;">0.00</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd; text-align: center; background-color: #f8d7da;">0.00</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd; text-align: center; background-color: #d4edda;">1.00</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd; text-align: center; background-color: #fff3cd;">0.1000</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd; text-align: center; color: #999;">NA</td>
+    </tr>
+    <tr style="background-color: #fff;">
+      <td style="padding: 10px 8px; border: 1px solid #ddd;">groq-llama3-8b</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd;">coffee_machines</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd; text-align: center; color: #999;">NA</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd; text-align: center; background-color: #f8d7da;">0.00</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd; text-align: center; background-color: #f8d7da;">0.00</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd; text-align: center; background-color: #f8d7da;">0.00</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd; text-align: center; background-color: #fff3cd;">0.1111</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd; text-align: center; color: #999;">NA</td>
+    </tr>
+    <tr style="background-color: #cfe2ff; font-weight: 600;">
+      <td style="padding: 10px 8px; border: 1px solid #ddd;">groq-llama3-8b</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd;">📊 Overall (3 categories)</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd; text-align: center; color: #999;">NA</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd; text-align: center;">0.33</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd; text-align: center;">0.33</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd; text-align: center;">0.67</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd; text-align: center;">0.4037</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd; text-align: center; color: #999;">NA</td>
+    </tr>
+
+    <!-- RewriteToRank Dataset -->
+    <tr style="background-color: #f8f9fa;">
+      <td style="padding: 10px 8px; border: 1px solid #ddd; font-weight: 600; color: #2c3e50;">RewriteToRank</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd;">groq-llama3-8b</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd; font-style: italic;">All categories (50)</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd; text-align: center; color: #999;">NA</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd; text-align: center; background-color: #d4edda;">0.78</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd; text-align: center; background-color: #d4edda;">0.78</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd; text-align: center; background-color: #d4edda;">0.86</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd; text-align: center; background-color: #d4edda;">0.8354</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd; text-align: center; color: #999;">NA</td>
+    </tr>
+
+    <!-- LLM Rank Optimizer Dataset -->
+    <tr style="background-color: #fff;">
+      <td rowspan="5" style="padding: 10px 8px; border: 1px solid #ddd; font-weight: 600; vertical-align: top; color: #2c3e50;">LLM Rank Optimizer</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd;">groq-llama3-8b</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd;">books</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd; text-align: center; color: #999;">NA</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd; text-align: center; background-color: #d4edda;">1.00</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd; text-align: center; background-color: #d4edda;">1.00</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd; text-align: center; background-color: #d4edda;">1.00</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd; text-align: center; background-color: #d4edda;">1.0000</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd; text-align: center; color: #999;">NA</td>
+    </tr>
+    <tr style="background-color: #fff;">
+      <td style="padding: 10px 8px; border: 1px solid #ddd;">groq-llama3-8b</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd;">cameras</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd; text-align: center; color: #999;">NA</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd; text-align: center; background-color: #d4edda;">1.00</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd; text-align: center; background-color: #d4edda;">1.00</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd; text-align: center; background-color: #d4edda;">1.00</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd; text-align: center; background-color: #d4edda;">1.0000</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd; text-align: center; color: #999;">NA</td>
+    </tr>
+    <tr style="background-color: #fff;">
+      <td style="padding: 10px 8px; border: 1px solid #ddd;">groq-llama3-8b</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd;">coffee_machines</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd; text-align: center; color: #999;">NA</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd; text-align: center; background-color: #d4edda;">1.00</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd; text-align: center; background-color: #d4edda;">1.00</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd; text-align: center; background-color: #d4edda;">1.00</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd; text-align: center; background-color: #d4edda;">1.0000</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd; text-align: center; color: #999;">NA</td>
+    </tr>
+    <tr style="background-color: #fff;">
+      <td style="padding: 10px 8px; border: 1px solid #ddd;">groq-llama3-8b</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd;">election_articles</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd; text-align: center; color: #999;">NA</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd; text-align: center; background-color: #d4edda;">1.00</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd; text-align: center; background-color: #d4edda;">1.00</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd; text-align: center; background-color: #f8d7da;">0.00</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd; text-align: center; background-color: #d4edda;">1.0000</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd; text-align: center; color: #999;">NA</td>
+    </tr>
+    <tr style="background-color: #cfe2ff; font-weight: 600;">
+      <td style="padding: 10px 8px; border: 1px solid #ddd;">groq-llama3-8b</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd;">📊 Overall (4 categories)</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd; text-align: center; color: #999;">NA</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd; text-align: center;">1.00</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd; text-align: center;">1.00</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd; text-align: center;">0.75</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd; text-align: center;">1.0000</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd; text-align: center; color: #999;">NA</td>
+    </tr>
+
+    <!-- LLM Rank Dataset -->
+    <tr style="background-color: #f8f9fa;">
+      <td rowspan="8" style="padding: 10px 8px; border: 1px solid #ddd; font-weight: 600; vertical-align: top; color: #2c3e50;">LLM Rank</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd;">groq-llama3-8b</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd;">computers</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd; text-align: center; color: #999;">NA</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd; text-align: center; background-color: #d4edda;">1.00</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd; text-align: center; background-color: #d4edda;">1.00</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd; text-align: center; background-color: #d4edda;">1.00</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd; text-align: center; background-color: #d4edda;">1.0000</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd; text-align: center; color: #999;">NA</td>
+    </tr>
+    <tr style="background-color: #f8f9fa;">
+      <td style="padding: 10px 8px; border: 1px solid #ddd;">groq-llama3-8b</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd;">software</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd; text-align: center; color: #999;">NA</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd; text-align: center; background-color: #d4edda;">1.00</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd; text-align: center; background-color: #d4edda;">1.00</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd; text-align: center; background-color: #f8d7da;">0.00</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd; text-align: center; background-color: #d4edda;">1.0000</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd; text-align: center; color: #999;">NA</td>
+    </tr>
+    <tr style="background-color: #f8f9fa;">
+      <td style="padding: 10px 8px; border: 1px solid #ddd;">groq-llama3-8b</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd;">books</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd; text-align: center; color: #999;">NA</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd; text-align: center; background-color: #f8d7da;">0.00</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd; text-align: center; background-color: #f8d7da;">0.00</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd; text-align: center; background-color: #d4edda;">1.00</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd; text-align: center; background-color: #fff3cd;">0.2000</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd; text-align: center; color: #999;">NA</td>
+    </tr>
+    <tr style="background-color: #f8f9fa;">
+      <td style="padding: 10px 8px; border: 1px solid #ddd;">groq-llama3-8b</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd;">automotive</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd; text-align: center; color: #999;">NA</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd; text-align: center; background-color: #d4edda;">1.00</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd; text-align: center; background-color: #d4edda;">1.00</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd; text-align: center; background-color: #d4edda;">1.00</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd; text-align: center; background-color: #d4edda;">1.0000</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd; text-align: center; color: #999;">NA</td>
+    </tr>
+    <tr style="background-color: #f8f9fa;">
+      <td style="padding: 10px 8px; border: 1px solid #ddd;">groq-llama3-8b</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd;">baby</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd; text-align: center; color: #999;">NA</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd; text-align: center; background-color: #d4edda;">1.00</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd; text-align: center; background-color: #d4edda;">1.00</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd; text-align: center; background-color: #f8d7da;">0.00</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd; text-align: center; background-color: #d4edda;">1.0000</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd; text-align: center; color: #999;">NA</td>
+    </tr>
+    <tr style="background-color: #f8f9fa;">
+      <td style="padding: 10px 8px; border: 1px solid #ddd;">groq-llama3-8b</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd;">grocery</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd; text-align: center; color: #999;">NA</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd; text-align: center; background-color: #f8d7da;">0.00</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd; text-align: center; background-color: #f8d7da;">0.00</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd; text-align: center; background-color: #d4edda;">1.00</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd; text-align: center; background-color: #fff3cd;">0.1429</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd; text-align: center; color: #999;">NA</td>
+    </tr>
+    <tr style="background-color: #f8f9fa;">
+      <td style="padding: 10px 8px; border: 1px solid #ddd;">groq-llama3-8b</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd;">appliances</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd; text-align: center; color: #999;">NA</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd; text-align: center; background-color: #d4edda;">1.00</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd; text-align: center; background-color: #d4edda;">1.00</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd; text-align: center; background-color: #f8d7da;">0.00</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd; text-align: center; background-color: #d4edda;">1.0000</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd; text-align: center; color: #999;">NA</td>
+    </tr>
+    <tr style="background-color: #cfe2ff; font-weight: 600;">
+      <td style="padding: 10px 8px; border: 1px solid #ddd;">groq-llama3-8b</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd;">📊 Overall (7 categories)</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd; text-align: center; color: #999;">NA</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd; text-align: center;">0.71</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd; text-align: center;">0.71</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd; text-align: center;">0.57</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd; text-align: center;">0.7633</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd; text-align: center; color: #999;">NA</td>
+    </tr>
+
+    <!-- AdversarialSEO Dataset -->
+    <tr style="background-color: #fff;">
+      <td rowspan="8" style="padding: 10px 8px; border: 1px solid #ddd; font-weight: 600; vertical-align: top; color: #2c3e50;">AdversarialSEO</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd;">groq-llama3-8b</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd;">cameras</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd; text-align: center; color: #999;">NA</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd; text-align: center; background-color: #d4edda;">1.00</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd; text-align: center; background-color: #d4edda;">1.00</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd; text-align: center; background-color: #d4edda;">1.00</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd; text-align: center; background-color: #d4edda;">1.0000</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd; text-align: center; color: #999;">NA</td>
+    </tr>
+    <tr style="background-color: #fff;">
+      <td style="padding: 10px 8px; border: 1px solid #ddd;">groq-llama3-8b</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd;">books_and_media</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd; text-align: center; color: #999;">NA</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd; text-align: center; background-color: #f8d7da;">0.00</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd; text-align: center; background-color: #f8d7da;">0.00</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd; text-align: center; background-color: #d4edda;">1.00</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd; text-align: center; background-color: #fff3cd;">0.1250</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd; text-align: center; color: #999;">NA</td>
+    </tr>
+    <tr style="background-color: #fff;">
+      <td style="padding: 10px 8px; border: 1px solid #ddd;">groq-llama3-8b</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd;">computing_hardware</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd; text-align: center; color: #999;">NA</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd; text-align: center; background-color: #d4edda;">1.00</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd; text-align: center; background-color: #d4edda;">1.00</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd; text-align: center; background-color: #d4edda;">1.00</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd; text-align: center; background-color: #d4edda;">1.0000</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd; text-align: center; color: #999;">NA</td>
+    </tr>
+    <tr style="background-color: #fff;">
+      <td style="padding: 10px 8px; border: 1px solid #ddd;">groq-llama3-8b</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd;">home_furniture</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd; text-align: center; color: #999;">NA</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd; text-align: center; background-color: #d4edda;">1.00</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd; text-align: center; background-color: #d4edda;">1.00</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd; text-align: center; background-color: #d4edda;">1.00</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd; text-align: center; background-color: #d4edda;">1.0000</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd; text-align: center; color: #999;">NA</td>
+    </tr>
+    <tr style="background-color: #fff;">
+      <td style="padding: 10px 8px; border: 1px solid #ddd;">groq-llama3-8b</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd;">kitchen_appliances</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd; text-align: center; color: #999;">NA</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd; text-align: center; background-color: #d4edda;">1.00</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd; text-align: center; background-color: #d4edda;">1.00</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd; text-align: center; background-color: #d4edda;">1.00</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd; text-align: center; background-color: #d4edda;">1.0000</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd; text-align: center; color: #999;">NA</td>
+    </tr>
+    <tr style="background-color: #fff;">
+      <td style="padding: 10px 8px; border: 1px solid #ddd;">groq-llama3-8b</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd;">lenses</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd; text-align: center; color: #999;">NA</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd; text-align: center; background-color: #f8d7da;">0.00</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd; text-align: center; background-color: #f8d7da;">0.00</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd; text-align: center; background-color: #d4edda;">1.00</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd; text-align: center; background-color: #fff3cd;">0.2500</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd; text-align: center; color: #999;">NA</td>
+    </tr>
+    <tr style="background-color: #fff;">
+      <td style="padding: 10px 8px; border: 1px solid #ddd;">groq-llama3-8b</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd;">accessories</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd; text-align: center; color: #999;">NA</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd; text-align: center; background-color: #f8d7da;">0.00</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd; text-align: center; background-color: #f8d7da;">0.00</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd; text-align: center; background-color: #d4edda;">1.00</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd; text-align: center; background-color: #fff3cd;">0.5000</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd; text-align: center; color: #999;">NA</td>
+    </tr>
+    <tr style="background-color: #cfe2ff; font-weight: 600;">
+      <td style="padding: 10px 8px; border: 1px solid #ddd;">groq-llama3-8b</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd;">📊 Overall (7 categories)</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd; text-align: center; color: #999;">NA</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd; text-align: center;">0.57</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd; text-align: center;">0.57</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd; text-align: center;">1.00</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd; text-align: center;">0.6964</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd; text-align: center; color: #999;">NA</td>
+    </tr>
+
+    <!-- C-SEO Dataset -->
+    <tr style="background-color: #f8f9fa;">
+      <td rowspan="7" style="padding: 10px 8px; border: 1px solid #ddd; font-weight: 600; vertical-align: top; color: #2c3e50;">C-SEO</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd;">groq-llama3-8b</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd;">books</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd; text-align: center; color: #999;">NA</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd; text-align: center; background-color: #d4edda;">1.00</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd; text-align: center; background-color: #d4edda;">1.00</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd; text-align: center; background-color: #d4edda;">1.00</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd; text-align: center; background-color: #d4edda;">1.0000</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd; text-align: center; color: #999;">NA</td>
+    </tr>
+    <tr style="background-color: #f8f9fa;">
+      <td style="padding: 10px 8px; border: 1px solid #ddd;">groq-llama3-8b</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd;">debate</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd; text-align: center; color: #999;">NA</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd; text-align: center; background-color: #d4edda;">1.00</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd; text-align: center; background-color: #d4edda;">1.00</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd; text-align: center; background-color: #d4edda;">1.00</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd; text-align: center; background-color: #d4edda;">1.0000</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd; text-align: center; color: #999;">NA</td>
+    </tr>
+    <tr style="background-color: #f8f9fa;">
+      <td style="padding: 10px 8px; border: 1px solid #ddd;">groq-llama3-8b</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd;">news</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd; text-align: center; color: #999;">NA</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd; text-align: center; background-color: #d4edda;">1.00</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd; text-align: center; background-color: #f8d7da;">0.00</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd; text-align: center; background-color: #d4edda;">1.00</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd; text-align: center; background-color: #d4edda;">1.0000</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd; text-align: center; color: #999;">NA</td>
+    </tr>
+    <tr style="background-color: #f8f9fa;">
+      <td style="padding: 10px 8px; border: 1px solid #ddd;">groq-llama3-8b</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd;">retail</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd; text-align: center; color: #999;">NA</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd; text-align: center; background-color: #d4edda;">1.00</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd; text-align: center; background-color: #d4edda;">1.00</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd; text-align: center; background-color: #d4edda;">1.00</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd; text-align: center; background-color: #d4edda;">1.0000</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd; text-align: center; color: #999;">NA</td>
+    </tr>
+    <tr style="background-color: #f8f9fa;">
+      <td style="padding: 10px 8px; border: 1px solid #ddd;">groq-llama3-8b</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd;">videogames</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd; text-align: center; color: #999;">NA</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd; text-align: center; background-color: #d4edda;">1.00</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd; text-align: center; background-color: #d4edda;">1.00</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd; text-align: center; background-color: #d4edda;">1.00</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd; text-align: center; background-color: #d4edda;">1.0000</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd; text-align: center; color: #999;">NA</td>
+    </tr>
+    <tr style="background-color: #f8f9fa;">
+      <td style="padding: 10px 8px; border: 1px solid #ddd;">groq-llama3-8b</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd;">web</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd; text-align: center; color: #999;">NA</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd; text-align: center; background-color: #f8d7da;">0.00</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd; text-align: center; background-color: #f8d7da;">0.00</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd; text-align: center; background-color: #d4edda;">1.00</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd; text-align: center; background-color: #fff3cd;">0.1111</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd; text-align: center; color: #999;">NA</td>
+    </tr>
+    <tr style="background-color: #cfe2ff; font-weight: 600;">
+      <td style="padding: 10px 8px; border: 1px solid #ddd;">groq-llama3-8b</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd;">📊 Overall (6 categories)</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd; text-align: center; color: #999;">NA</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd; text-align: center;">0.83</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd; text-align: center;">0.67</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd; text-align: center;">1.00</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd; text-align: center;">0.8519</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd; text-align: center; color: #999;">NA</td>
+    </tr>
+
+    <!-- Ragdoll Dataset -->
+    <tr style="background-color: #fff;">
+      <td style="padding: 10px 8px; border: 1px solid #ddd; font-weight: 600; color: #2c3e50;">Ragdoll</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd;">groq-llama3-8b</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd; font-style: italic;">All categories (50)</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd; text-align: center; color: #999;">NA</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd; text-align: center; background-color: #fff3cd;">0.38</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd; text-align: center; background-color: #fff3cd;">0.38</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd; text-align: center; background-color: #fff3cd;">0.60</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd; text-align: center; background-color: #fff3cd;">0.4053</td>
+      <td style="padding: 10px 8px; border: 1px solid #ddd; text-align: center; color: #999;">NA</td>
+    </tr>
+  </tbody>
+</table>
+
+<div style="margin-top: 20px; padding: 15px; background-color: #f8f9fa; border-left: 4px solid #4a90e2; font-family: Arial, sans-serif; font-size: 13px; color: #555;">
+  <strong style="color: #2c3e50;">Legend:</strong>
+  <ul style="margin-top: 8px; margin-bottom: 0; line-height: 1.8;">
+    <li><span style="background-color: #d4edda; padding: 2px 8px; border-radius: 3px;">Green</span> = High performance (≥0.75)</li>
+    <li><span style="background-color: #fff3cd; padding: 2px 8px; border-radius: 3px;">Yellow</span> = Medium performance (0.25-0.74)</li>
+    <li><span style="background-color: #f8d7da; padding: 2px 8px; border-radius: 3px;">Red</span> = Low performance (<0.25)</li>
+    <li><span style="background-color: #cfe2ff; padding: 2px 8px; border-radius: 3px;">Blue</span> = Overall aggregated results</li>
+    <li><span style="color: #999;">NA</span> = Not applicable or not available</li>
+  </ul>
+  <p style="margin-top: 12px; margin-bottom: 0; font-size: 12px; font-style: italic;">
+    📊 Overall rows represent aggregated metrics across all categories for each test dataset using the groq-llama3-8b model.
+  </p>
+</div>
