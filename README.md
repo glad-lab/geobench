@@ -61,7 +61,6 @@ must:
       <th>PPL-R</th>
     </tr>
   </thead>
-
   <tbody>
     <tr>
       <td rowspan="7">Rewrite-to-Rank</td>
@@ -95,11 +94,11 @@ must:
     <tr>
       <td rowspan="7">StealthRank</td>
       <td>Ragroll</td>
-      <td>NA</td>NA<td>NA</td>NA<td>NA</td>NA<td>NA</td>NA<td>NA</td>
+      <td></td><td></td><td></td><td></td><td></td>
     </tr>
     <tr>
       <td>STSData</td>
-      <td>NA</td>NA<td>NA</td>NA<td>NA</td>NA<td>NA</td>NA<td>NA</td>
+      <td></td><td></td><td></td><td></td><td></td>
     </tr>
     <!-- StealthRank × RewriteToRank with nested table + per-model aggregation -->
     <tr>
@@ -334,6 +333,7 @@ must:
     </tr>
   </tbody>
 </table>
+
 
 ## Ranking Manipulation for Conversational Search Engines - Evaluation Results
 
