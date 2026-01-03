@@ -728,6 +728,5 @@ must:
 > - Values in **bold** indicate overall/summary metrics.
 
 ## C-SEO - Evaluation Results
-## 📖 Documentation
 
 - **[Complete Results](https://github.com/anonymous/geobench/blob/cseo/results.md)** - Full benchmark evaluation with all metrics
