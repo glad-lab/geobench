@@ -51,13 +51,14 @@ must:
     <tr>
       <th rowspan="2">Algorithm</th>
       <th rowspan="2">Test Dataset</th>
-      <th colspan="5" style="text-align: center;">Evaluation Metrics</th>
+      <th colspan="6" style="text-align: center;">Evaluation Metrics</th>
     </tr>
     <tr>
       <th>NRG</th>
       <th>Success@0.1</th>
       <th>Promote@0.1</th>
       <th>KVR</th>
+      <th>MRR</th>
       <th>PPL-R</th>
     </tr>
   </thead>
@@ -66,44 +67,44 @@ must:
     <tr>
       <td rowspan="8">Rewrite-to-Rank</td>
       <td>Ragroll</td>
-      <td></td><td></td><td></td><td></td><td></td>
+      <td></td><td></td><td></td><td></td><td></td><td></td>
     </tr>
     <tr>
       <td>STSData</td>
-      <td></td><td></td><td></td><td></td><td></td>
+      <td></td><td></td><td></td><td></td><td></td><td></td>
     </tr>
     <tr>
       <td>RewriteToRank</td>
-      <td></td><td></td><td></td><td></td><td></td>
+      <td></td><td></td><td></td><td></td><td></td><td></td>
     </tr>
     <tr>
       <td>LLM Rank Optimizer</td>
-      <td></td><td></td><td></td><td></td><td></td>
+      <td></td><td></td><td></td><td></td><td></td><td></td>
     </tr>
     <tr>
       <td>LLM Rank</td>
-      <td></td><td></td><td></td><td></td><td></td>
+      <td></td><td></td><td></td><td></td><td></td><td></td>
     </tr>
     <tr>
       <td>AdversarialSEO</td>
-      <td></td><td></td><td></td><td></td><td></td>
+      <td></td><td></td><td></td><td></td><td></td><td></td>
     </tr>
     <tr>
       <td>C-SEO</td>
-      <td></td><td></td><td></td><td></td><td></td>
+      <td></td><td></td><td></td><td></td><td></td><td></td>
     </tr>
     <tr>
       <td>Ragdoll</td>
-      <td></td><td></td><td></td><td></td><td></td>
+      <td></td><td></td><td></td><td></td><td></td><td></td>
     </tr>
     <tr>
       <td rowspan="8">StealthRank</td>
       <td>Ragroll</td>
-      <td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td>
+      <td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td>
     </tr>
     <tr>
       <td>STSData</td>
-      <td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td>
+      <td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td>
     </tr>
     <!-- StealthRank × RewriteToRank with nested table -->
     <tr>
@@ -111,17 +112,18 @@ must:
         RewriteToRank
         (DeepSeek 7B + Mistral 7B: 2 categories; Llama 3.1 8B + Vicuna 7B: 1 category)
       </td>
-      <td colspan="5" style="padding: 8px;">
+      <td colspan="6" style="padding: 8px;">
         <table border="1" style="width: 100%; border-collapse: collapse; table-layout: fixed; font-size: 12px; line-height: 1.25;">
           <thead>
             <tr>
               <th style="width: 14%;">Model</th>
-              <th style="width: 18%;">Category</th>
-              <th style="width: 14%;">NRG</th>
-              <th style="width: 14%;">Success@0.1 (reach)</th>
-              <th style="width: 14%;">Promote@0.1</th>
-              <th style="width: 13%;">KVR</th>
-              <th style="width: 13%;">PPL-R</th>
+              <th style="width: 16%;">Category</th>
+              <th style="width: 12%;">NRG</th>
+              <th style="width: 12%;">Success@0.1 (reach)</th>
+              <th style="width: 12%;">Promote@0.1</th>
+              <th style="width: 12%;">KVR</th>
+              <th style="width: 10%;">MRR</th>
+              <th style="width: 12%;">PPL-R</th>
             </tr>
           </thead>
           <tbody>
@@ -132,6 +134,7 @@ must:
               <td>0.25</td>
               <td>0.25</td>
               <td>0.25±0.46</td>
+              <td>NA</td>
               <td>1.15±0.66</td>
             </tr>
             <tr>
@@ -141,6 +144,7 @@ must:
               <td>0.38</td>
               <td>0.25</td>
               <td>0.38±0.52</td>
+              <td>NA</td>
               <td>1.31±0.60</td>
             </tr>
             <tr>
@@ -150,6 +154,7 @@ must:
               <td><strong>0.31</strong></td>
               <td><strong>0.25</strong></td>
               <td><strong>0.315±0.479</strong></td>
+              <td><strong>NA</strong></td>
               <td><strong>1.23±0.61</strong></td>
             </tr>
             <tr>
@@ -159,6 +164,7 @@ must:
               <td>0.25</td>
               <td>0.12</td>
               <td>0.62±0.52</td>
+              <td>NA</td>
               <td>1.14±0.39</td>
             </tr>
             <tr>
@@ -168,6 +174,7 @@ must:
               <td>0.12</td>
               <td>0.12</td>
               <td>0.38±0.52</td>
+              <td>NA</td>
               <td>1.40±0.41</td>
             </tr>
             <tr>
@@ -177,6 +184,7 @@ must:
               <td>0.38</td>
               <td>0.12</td>
               <td>0.12±0.35</td>
+              <td>NA</td>
               <td>1.65±1.56</td>
             </tr>
             <tr>
@@ -186,6 +194,7 @@ must:
               <td><strong>0.25</strong></td>
               <td><strong>0.12</strong></td>
               <td><strong>0.25±0.45</strong></td>
+              <td><strong>NA</strong></td>
               <td><strong>1.53±1.11</strong></td>
             </tr>
             <tr>
@@ -195,6 +204,7 @@ must:
               <td>0.25</td>
               <td>0.12</td>
               <td>0.38±0.52</td>
+              <td>NA</td>
               <td>0.96±0.28</td>
             </tr>
           </tbody>
@@ -206,155 +216,155 @@ must:
     </tr>
     <tr>
       <td>LLM Rank Optimizer</td>
-      <td></td><td></td><td></td><td></td><td></td>
+      <td></td><td></td><td></td><td></td><td></td><td></td>
     </tr>
     <tr>
       <td>LLM Rank</td>
-      <td></td><td></td><td></td><td></td><td></td>
+      <td></td><td></td><td></td><td></td><td></td><td></td>
     </tr>
     <tr>
       <td>AdversarialSEO (skipping because descriptions lengths are too long and will probably cause OOM errors)</td>
-      <td></td><td></td><td></td><td></td><td></td>
+      <td></td><td></td><td></td><td></td><td></td><td></td>
     </tr>
     <tr>
       <td>C-SEO</td>
-      <td></td><td></td><td></td><td></td><td></td>
+      <td></td><td></td><td></td><td></td><td></td><td></td>
     </tr>
     <tr>
       <td>Ragdoll</td>
-      <td></td><td></td><td></td><td></td><td></td>
+      <td></td><td></td><td></td><td></td><td></td><td></td>
     </tr>
     <tr>
       <td rowspan="8">C-SEO</td>
       <td>Ragroll</td>
-      <td></td><td></td><td></td><td></td><td></td>
+      <td></td><td></td><td></td><td></td><td></td><td></td>
     </tr>
     <tr>
       <td>STSData</td>
-      <td></td><td></td><td></td><td></td><td></td>
+      <td></td><td></td><td></td><td></td><td></td><td></td>
     </tr>
     <tr>
       <td>RewriteToRank</td>
-      <td></td><td></td><td></td><td></td><td></td>
+      <td></td><td></td><td></td><td></td><td></td><td></td>
     </tr>
     <tr>
       <td>LLM Rank Optimizer</td>
-      <td></td><td></td><td></td><td></td><td></td>
+      <td></td><td></td><td></td><td></td><td></td><td></td>
     </tr>
     <tr>
       <td>LLM Rank</td>
-      <td></td><td></td><td></td><td></td><td></td>
+      <td></td><td></td><td></td><td></td><td></td><td></td>
     </tr>
     <tr>
       <td>AdversarialSEO</td>
-      <td></td><td></td><td></td><td></td><td></td>
+      <td></td><td></td><td></td><td></td><td></td><td></td>
     </tr>
     <tr>
       <td>C-SEO</td>
-      <td></td><td></td><td></td><td></td><td></td>
+      <td></td><td></td><td></td><td></td><td></td><td></td>
     </tr>
     <tr>
       <td>Ragdoll</td>
-      <td></td><td></td><td></td><td></td><td></td>
+      <td></td><td></td><td></td><td></td><td></td><td></td>
     </tr>
     <tr>
       <td rowspan="8">STS (Kumar et al.)</td>
       <td>Ragroll</td>
-      <td></td><td></td><td></td><td></td><td></td>
+      <td></td><td></td><td></td><td></td><td></td><td></td>
     </tr>
     <tr>
       <td>STSData</td>
-      <td></td><td></td><td></td><td></td><td></td>
+      <td></td><td></td><td></td><td></td><td></td><td></td>
     </tr>
     <tr>
       <td>RewriteToRank</td>
-      <td></td><td></td><td></td><td></td><td></td>
+      <td></td><td></td><td></td><td></td><td></td><td></td>
     </tr>
     <tr>
       <td>LLM Rank Optimizer</td>
-      <td></td><td></td><td></td><td></td><td></td>
+      <td></td><td></td><td></td><td></td><td></td><td></td>
     </tr>
     <tr>
       <td>LLM Rank</td>
-      <td></td><td></td><td></td><td></td><td></td>
+      <td></td><td></td><td></td><td></td><td></td><td></td>
     </tr>
     <tr>
       <td>AdversarialSEO</td>
-      <td></td><td></td><td></td><td></td><td></td>
+      <td></td><td></td><td></td><td></td><td></td><td></td>
     </tr>
     <tr>
       <td>C-SEO</td>
-      <td></td><td></td><td></td><td></td><td></td>
+      <td></td><td></td><td></td><td></td><td></td><td></td>
     </tr>
     <tr>
       <td>Ragdoll</td>
-      <td></td><td></td><td></td><td></td><td></td>
+      <td></td><td></td><td></td><td></td><td></td><td></td>
     </tr>
     <tr>
       <td rowspan="8">Baseline (Zero-Shot Ranker)</td>
       <td>Ragroll</td>
-      <td></td><td></td><td></td><td></td><td></td>
+      <td></td><td></td><td></td><td></td><td></td><td></td>
     </tr>
     <tr>
       <td>STSData</td>
-      <td></td><td></td><td></td><td></td><td></td>
+      <td></td><td></td><td></td><td></td><td></td><td></td>
     </tr>
     <tr>
       <td>RewriteToRank</td>
-      <td></td><td></td><td></td><td></td><td></td>
+      <td></td><td></td><td></td><td></td><td></td><td></td>
     </tr>
     <tr>
       <td>LLM Rank Optimizer</td>
-      <td></td><td></td><td></td><td></td><td></td>
+      <td></td><td></td><td></td><td></td><td></td><td></td>
     </tr>
     <tr>
       <td>LLM Rank</td>
-      <td></td><td></td><td></td><td></td><td></td>
+      <td></td><td></td><td></td><td></td><td></td><td></td>
     </tr>
     <tr>
       <td>AdversarialSEO</td>
-      <td></td><td></td><td></td><td></td><td></td>
+      <td></td><td></td><td></td><td></td><td></td><td></td>
     </tr>
     <tr>
       <td>C-SEO</td>
-      <td></td><td></td><td></td><td></td><td></td>
+      <td></td><td></td><td></td><td></td><td></td><td></td>
     </tr>
     <tr>
       <td>Ragdoll</td>
-      <td></td><td></td><td></td><td></td><td></td>
+      <td></td><td></td><td></td><td></td><td></td><td></td>
     </tr>
     <tr>
       <td rowspan="8">PMA (Nestaas et al.)</td>
       <td>Ragroll</td>
-      <td></td><td></td><td></td><td></td><td></td>
+      <td></td><td></td><td></td><td></td><td></td><td></td>
     </tr>
     <tr>
       <td>STSData</td>
-      <td></td><td></td><td></td><td></td><td></td>
+      <td></td><td></td><td></td><td></td><td></td><td></td>
     </tr>
     <tr>
       <td>RewriteToRank</td>
-      <td></td><td></td><td></td><td></td><td></td>
+      <td></td><td></td><td></td><td></td><td></td><td></td>
     </tr>
     <tr>
       <td>LLM Rank Optimizer</td>
-      <td></td><td></td><td></td><td></td><td></td>
+      <td></td><td></td><td></td><td></td><td></td><td></td>
     </tr>
     <tr>
       <td>LLM Rank</td>
-      <td></td><td></td><td></td><td></td><td></td>
+      <td></td><td></td><td></td><td></td><td></td><td></td>
     </tr>
     <tr>
       <td>AdversarialSEO</td>
-      <td></td><td></td><td></td><td></td><td></td>
+      <td></td><td></td><td></td><td></td><td></td><td></td>
     </tr>
     <tr>
       <td>C-SEO</td>
-      <td></td><td></td><td></td><td></td><td></td>
+      <td></td><td></td><td></td><td></td><td></td><td></td>
     </tr>
     <tr>
       <td>Ragdoll</td>
-      <td></td><td></td><td></td><td></td><td></td>
+      <td></td><td></td><td></td><td></td><td></td><td></td>
     </tr>
 
     <!-- ========================================================================= -->
@@ -366,7 +376,7 @@ must:
         Ragroll
         (groq-llama3-8b: 49 categories)
       </td>
-      <td colspan="5" style="padding: 8px;">
+      <td colspan="6" style="padding: 8px;">
         <table border="1" style="width: 100%; border-collapse: collapse; table-layout: fixed; font-size: 12px; line-height: 1.25;">
           <thead>
             <tr>
@@ -401,7 +411,7 @@ must:
         STSData
         (groq-llama3-8b: 3 categories)
       </td>
-      <td colspan="5" style="padding: 8px;">
+      <td colspan="6" style="padding: 8px;">
         <table border="1" style="width: 100%; border-collapse: collapse; table-layout: fixed; font-size: 12px; line-height: 1.25;">
           <thead>
             <tr>
@@ -465,7 +475,7 @@ must:
         RewriteToRank
         (groq-llama3-8b: 50 categories)
       </td>
-      <td colspan="5" style="padding: 8px;">
+      <td colspan="6" style="padding: 8px;">
         <table border="1" style="width: 100%; border-collapse: collapse; table-layout: fixed; font-size: 12px; line-height: 1.25;">
           <thead>
             <tr>
@@ -500,7 +510,7 @@ must:
         LLM Rank Optimizer
         (groq-llama3-8b: 4 categories)
       </td>
-      <td colspan="5" style="padding: 8px;">
+      <td colspan="6" style="padding: 8px;">
         <table border="1" style="width: 100%; border-collapse: collapse; table-layout: fixed; font-size: 12px; line-height: 1.25;">
           <thead>
             <tr>
@@ -575,7 +585,7 @@ must:
         LLM Rank
         (groq-llama3-8b: 7 categories)
       </td>
-      <td colspan="5" style="padding: 8px;">
+      <td colspan="6" style="padding: 8px;">
         <table border="1" style="width: 100%; border-collapse: collapse; table-layout: fixed; font-size: 12px; line-height: 1.25;">
           <thead>
             <tr>
@@ -680,7 +690,7 @@ must:
         AdversarialSEO
         (groq-llama3-8b: 7 categories)
       </td>
-      <td colspan="5" style="padding: 8px;">
+      <td colspan="6" style="padding: 8px;">
         <table border="1" style="width: 100%; border-collapse: collapse; table-layout: fixed; font-size: 12px; line-height: 1.25;">
           <thead>
             <tr>
@@ -785,7 +795,7 @@ must:
         C-SEO
         (groq-llama3-8b: 6 categories)
       </td>
-      <td colspan="5" style="padding: 8px;">
+      <td colspan="6" style="padding: 8px;">
         <table border="1" style="width: 100%; border-collapse: collapse; table-layout: fixed; font-size: 12px; line-height: 1.25;">
           <thead>
             <tr>
@@ -879,7 +889,7 @@ must:
         Ragdoll
         (groq-llama3-8b: 50 categories)
       </td>
-      <td colspan="5" style="padding: 8px;">
+      <td colspan="6" style="padding: 8px;">
         <table border="1" style="width: 100%; border-collapse: collapse; table-layout: fixed; font-size: 12px; line-height: 1.25;">
           <thead>
             <tr>
