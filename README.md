@@ -95,13 +95,12 @@ must:
     <tr>
       <td rowspan="7">StealthRank</td>
       <td>Ragroll</td>
-      <td>NA</td>NA<td>NA</td>NA<td>NA</td>NA<td>NA</td>NA<td>NA</td>
+      <td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td>
     </tr>
     <tr>
       <td>STSData</td>
-      <td>NA</td>NA<td>NA</td>NA<td>NA</td>NA<td>NA</td>NA<td>NA</td>
+      <td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td>
     </tr>
-    <!-- StealthRank × RewriteToRank with nested table + per-model aggregation -->
     <tr>
       <td>
         RewriteToRank
@@ -332,10 +331,8 @@ must:
       <td>Ragdoll</td>
       <td></td><td></td><td></td><td></td><td></td>
     </tr>
-
     <tr>
       <td rowspan="7">Ranking Manipulation for Conversational Search Engines</td>
-      <!-- Ragroll dataset -->
       <td>
         Ragroll
         (groq-llama3-8b: 49 categories)
@@ -369,7 +366,6 @@ must:
       </td>
     </tr>
     <tr>
-      <!-- STSData dataset -->
       <td>
         STSData
         (groq-llama3-8b: 3 categories)
@@ -403,7 +399,6 @@ must:
       </td>
     </tr>
     <tr>
-      <!-- RewriteToRank dataset -->
       <td>
         RewriteToRank
         (groq-llama3-8b: 50 categories)
@@ -437,7 +432,6 @@ must:
       </td>
     </tr>
     <tr>
-      <!-- LLM Rank Optimizer dataset -->
       <td>
         LLM Rank Optimizer
         (groq-llama3-8b: 4 categories)
@@ -471,7 +465,6 @@ must:
       </td>
     </tr>
     <tr>
-      <!-- LLM Rank dataset -->
       <td>
         LLM Rank
         (groq-llama3-8b: 7 categories)
@@ -509,7 +502,6 @@ must:
       <td></td><td></td><td></td><td></td><td></td>
     </tr>
     <tr>
-      <!-- Ragdoll dataset -->
       <td>
         Ragdoll
         (groq-llama3-8b: 50 categories)
@@ -542,6 +534,7 @@ must:
         </div>
       </td>
     </tr>
-    
+
   </tbody>
 </table>
+
