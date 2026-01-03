@@ -726,3 +726,8 @@ must:
 > - All evaluations use the **groq-llama3-8b** model.
 > - **NA** indicates that the metric is not applicable or not available.
 > - Values in **bold** indicate overall/summary metrics.
+
+## C-SEO - Evaluation Results
+## 📖 Documentation
+
+- **[Complete Results](https://github.com/glad-lab/geobench/blob/cseo/results.md)** - Full benchmark evaluation with all metrics
