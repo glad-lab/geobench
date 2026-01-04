@@ -360,7 +360,7 @@ must:
       <td align="center">NA</td>
       <td align="center"><strong>0.84</strong></td>
       <td align="center"><strong>0.84</strong></td>
-      <td align="center"><strong>0.92</strong></td>
+      <td align="center"><strong>0.96</strong></td>
       <td align="center"><strong>0.8835</strong></td>
       <td align="center">NA</td>
     </tr>
@@ -392,7 +392,7 @@ must:
       <td align="center">NA</td>
       <td align="center">0.00</td>
       <td align="center">0.00</td>
-      <td align="center">0.00</td>
+      <td align="center">1.00</td>
       <td align="center">0.1111</td>
       <td align="center">NA</td>
     </tr>
@@ -402,7 +402,7 @@ must:
       <td align="center">NA</td>
       <td align="center"><strong>0.33</strong></td>
       <td align="center"><strong>0.33</strong></td>
-      <td align="center"><strong>0.67</strong></td>
+      <td align="center"><strong>1.00</strong></td>
       <td align="center"><strong>0.4037</strong></td>
       <td align="center">NA</td>
     </tr>
@@ -414,7 +414,7 @@ must:
       <td align="center">NA</td>
       <td align="center"><strong>0.78</strong></td>
       <td align="center"><strong>0.78</strong></td>
-      <td align="center"><strong>0.86</strong></td>
+      <td align="center"><strong>0.90</strong></td>
       <td align="center"><strong>0.8354</strong></td>
       <td align="center">NA</td>
     </tr>
