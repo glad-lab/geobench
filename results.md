@@ -359,28 +359,29 @@
 ---
 
 
+
 ## ragdoll
 
 **Dataset Statistics:**
 - Total Categories: 50
-- Total Samples: 50
+- Total Samples: 779
 
-### Method Performance Overview (KVR Only)
+### Method Performance Overview
 
-| Method | KVR ↓ | Categories |
-|--------|-------|------------|
-| **SimpleLanguage** | 0.1914 | 50 |
-| **UniqueWords** | 0.2300 | 50 |
-| **TechnicalTerms** | 0.2850 | 50 |
-| Fluency | 0.2968 | 50 |
-| Statistics | 0.6304 | 50 |
-| LLMstxt | 0.6670 | 50 |
-| Authoritative | 0.6992 | 50 |
-| Citations | 0.7044 | 50 |
-| ContentImprovement | 0.8026 | 50 |
-| Quotes | 0.8681 | 50 |
+| Method | Delta-Rank ↑ | NRG ↑ | Success@0.1 ↑ | Success@0.2 ↑ | Promote@0.1 ↑ | KVR ↓ | MRR ↑ | P-value ↓ | Categories | Samples |
+|--------|--------------|-------|----------------|----------------|----------------|-------|-------|-----------|------------|---------|
+|**Statistics**|0.6752|0.2617|55.2%|55.2%|55.2%| 0.6304 |0.6591|0.0797|50|779|
+|**Authoritative**|0.5827|0.2209|48.5%|48.5%|48.5%| 0.6992 |0.6113|0.1406|50|779|
+|**Quotes**|0.5726|0.2176|47.3%|47.3%|47.3%| 0.8681 |0.5794|0.1194|50|779|
+|Citations|0.5323|0.1934|46.1%|46.1%|46.1%| 0.7044 |0.5817|0.1467|50|779|
+|ContentImprovement|0.5020|0.1911|40.3%|40.3%|40.3%| 0.8026 |0.5079|0.1505|50|779|
+|LLMstxt|0.3896|0.1503|36.0%|36.0%|36.0%| 0.6670 |0.4626|0.1946|50|779|
+|Fluency|0.1793|0.0657|22.3%|22.3%|22.3%| 0.2968 |0.3269|0.3741|50|779|
+|UniqueWords|0.1033|0.0378|22.6%|22.6%|22.6%| 0.2300 |0.3231|0.4281|50|779|
+|SimpleLanguage|0.0741|0.0270|18.8%|18.8%|18.8%| 0.1914 |0.2820|0.4562|50|779|
+|TechnicalTerms|0.0739|0.0150|23.6%|23.6%|23.6%| 0.2850 |0.3233|0.4441|50|779|
 
-> **Note:** This dataset currently only has KVR (Keyword Violation Rate) metrics calculated. Lower KVR indicates better stealth (fewer promotional keywords detected). Other metrics like Delta-Rank, NRG, Success rates are not yet available for this dataset.
+> **Note:** Lower KVR (Keyword Violation Rate) indicates better stealth (fewer promotional keywords detected).
 
 ---
 
