@@ -26,7 +26,7 @@
 | **Success@0.1** | Percentage of cases achieving ΔRank ≥ 0.1 | Indicates consistency of small improvements |
 | **Success@0.2** | Percentage of cases achieving ΔRank ≥ 0.2 | Indicates consistency of moderate improvements |
 | **Promote@0.1** | Percentage of cases promoted by ≥ 0.1 positions | Similar to Success@0.1 |
-| **KVR** | K-Value Ratio - ratio of top-K results | Indicates robustness |
+| **KVR** | Keyword Violation Rate - detects promotional keywords | Lower is better. Indicates stealth (fewer promotional signals) |
 | **MRR** | Mean Reciprocal Rank | Range: 0-1, higher is better |
 | **P-value** | Statistical significance indicator | Lower is better (p < 0.05 = significant) |
 
@@ -43,7 +43,7 @@
 
 ### Method Performance Overview
 
-| Method | Delta-Rank ↑ | NRG ↑ | Success@0.1 ↑ | Success@0.2 ↑ | Promote@0.1 ↑ | KVR ↑ | MRR ↑ | P-value ↓ | Categories | Samples |
+| Method | Delta-Rank ↑ | NRG ↑ | Success@0.1 ↑ | Success@0.2 ↑ | Promote@0.1 ↑ | KVR ↓ | MRR ↑ | P-value ↓ | Categories | Samples |
 |--------|--------------|-------|----------------|----------------|----------------|-------|-------|-----------|------------|---------|
 |**Quotes**|0.4405|0.0881|85.7%|85.7%|85.7%| 0.9667 |0.3704|0.3158|7|7|
 |**Authoritative**|0.2286|0.0457|71.4%|71.4%|71.4%| 0.9667 |0.3704|0.4479|7|7|
@@ -146,7 +146,7 @@
 
 ### Method Performance Overview
 
-| Method | Delta-Rank ↑ | NRG ↑ | Success@0.1 ↑ | Success@0.2 ↑ | Promote@0.1 ↑ | KVR ↑ | MRR ↑ | P-value ↓ | Categories | Samples |
+| Method | Delta-Rank ↑ | NRG ↑ | Success@0.1 ↑ | Success@0.2 ↑ | Promote@0.1 ↑ | KVR ↓ | MRR ↑ | P-value ↓ | Categories | Samples |
 |--------|--------------|-------|----------------|----------------|----------------|-------|-------|-----------|------------|---------|
 |**Fluency**|2.5000|0.5000|100.0%|100.0%|100.0%| 0.5000 |0.7500|0.5000|2|2|
 |**Authoritative**|2.0000|0.4000|100.0%|100.0%|100.0%| 0.7000 |0.5208|0.5000|4|4|
@@ -211,7 +211,7 @@
 
 ### Method Performance Overview
 
-| Method | Delta-Rank ↑ | NRG ↑ | Success@0.1 ↑ | Success@0.2 ↑ | Promote@0.1 ↑ | KVR ↑ | MRR ↑ | P-value ↓ | Categories | Samples |
+| Method | Delta-Rank ↑ | NRG ↑ | Success@0.1 ↑ | Success@0.2 ↑ | Promote@0.1 ↑ | KVR ↓ | MRR ↑ | P-value ↓ | Categories | Samples |
 |--------|--------------|-------|----------------|----------------|----------------|-------|-------|-----------|------------|---------|
 |**Quotes**|0.9075|0.1815|96.2%|96.2%|96.2%| 0.8667 |0.0860|0.2182|53|53|
 |**Statistics**|0.8170|0.1634|92.5%|92.5%|92.5%| 0.8667 |0.0860|0.2412|53|53|
@@ -234,7 +234,7 @@
 
 ### Method Performance Overview
 
-| Method | Delta-Rank ↑ | NRG ↑ | Success@0.1 ↑ | Success@0.2 ↑ | Promote@0.1 ↑ | KVR ↑ | MRR ↑ | P-value ↓ | Categories | Samples |
+| Method | Delta-Rank ↑ | NRG ↑ | Success@0.1 ↑ | Success@0.2 ↑ | Promote@0.1 ↑ | KVR ↓ | MRR ↑ | P-value ↓ | Categories | Samples |
 |--------|--------------|-------|----------------|----------------|----------------|-------|-------|-----------|------------|---------|
 |**LLMstxt**|3.0000|0.6000|100.0%|100.0%|100.0%| 0.7667 |1.0000|0.5000|1|1|
 |**SimpleLanguage**|3.0000|0.6000|100.0%|100.0%|100.0%| 0.8333 |1.0000|0.5000|1|1|
@@ -281,7 +281,7 @@
 
 ### Method Performance Overview
 
-| Method | Delta-Rank ↑ | NRG ↑ | Success@0.1 ↑ | Success@0.2 ↑ | Promote@0.1 ↑ | KVR ↑ | MRR ↑ | P-value ↓ | Categories | Samples |
+| Method | Delta-Rank ↑ | NRG ↑ | Success@0.1 ↑ | Success@0.2 ↑ | Promote@0.1 ↑ | KVR ↓ | MRR ↑ | P-value ↓ | Categories | Samples |
 |--------|--------------|-------|----------------|----------------|----------------|-------|-------|-----------|------------|---------|
 |**Authoritative**|1.0000|0.2000|100.0%|100.0%|100.0%| 0.8333 |0.7500|0.5000|2|2|
 |**ContentImprovement**|1.0000|0.2000|100.0%|100.0%|100.0%| 0.7333 |0.6111|0.5000|3|3|
@@ -343,7 +343,7 @@
 
 ### Method Performance Overview
 
-| Method | Delta-Rank ↑ | NRG ↑ | Success@0.1 ↑ | Success@0.2 ↑ | Promote@0.1 ↑ | KVR ↑ | MRR ↑ | P-value ↓ | Categories | Samples |
+| Method | Delta-Rank ↑ | NRG ↑ | Success@0.1 ↑ | Success@0.2 ↑ | Promote@0.1 ↑ | KVR ↓ | MRR ↑ | P-value ↓ | Categories | Samples |
 |--------|--------------|-------|----------------|----------------|----------------|-------|-------|-----------|------------|---------|
 |**Statistics**|0.5690|0.1138|100.0%|100.0%|100.0%| 0.9333 |0.1030|0.0042|42|42|
 |**Quotes**|0.3702|0.0740|95.2%|88.1%|95.2%| 0.9333 |0.1030|0.0462|42|42|
@@ -391,28 +391,28 @@ Average performance of each method across all datasets.
 
 | Rank | Method | Avg Delta-Rank | Avg NRG | Datasets Tested |
 |------|--------|----------------|---------|-----------------|
-| 🥇 1 | **Quotes** | 1.2030 | 0.2406 | 6 |
-| 🥈 2 | **ContentImprovement** | 1.1051 | 0.2210 | 6 |
-| 🥉 3 | **LLMstxt** | 1.0706 | 0.2141 | 6 |
-|  4 | Statistics | 1.0461 | 0.2092 | 6 |
-|  5 | Authoritative | 1.0397 | 0.2079 | 6 |
-|  6 | TechnicalTerms | 1.0234 | 0.2047 | 6 |
-|  7 | Citations | 0.8538 | 0.1708 | 6 |
-|  8 | SimpleLanguage | 0.7022 | 0.1404 | 6 |
-|  9 | Fluency | 0.5368 | 0.1074 | 6 |
-|  10 | UniqueWords | 0.4815 | 0.0963 | 5 |
-
+| 🥇 1 | **Quotes** | 1.1130 | 0.2373 | 7 |
+| 🥈 2 | **ContentImprovement** | 1.0189 | 0.2167 | 7 |
+| 🥉 3 | **Statistics** | 0.9931 | 0.2167 | 7 |
+|  4 | Authoritative | 0.9745 | 0.2098 | 7 |
+|  5 | LLMstxt | 0.9733 | 0.2050 | 7 |
+|  6 | TechnicalTerms | 0.8877 | 0.1776 | 7 |
+|  7 | Citations | 0.8079 | 0.1740 | 7 |
+|  8 | SimpleLanguage | 0.6125 | 0.1242 | 7 |
+|  9 | Fluency | 0.4857 | 0.1014 | 7 |
+|  10 | UniqueWords | 0.4185 | 0.0866 | 6 |
 
 ---
 
 ## Summary
 
-- **Total Datasets Analyzed:** 6
+- **Total Datasets Analyzed:** 7
 - **Total Methods Evaluated:** 10
-- **Total Categories:** 114
-- **Total Samples:** 1096
+- **Total Categories:** 157
+- **Total Samples:** 886
 
 
 ---
 
 *Generated automatically from benchmark results*
+
