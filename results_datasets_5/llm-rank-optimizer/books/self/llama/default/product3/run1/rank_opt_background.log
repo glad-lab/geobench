@@ -1,0 +1,37 @@
+/home/exouser/miniconda3/envs/llm-rank/lib/python3.10/site-packages/transformers/utils/hub.py:128: FutureWarning: Using `TRANSFORMERS_CACHE` is deprecated and will be removed in v5 of Transformers. Use `HF_HOME` instead.
+  warnings.warn(
+
+* * * * * Experiment Parameters * * * * *
+Device(s): ['NVIDIA A100-SXM4-40GB']
+Mode: self
+Model path(s): /media/volume/v4/Llama-2-7b-chat-hf
+Product catalog: Datasets/StealthRank/json/books.jsonl
+User message type: default
+Number of iterations: 1600
+Test iteration interval: 50
+Batch size: 120
+Top candidates: 1
+Shuffle product list: True
+Results directory: /home/exouser/Desktop/vscode/geobench/results_datasets_5/llm-rank-optimizer/books/self/llama/default/product3/run1
+Save state: True
+* * * * * * * * * * * * * * * * * * * * *
+
+Traceback (most recent call last):
+  File "/home/exouser/miniconda3/envs/llm-rank/lib/python3.10/site-packages/transformers/utils/hub.py", line 403, in cached_file
+    resolved_file = hf_hub_download(
+  File "/home/exouser/miniconda3/envs/llm-rank/lib/python3.10/site-packages/huggingface_hub/utils/_validators.py", line 106, in _inner_fn
+    validate_repo_id(arg_value)
+  File "/home/exouser/miniconda3/envs/llm-rank/lib/python3.10/site-packages/huggingface_hub/utils/_validators.py", line 154, in validate_repo_id
+    raise HFValidationError(
+huggingface_hub.errors.HFValidationError: Repo id must be in the form 'repo_name' or 'namespace/repo_name': '/media/volume/v4/Llama-2-7b-chat-hf'. Use `repo_type` argument if needed.
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/exouser/Desktop/vscode/geobench/rank_opt.py", line 579, in <module>
+    model_llama_7b = transformers.AutoModelForCausalLM.from_pretrained(
+  File "/home/exouser/miniconda3/envs/llm-rank/lib/python3.10/site-packages/transformers/models/auto/auto_factory.py", line 487, in from_pretrained
+    resolved_config_file = cached_file(
+  File "/home/exouser/miniconda3/envs/llm-rank/lib/python3.10/site-packages/transformers/utils/hub.py", line 469, in cached_file
+    raise EnvironmentError(
+OSError: Incorrect path_or_model_id: '/media/volume/v4/Llama-2-7b-chat-hf'. Please provide either the path to a local folder or the repo_id of a model on the Hub.
