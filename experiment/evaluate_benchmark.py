@@ -287,10 +287,10 @@ if __name__ == "__main__":
     result_dir = "results_new/benchmark_results/suffix/v1"
 
     model_catalogs = {
-        "deepseek-7b": ["electrical_supplies", "gun_accessories"],
-        "llama-3.1-8b": ["electrical_supplies"],
-        "mistral-7b": ["electrical_supplies", "gun_accessories"],
-        "vicuna-7b": ["electrical_supplies"],
+        "deepseek-7b": ["election_articles", "books", "cameras", "coffee_machines"],
+        "llama-3.1-8b": ["election_articles", "books", "cameras", "coffee_machines"],
+        "mistral-7b": ["election_articles", "books", "cameras", "coffee_machines"],
+        "vicuna-7b": ["election_articles", "books", "cameras", "coffee_machines"],
     }
 
     device = "cuda" if torch.cuda.is_available() else "cpu"
