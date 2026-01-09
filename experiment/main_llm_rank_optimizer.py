@@ -166,7 +166,7 @@ def get_args():
     args.add_argument("--mode", type=str, choices=['suffix', 'paraphrase'], default='suffix')
     args.add_argument("--catalog", type=str, default=None)
     args.add_argument("--model", type=str, choices=['llama-3.1-8b', 'llama-2-7b', 'vicuna-7b', 'mistral-7b', 'deepseek-7b'], default=None)
-    args.add_argument("--dataset", type=str, default="amazon", choices=["amazon", "json", "ragdoll", "rewrite_to_rank", "llm_rank", "llm_rank_optimizer"])
+    args.add_argument("--dataset", type=str, default="amazon", choices=["amazon", "json", "ragdoll", "rewrite_to_rank", "llm_rank", "llm_rank_optimizer_subsampled"])
     return args.parse_args()
 
 if __name__ == "__main__":
