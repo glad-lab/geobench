@@ -16,4 +16,4 @@ export HF_HOME=/work/hdd/beaa/anonymous/hf_cache
 cd /work/hdd/beaa/anonymous/controllable-seo-project/geobench
 
 export WANDB_AGENT_MAX_INITIAL_FAILURES=0
-python -m experiment.main_llm_rank_optimizer --model deepseek-7b --dataset llm_rank_optimizer --mode suffix
+python -m experiment.main_llm_rank_optimizer --model deepseek-7b --dataset llm_rank_optimizer_subsampled --mode suffix

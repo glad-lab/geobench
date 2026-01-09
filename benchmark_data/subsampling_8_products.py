@@ -1,8 +1,8 @@
 import json
 import os
 
-INPUT_DIR = "benchmark_data/llm_rank"
-OUTPUT_DIR = "benchmark_data/llm_rank_subsampled"
+INPUT_DIR = "benchmark_data/llm_rank_optimizer"
+OUTPUT_DIR = "benchmark_data/llm_rank_optimizer_subsampled"
 
 os.makedirs(OUTPUT_DIR, exist_ok=True)
 
