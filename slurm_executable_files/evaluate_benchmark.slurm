@@ -1,7 +1,7 @@
 #!/bin/bash
 #SBATCH --job-name=eval-benchmark
 #SBATCH --partition=cpu
-#SBATCH --account=bdns-delta-cpu
+#SBATCH --account=bfsl-delta-cpu
 #SBATCH --nodes=1
 #SBATCH --cpus-per-task=8
 #SBATCH --mem=64G
