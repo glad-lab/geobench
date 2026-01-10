@@ -172,7 +172,7 @@ def get_args():
 if __name__ == "__main__":
     args = get_args()
 
-    config_path = f'configs/{args.mode}_{args.model}_{args.dataset}.yaml'
+    config_path = f'configs/{args.mode}_{args.model}_llm_rank_optimizer.yaml'
     if not os.path.exists(config_path):
         config_path = f'configs/{args.mode}_{args.model}.yaml'
 
