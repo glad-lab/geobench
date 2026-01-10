@@ -166,14 +166,14 @@ def get_args():
     args.add_argument("--mode", type=str, choices=['suffix', 'paraphrase'], default='suffix')
     args.add_argument("--catalog", type=str, default=None)
     args.add_argument("--model", type=str, choices=['llama-3.1-8b', 'llama-2-7b', 'vicuna-7b', 'mistral-7b', 'deepseek-7b'], default=None)
-    args.add_argument("--dataset", type=str, default="ragdoll", choices=["amazon", "json", "ragdoll", "rewrite_to_rank", "llm_rank"])
+    args.add_argument("--dataset", type=str, default="ragdoll_subsampled", choices=["amazon", "json", "ragdoll_subsampled", "rewrite_to_rank", "llm_rank"])
     return args.parse_args()
 
 if __name__ == "__main__":
     args = get_args()
 
     # Try dataset-specific config first, fallback to model-only
-    config_path = f'configs/{args.mode}_{args.model}_{args.dataset}.yaml'
+    config_path = f'configs/{args.mode}_{args.model}_ragdoll.yaml'
     if not os.path.exists(config_path):
         config_path = f'configs/{args.mode}_{args.model}.yaml'
 
