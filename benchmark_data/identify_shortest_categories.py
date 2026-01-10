@@ -2,8 +2,8 @@ import json
 import os
 from statistics import median
 
-ROOT = "benchmark_data/llm_rank_optimizer"
-CATEGORY_LIST = "benchmark_data/list_8_products/llm_rank_optimizer_at_least_8.txt"
+ROOT = "benchmark_data/ragdoll"
+CATEGORY_LIST = "benchmark_data/list_8_products/ragdoll_at_least_8.txt"
 
 with open(CATEGORY_LIST) as f:
     categories = [line.split('\t')[0] for line in f]
