@@ -129,7 +129,7 @@ def calculate_metrics(
     kvr_values: List[int] = []
     ppl_r_values: List[float] = []
 
-    jsonl_path = f"benchmark_data/llm_rank_optimizer/{catalog}.jsonl"
+    jsonl_path = f"benchmark_data/llm_rank_optimizer_subsampled/{catalog}.jsonl"
     products = []
     with open(jsonl_path, "r", encoding="utf-8") as f:
         for line in f:
@@ -139,7 +139,7 @@ def calculate_metrics(
     top20 = math.ceil(0.2 * L)
 
     for idx in indices:
-        file_path = f"{result_dir}/{model}/llm_rank_optimizer/{catalog}/{idx}/random_inference={random_inference}.csv"
+        file_path = f"{result_dir}/{model}/llm_rank_optimizer_subsampled/{catalog}/{idx}/random_inference={random_inference}.csv"
         if not os.path.exists(file_path):
             print(f"File not found: {file_path}")
             continue
@@ -235,14 +235,14 @@ def extract_examples(
 ) -> List[Dict]:
     examples: List[Dict] = []
 
-    jsonl_path = f"benchmark_data/llm_rank_optimizer/{catalog}.jsonl"
+    jsonl_path = f"benchmark_data/llm_rank_optimizer_subsampled/{catalog}.jsonl"
     products = []
     with open(jsonl_path, "r", encoding="utf-8") as f:
         for line in f:
             products.append(json.loads(line))
 
     for idx in range(1, L + 1):
-        file_path = f"{result_dir}/{model}/llm_rank_optimizer/{catalog}/{idx}/random_inference={random_inference}.csv"
+        file_path = f"{result_dir}/{model}/llm_rank_optimizer_subsampled/{catalog}/{idx}/random_inference={random_inference}.csv"
         if not os.path.exists(file_path):
             continue
 
@@ -347,11 +347,11 @@ if __name__ == "__main__":
     df_results = pd.DataFrame(all_results)
     print(tabulate(df_results, headers="keys", tablefmt="grid"))
 
-    save_path = f"{output_dir}/llm_rank_optimizer_new_metrics.csv"
+    save_path = f"{output_dir}/llm_rank_optimizer_subsampled_new_metrics.csv"
     df_results.to_csv(save_path, index=False)
     print(f"✅ Saved metrics to {save_path}")
 
     df_examples = pd.DataFrame(all_examples)
-    examples_path = f"{output_dir}/llm_rank_optimizer_examples.csv"
+    examples_path = f"{output_dir}/llm_rank_optimizer_subsampled_examples.csv"
     df_examples.to_csv(examples_path, index=False)
     print(f"✅ Saved examples to {examples_path}")
