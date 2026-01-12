@@ -1,6 +1,6 @@
 #!/bin/bash
 #SBATCH --job-name=eval-benchmark
-#SBATCH --partition=cpu
+#SBATCH --partition=cpu-preempt
 #SBATCH --account=bfsl-delta-cpu
 #SBATCH --nodes=1
 #SBATCH --cpus-per-task=8
