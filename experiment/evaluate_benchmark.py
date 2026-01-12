@@ -287,10 +287,10 @@ if __name__ == "__main__":
     result_dir = "results_new/benchmark_results/suffix/v1"
 
     model_catalogs = {
-        "deepseek-7b": ["election_articles", "books", "cameras", "coffee_machines"],
-        "llama-3.1-8b": ["election_articles", "books", "cameras", "coffee_machines"],
-        "mistral-7b": ["election_articles", "books", "cameras", "coffee_machines"],
-        "vicuna-7b": ["election_articles", "books", "cameras", "coffee_machines"],
+        "deepseek-7b": ["action", "adventure", "automotive", "baby", "books", "children's", "comedy", "computers", "crime", "documentary", "drama", "film-noir", "horror", "musical", "mystery", "romance", "sci-fi", "software", "thriller", "war", "western"],
+        "llama-3.1-8b": ["action", "adventure", "automotive", "baby", "books", "children's", "comedy", "computers", "crime", "documentary", "drama", "film-noir", "horror", "musical", "mystery", "romance", "sci-fi", "software", "thriller", "war", "western"],
+        "mistral-7b": ["action", "adventure", "automotive", "baby", "books", "children's", "comedy", "computers", "crime", "documentary", "drama", "film-noir", "horror", "musical", "mystery", "romance", "sci-fi", "software", "thriller", "war", "western"],
+        "vicuna-7b": ["action", "adventure", "automotive", "baby", "books", "children's", "comedy", "computers", "crime", "documentary", "drama", "film-noir", "horror", "musical", "mystery", "romance", "sci-fi", "software", "thriller", "war", "western"],
     }
 
     device = "cuda" if torch.cuda.is_available() else "cpu"
