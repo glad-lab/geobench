@@ -1,8 +1,8 @@
 #!/bin/bash
 #SBATCH --job-name=eval-benchmark
-#SBATCH --partition=cpu-preempt
-#SBATCH --account=bfsl-delta-cpu
-#SBATCH --nodes=1
+#SBATCH --partition=gpuA100x4
+#SBATCH --account=bfsl-delta-gpu
+#SBATCH --gpus-per-node=1
 #SBATCH --cpus-per-task=8
 #SBATCH --mem=64G
 #SBATCH --time=20:00:00
