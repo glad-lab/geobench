@@ -95,7 +95,7 @@ def prompt_generator_vicuna(target_product_idx, product_list, user_msg, tokenize
 
     return sts_prompt_ids, sts_idxs
 
-def prompt_generator_llama(target_product_idx, product_list, user_msg, tokenizer, device, sts_tokens):
+def prompt_generator_llama(target_product_idx, product_list, user_msg, tokenizer, device, sts_tokens, max_products_in_prompt=None):
     '''
     Generate the prompt for the rank optimization procedure.
 
@@ -106,6 +106,8 @@ def prompt_generator_llama(target_product_idx, product_list, user_msg, tokenizer
         tokenizer: The tokenizer of the model.
         device: The device to run the model.
         sts_tokens: The tokens for the strategic text sequence.
+        max_products_in_prompt: Maximum number of products to include in the prompt. If None, include all products.
+                                If set, only the first N products (including target product) will be used.
 
     Returns:
         sts_prompt_ids: Token IDs of the STS inserted prompt.
@@ -128,14 +130,29 @@ def prompt_generator_llama(target_product_idx, product_list, user_msg, tokenizer
     #                 + "as follows: 1. product one 2. product two ...\n" \
     #                 + "<</SYS>>\n\nProducts:\n"
 
+    # 如果设置了 max_products_in_prompt，则只使用前 N 个商品（确保包含 target_product）
+    if max_products_in_prompt is not None and max_products_in_prompt < len(product_list):
+        # 确保 target_product 在范围内
+        if target_product_idx >= max_products_in_prompt:
+            # 如果 target_product 超出范围，将其移到最后一个位置
+            limited_product_list = product_list[:max_products_in_prompt-1] + [product_list[target_product_idx]]
+            # 更新 target_product_idx 为最后一个位置
+            limited_target_product_idx = max_products_in_prompt - 1
+        else:
+            limited_product_list = product_list[:max_products_in_prompt]
+            limited_target_product_idx = target_product_idx
+    else:
+        limited_product_list = product_list
+        limited_target_product_idx = target_product_idx
+
     head = system_prompt
     tail = ''
 
     # Generate the adversarial prompt
-    for i, product in enumerate(product_list):
-        if i < target_product_idx:
+    for i, product in enumerate(limited_product_list):
+        if i < limited_target_product_idx:
             head += json.dumps(product) + "\n"
-        elif i == target_product_idx:
+        elif i == limited_target_product_idx:
             head += json.dumps(product) + "\n"
             tail += head[-3:]
             head = head[:-3]
@@ -155,7 +172,7 @@ def prompt_generator_llama(target_product_idx, product_list, user_msg, tokenizer
 
 def rank_opt(target_product_idx, product_list, model_list, tokenizer, loss_function, prompt_gen_list,
              forbidden_tokens, save_path, num_iter=1000, top_k=256, num_samples=128, batch_size=200,
-             test_iter=50, num_sts_tokens=30, top_candidates=1, verbose=True, random_order=True, save_state=True):
+             test_iter=50, num_sts_tokens=30, top_candidates=1, verbose=True, random_order=True, save_state=True, max_products_in_prompt=None):
     '''
     Implements the rank optimization procedure. The objective is to generate an optimized
     text sequence that when add to the target product in the product list will result in
@@ -237,7 +254,7 @@ def rank_opt(target_product_idx, product_list, model_list, tokenizer, loss_funct
 
     for i in range(num_models):
         # Generate input prompt
-        inp_prompt_ids, sts_idxs = prompt_gen_list[i](target_product_idx, product_list, user_msg, tokenizer, model_list[i].device, sts_tokens)
+        inp_prompt_ids, sts_idxs = prompt_gen_list[i](target_product_idx, product_list, user_msg, tokenizer, model_list[i].device, sts_tokens, max_products_in_prompt)
         input_sequence_list.append(inp_prompt_ids)
         sts_idxs_list.append(sts_idxs)
 
@@ -308,7 +325,7 @@ def rank_opt(target_product_idx, product_list, model_list, tokenizer, loss_funct
 
         for i in range(num_models):
             # Generate input prompt
-            inp_prompt_ids, sts_idxs = prompt_gen_list[i](target_product_idx, product_list, user_msg, tokenizer, model_list[i].device, sts_tokens)
+            inp_prompt_ids, sts_idxs = prompt_gen_list[i](target_product_idx, product_list, user_msg, tokenizer, model_list[i].device, sts_tokens, max_products_in_prompt)
             input_sequence_list.append(inp_prompt_ids)
             sts_idxs_list.append(sts_idxs)
         
@@ -446,6 +463,7 @@ if __name__ == "__main__":
     argparser.add_argument("--top_candidates", type=int, default=1, help="Number of top candidates to consider for multi-coordinate updates.")
     argparser.add_argument("--user_msg_type", type=str, default="default", choices=["default", "custom"], help="User message type.")
     argparser.add_argument("--save_state", action="store_true", help="Whether to save the state of the optimization procedure. If interrupted, the experiment can be resumed.")
+    argparser.add_argument("--max_products_in_prompt", type=int, default=None, help="Maximum number of products to include in the prompt. If None, include all products. If set, only the first N products (including target product) will be used.")
     args = argparser.parse_args()
 
     results_dir = args.results_dir
@@ -643,26 +661,29 @@ if __name__ == "__main__":
     # Lambda function for the target loss
     loss_fn = lambda embeddings, model: target_loss(embeddings, model, tokenizer_llama, target_str)
 
+    # 获取 max_products_in_prompt 参数
+    max_products_in_prompt = args.max_products_in_prompt
+
     if mode == "self" and target_llm == "vicuna":
-        # 修正Vicuna的Lambda函数：接收6个参数
-        prompt_gen_vicuna = lambda adv_target_idx, prod_list, user_msg, tokenizer, device, adv_tokens: prompt_generator_vicuna(adv_target_idx, prod_list, user_msg, tokenizer, device, adv_tokens)
+        # 修正Vicuna的Lambda函数：接收7个参数（新增 max_products_in_prompt）
+        prompt_gen_vicuna = lambda adv_target_idx, prod_list, user_msg, tokenizer, device, adv_tokens, max_prod: prompt_generator_vicuna(adv_target_idx, prod_list, user_msg, tokenizer, device, adv_tokens)
 
         rank_opt(target_product_idx, product_list, [model_vicuna_7b], tokenizer_llama, loss_fn, [prompt_gen_vicuna],
-                forbidden_tokens, results_dir, test_iter=test_iter, top_candidates=top_candidates, batch_size=batch_size, num_iter=num_iter, num_samples=256, random_order=random_order, save_state=save_state)
+                forbidden_tokens, results_dir, test_iter=test_iter, top_candidates=top_candidates, batch_size=batch_size, num_iter=num_iter, num_samples=256, random_order=random_order, save_state=save_state, max_products_in_prompt=max_products_in_prompt)
     else:
-        # 修正Llama的Lambda函数：接收6个参数
-        prompt_gen_llama = lambda adv_target_idx, prod_list, user_msg, tokenizer, device, adv_tokens: prompt_generator_llama(adv_target_idx, prod_list, user_msg, tokenizer, device, adv_tokens)
+        # 修正Llama的Lambda函数：接收7个参数（新增 max_products_in_prompt）
+        prompt_gen_llama = lambda adv_target_idx, prod_list, user_msg, tokenizer, device, adv_tokens, max_prod: prompt_generator_llama(adv_target_idx, prod_list, user_msg, tokenizer, device, adv_tokens, max_prod)
 
         if mode == "self" and target_llm == "llama":
             rank_opt(target_product_idx, product_list, [model_llama_7b], tokenizer_llama, loss_fn, [prompt_gen_llama],
-                    forbidden_tokens, results_dir, test_iter=test_iter, top_candidates=top_candidates, batch_size=batch_size, num_iter=num_iter, num_samples=256, random_order=random_order, save_state=save_state)
+                    forbidden_tokens, results_dir, test_iter=test_iter, top_candidates=top_candidates, batch_size=batch_size, num_iter=num_iter, num_samples=256, random_order=random_order, save_state=save_state, max_products_in_prompt=max_products_in_prompt)
         elif mode == "self" and target_llm == "llama32":
             rank_opt(target_product_idx, product_list, [model_llama32_1b], tokenizer_llama, loss_fn, [prompt_gen_llama],
-                    forbidden_tokens, results_dir, test_iter=test_iter, top_candidates=top_candidates, batch_size=batch_size, num_iter=num_iter, num_samples=256, random_order=random_order, save_state=save_state)
+                    forbidden_tokens, results_dir, test_iter=test_iter, top_candidates=top_candidates, batch_size=batch_size, num_iter=num_iter, num_samples=256, random_order=random_order, save_state=save_state, max_products_in_prompt=max_products_in_prompt)
             
     if mode == "transfer":
-        # 修正Vicuna的Lambda函数：接收6个参数
-        prompt_gen_vicuna = lambda adv_target_idx, prod_list, user_msg, tokenizer, device, adv_tokens: prompt_generator_vicuna(adv_target_idx, prod_list, user_msg, tokenizer, device, adv_tokens)
+        # 修正Vicuna的Lambda函数：接收7个参数（新增 max_products_in_prompt）
+        prompt_gen_vicuna = lambda adv_target_idx, prod_list, user_msg, tokenizer, device, adv_tokens, max_prod: prompt_generator_vicuna(adv_target_idx, prod_list, user_msg, tokenizer, device, adv_tokens)
 
         rank_opt(target_product_idx, product_list, [model_llama_7b, model_vicuna_7b], tokenizer_llama, loss_fn, [prompt_gen_llama, prompt_gen_vicuna],
-                forbidden_tokens, results_dir, test_iter=test_iter, top_candidates=top_candidates, batch_size=batch_size, num_iter=num_iter, num_samples=256, random_order=random_order, save_state=save_state)
+                forbidden_tokens, results_dir, test_iter=test_iter, top_candidates=top_candidates, batch_size=batch_size, num_iter=num_iter, num_samples=256, random_order=random_order, save_state=save_state, max_products_in_prompt=max_products_in_prompt)
