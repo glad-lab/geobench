@@ -56,7 +56,7 @@ skipped_tasks=0
 completed_tasks=0
 
 # 按照指定顺序遍历算法文件夹
-algorithm_order=("StealthRank" "llm-rank-optimizer" "AdversarialSEO" "GEO")
+algorithm_order=("StealthRank" "llm-rank-optimizer" "AdversarialSEO" "GEO" "Zero-Shot Rankers")
 # RewriteToRank 跳过，不处理
 
 for algorithm_name in "${algorithm_order[@]}"; do
@@ -70,33 +70,45 @@ for algorithm_name in "${algorithm_order[@]}"; do
     echo "📦 处理算法: ${algorithm_name}"
     echo "   算法目录: ${algorithm_dir}"
     
-    # 遍历该算法下的每个类别文件
+    # 遍历该算法下的前两个类别文件（按文件名排序）
     category_count=0
-    for category_file in "${algorithm_dir}"/*.jsonl; do
+    mapfile -t category_files < <(ls "${algorithm_dir}"/*.jsonl 2>/dev/null | sort)
+    max_categories=2
+    for category_file in "${category_files[@]:0:${max_categories}}"; do
         if [ ! -f "${category_file}" ]; then
             continue
         fi
         category_count=$((category_count + 1))
-        
+
         category_name=$(basename "${category_file}" .jsonl)
         echo "  📁 处理类别: ${category_name}"
 
-        # 检查结果目录中该类别是否已经有至少 3 个不同的 target 商品结果，如果有则整类跳过
+        # 检查结果目录中该类别是否已经有至少 1 个 target 商品结果（当前只跑第 1 个商品），如果有则整类跳过
+        # 改进检测逻辑：不仅要检查 done.txt，还要检查日志中是否有 OOM 错误
         existing_category_dir="${results_base_dir}/${algorithm_name}/${category_name}/${mode}/${target_llm}/${user_msg_type}"
         if [ -d "${existing_category_dir}" ]; then
             existing_target_count=0
             for result_run_dir in "${existing_category_dir}"/product*/run1; do
+                # 检查是否有 done.txt 且包含 "done"
                 if [ -f "${result_run_dir}/done.txt" ] && grep -q "done" "${result_run_dir}/done.txt" 2>/dev/null; then
-                    existing_target_count=$((existing_target_count + 1))
+                    # 还要检查日志中是否有 OOM 错误，如果有 OOM 则视为未成功运行
+                    log_file="${result_run_dir}/rank_opt_background.log"
+                    if [ -f "${log_file}" ] && (grep -qi "OutOfMemoryError\|CUDA out of memory" "${log_file}" 2>/dev/null); then
+                        # 有 OOM 错误，视为未成功运行，不计数
+                        continue
+                    else
+                        # 没有 OOM 错误且 done.txt 存在，视为成功运行
+                        existing_target_count=$((existing_target_count + 1))
+                    fi
                 fi
             done
 
-            if [ "${existing_target_count}" -ge 3 ]; then
-                echo "     ✅ 结果目录中已存在至少 3 个不同的 target 商品（${existing_target_count} 个），跳过该类别"
+            if [ "${existing_target_count}" -ge 1 ]; then
+                echo "     ✅ 结果目录中已存在至少 1 个成功运行的 target 商品结果（${existing_target_count} 个），当前策略只跑第 1 个商品，跳过该类别"
                 echo ""
                 continue
             else
-                echo "     ℹ️  结果目录中已有 ${existing_target_count} 个 target 商品结果，继续处理..."
+                echo "     ℹ️  结果目录中已有 ${existing_target_count} 个成功运行的 target 商品结果，继续处理当前策略（只跑第 1 个商品）..."
             fi
         fi
 
@@ -116,8 +128,8 @@ print(len(products))
         data_catalog_path="${data_dir}/${category_name}.jsonl"
         cp -f "${category_file}" "${data_catalog_path}"
         
-        # 只遍历前 3 个商品作为 target product（如果商品少于 3 个，则全量遍历）
-        max_target_products=3
+        # 只遍历第 1 个商品作为 target product，减小迭代数量
+        max_target_products=1
         last_product_idx=${product_count}
         if [ "${product_count}" -gt "${max_target_products}" ]; then
             last_product_idx=${max_target_products}
@@ -129,11 +141,18 @@ print(len(products))
             results_dir="${results_base_dir}/${algorithm_name}/${category_name}/${mode}/${target_llm}/${user_msg_type}/product${product_idx}/run${run}"
             log_file="${results_dir}/rank_opt_background.log"
             
-            # 检查是否已完成
+            # 检查是否已完成（改进：不仅要检查 done.txt，还要检查日志中是否有 OOM 错误）
             if [ -f "${results_dir}/done.txt" ] && grep -q "done" "${results_dir}/done.txt" 2>/dev/null; then
-                skipped_tasks=$((skipped_tasks + 1))
-                echo "      ⏭️  product${product_idx}: 已完成，跳过"
-                continue
+                # 检查日志中是否有 OOM 错误，如果有 OOM 则视为未成功运行，需要重新运行
+                if [ -f "${log_file}" ] && (grep -qi "OutOfMemoryError\|CUDA out of memory" "${log_file}" 2>/dev/null); then
+                    echo "      ⚠️  product${product_idx}: 检测到 OOM 错误，将重新运行（减少商品数量）"
+                    # 删除 done.txt，以便重新运行
+                    rm -f "${results_dir}/done.txt"
+                else
+                    skipped_tasks=$((skipped_tasks + 1))
+                    echo "      ⏭️  product${product_idx}: 已完成，跳过"
+                    continue
+                fi
             fi
             
             # 创建结果目录
@@ -150,23 +169,93 @@ print(len(products))
             
             # 运行 rank_opt.py（前台运行，等待完成后再执行下一个任务）
             # 使用 category_name 作为 catalog 参数（文件已在 data/ 目录下）
+            # 添加 OOM 自动重试逻辑：如果 OOM，则逐个减少商品数量并重新运行（最少到 3 个）
             cd "${base_dir}"
-            if ${python_path} rank_opt.py \
-                --results_dir "${results_dir}" \
-                --catalog "${category_name}" \
-                --user_msg_type "${user_msg_type}" \
-                --target_product_idx "${product_idx}" \
-                --num_iter "${num_iter}" \
-                --test_iter "${test_iter}" \
-                --random_order \
-                --save_state \
-                --mode "${mode}" \
-                --target_llm "${target_llm}" > "${log_file}" 2>&1; then
-                echo "done" > "${results_dir}/done.txt"
-                completed_tasks=$((completed_tasks + 1))
-                echo "      ✅ product${product_idx}: 完成"
-            else
-                echo "      ❌ product${product_idx}: 失败，请查看日志: ${log_file}"
+            
+            # 动态生成商品数量列表：从 product_count-1 开始，逐个减少到 3
+            # 例如：如果 product_count=6，则列表为 (5 4 3)
+            min_products=3
+            max_products_in_prompt_list=()
+            if [ "${product_count}" -gt "${min_products}" ]; then
+                for ((i=$((product_count - 1)); i >= min_products; i--)); do
+                    max_products_in_prompt_list+=(${i})
+                done
+            fi
+            
+            run_success=false
+            # 先尝试使用全部商品（不设置 max_products_in_prompt 参数），如果 OOM 则逐个减少商品数量
+            for max_products in "" "${max_products_in_prompt_list[@]}"; do
+                if [ -n "${max_products}" ]; then
+                    echo "      🔄 product${product_idx}: 检测到 OOM，使用 ${max_products} 个商品重新运行..."
+                fi
+                
+                # 构建命令参数
+                cmd_args=(
+                    --results_dir "${results_dir}"
+                    --catalog "${category_name}"
+                    --user_msg_type "${user_msg_type}"
+                    --target_product_idx "${product_idx}"
+                    --num_iter "${num_iter}"
+                    --test_iter "${test_iter}"
+                    --random_order
+                    --save_state
+                    --mode "${mode}"
+                    --target_llm "${target_llm}"
+                )
+                # 如果设置了 max_products，添加该参数
+                if [ -n "${max_products}" ]; then
+                    cmd_args+=(--max_products_in_prompt "${max_products}")
+                fi
+                
+                if ${python_path} rank_opt.py "${cmd_args[@]}" > "${log_file}" 2>&1; then
+                    # 检查日志中是否有 OOM 错误
+                    if [ -f "${log_file}" ] && (grep -qi "OutOfMemoryError\|CUDA out of memory" "${log_file}" 2>/dev/null); then
+                        echo "      ⚠️  product${product_idx}: 检测到 OOM 错误"
+                        if [ -n "${max_products}" ] && [ "${max_products}" = "${min_products}" ]; then
+                            # 已经尝试了最少商品数量（3个），仍然 OOM
+                            echo "      ❌ product${product_idx}: 即使使用 ${min_products} 个商品仍然 OOM，跳过"
+                            run_success=false
+                            break
+                        else
+                            # 继续尝试更少的商品数量
+                            continue
+                        fi
+                    else
+                        # 没有 OOM 错误，运行成功
+                        echo "done" > "${results_dir}/done.txt"
+                        completed_tasks=$((completed_tasks + 1))
+                        if [ -n "${max_products}" ]; then
+                            echo "      ✅ product${product_idx}: 完成（使用了 ${max_products} 个商品）"
+                        else
+                            echo "      ✅ product${product_idx}: 完成"
+                        fi
+                        run_success=true
+                        break
+                    fi
+                else
+                    # 检查是否是 OOM 错误
+                    if [ -f "${log_file}" ] && (grep -qi "OutOfMemoryError\|CUDA out of memory" "${log_file}" 2>/dev/null); then
+                        echo "      ⚠️  product${product_idx}: 检测到 OOM 错误"
+                        if [ -n "${max_products}" ] && [ "${max_products}" = "${min_products}" ]; then
+                            # 已经尝试了最少商品数量（3个），仍然 OOM
+                            echo "      ❌ product${product_idx}: 即使使用 ${min_products} 个商品仍然 OOM，跳过"
+                            run_success=false
+                            break
+                        else
+                            # 继续尝试更少的商品数量
+                            continue
+                        fi
+                    else
+                        # 其他错误（非 OOM）
+                        echo "      ❌ product${product_idx}: 失败，请查看日志: ${log_file}"
+                        run_success=false
+                        break
+                    fi
+                fi
+            done
+            
+            if [ "${run_success}" = "false" ]; then
+                echo "      ❌ product${product_idx}: 最终失败，请查看日志: ${log_file}"
             fi
             
             # 显式等待进程完全结束（确保不会并行执行）

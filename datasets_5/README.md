@@ -7,6 +7,7 @@
 所有数据集文件都采用 JSONL 格式（每行一个 JSON 对象），格式根据原始数据源有所不同。
 
 - **GEO 数据集**: 保留原始字段（如 `name`, `description`）
+- **Zero-Shot Rankers 数据集**: 保留原始字段（如 `name`, `description`）
 - **其他数据集**: 统一格式包含 Name, Description, Price, Rating, Capacity, Ideal For 等字段
 
 ## 目录结构
@@ -37,12 +38,17 @@ datasets_5/
 │   ├── automatic_garden_watering_system.jsonl
 │   ├── barbecue_grill.jsonl
 │   └── beard_trimmer.jsonl
-└── llm-rank-optimizer/       # LLM Rank Optimizer 数据集（5个类别）
-    ├── Outdoor_Camping_Gear.jsonl
-    ├── Pet_Supplies.jsonl
-    ├── books.jsonl
-    ├── cameras.jsonl
-    └── coffee_machines.jsonl
+├── llm-rank-optimizer/       # LLM Rank Optimizer 数据集（4个类别）
+│   ├── books.jsonl
+│   ├── cameras.jsonl
+│   ├── coffee_machines.jsonl
+│   └── election_articles.jsonl
+└── Zero-Shot Rankers/        # Zero-Shot Rankers 数据集（5个类别）
+    ├── action.jsonl
+    ├── adventure.jsonl
+    ├── animation.jsonl
+    ├── childrens.jsonl
+    └── comedy.jsonl
 ```
 
 ## 数据集统计
@@ -53,15 +59,16 @@ datasets_5/
 | GEO | 5 | 30 | 6.0 |
 | RewriteToRank | 5 | 30 | 6.0 |
 | StealthRank | 5 | 30 | 6.0 |
-| llm-rank-optimizer | 5 | 30 | 6.0 |
-| **总计** | **25** | **150** | **6.0** |
+| llm-rank-optimizer | 4 | 24 | 6.0 |
+| Zero-Shot Rankers | 5 | 30 | 6.0 |
+| **总计** | **29** | **174** | **6.0** |
 
 ## 数据说明
 
 - 每个算法文件夹包含 **最多 5 个商品类别**（按文件名排序，取前5个）
 - 每个商品类别最多包含 **6 个商品**
-- 数据来源于 `../Datasets_clean/` 目录
-- 包括 GEO 数据集（5 个类别）
+- 数据来源于 `../Datasets_clean/` 目录和 `../Datasets/Zero-Shot Rankers/` 目录
+- 包括 GEO 数据集（5 个类别）和 Zero-Shot Rankers 数据集（5 个类别）
 
 ## 使用示例
 

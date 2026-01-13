@@ -9,8 +9,8 @@ client = boto3.client("bedrock-runtime", region_name="us-east-1")
 model_id = "meta.llama3-70b-instruct-v1:0"
 
 # 你的参数
-category = "toys"
-num = 10
+category = "computers"
+num = 15
 
 # 输出文件路径
 output_file_path = f"Datasets/llm-rank-optimizer/extend_data/{category}.jsonl"
@@ -58,7 +58,7 @@ formatted_prompt = f"""
 # Format the request payload.
 native_request = {
     "prompt": formatted_prompt,
-    "max_gen_len": 1024,  # 适当增加最大生成长度，确保能生成完整的JSONL
+    "max_gen_len": 4096,  # 适当增加最大生成长度，确保能生成完整的JSONL
     "temperature": 0.7,
 }
 

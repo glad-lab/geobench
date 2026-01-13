@@ -157,6 +157,7 @@ if __name__ == "__main__":
     parser.add_argument("--model_path", type=str, help="Path to the model", default="meta-llama/Llama-2-7b-chat-hf")
     parser.add_argument("--sts_dir", type=str, help="Director containing product descriptions with STS inserted", default="results")
     parser.add_argument("--catalog", type=str, default="coffee_machines", choices=["coffee_machines", "books", "cameras","election_articles"], help="The product catalog to use.")
+    parser.add_argument("--catalog_path", type=str, default=None, help="Optional: override product catalog JSONL path (e.g., data/books_media.jsonl)")
     parser.add_argument("--prod_idx", type=int, help="Index of the product to rank", default=3)
     parser.add_argument("--num_iter", type=int, help="Number of iterations to run", default=50)
     parser.add_argument("--prod_ord", type=str, choices=["random", "fixed"], help="Order of products during evaluation", default="random")
@@ -195,6 +196,10 @@ if __name__ == "__main__":
         catalog = "data/election_articles.jsonl"
         if user_msg_type == "default":
             user_msg = "I am looking for an article. Can I get some recommendations?"
+
+    # Allow overriding the underlying catalog file path for custom datasets
+    if args.catalog_path is not None:
+        catalog = args.catalog_path
 
     # if args.catalog == "coffee_machines":
     #     catalog = "data/coffee_machines.jsonl"
