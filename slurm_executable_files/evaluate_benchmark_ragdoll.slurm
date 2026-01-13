@@ -1,8 +1,9 @@
 #!/bin/bash
 #SBATCH --job-name=eval-benchmark-ragdoll
-#SBATCH --partition=cpu-preempt
-#SBATCH --account=bfsl-delta-cpu
+#SBATCH --partition=gpuA100x4
+#SBATCH --account=bfsl-delta-gpu
 #SBATCH --nodes=1
+#SBATCH --gpus-per-node=1
 #SBATCH --cpus-per-task=8
 #SBATCH --mem=64G
 #SBATCH --time=20:00:00
