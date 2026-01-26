@@ -331,7 +331,16 @@ if __name__ == "__main__":
     with open(catalog, "r") as file:
         product_lines = file.readlines()
 
-    product_names = [json.loads(line)['Name'] for line in product_lines]
+    # 支持不同数据集中的字段名差异：既兼容 "Name" 也兼容 "name"
+    product_names = []
+    for line in product_lines:
+        obj = json.loads(line)
+        if "Name" in obj:
+            product_names.append(obj["Name"])
+        elif "name" in obj:
+            product_names.append(obj["name"])
+        else:
+            raise KeyError(f"Product JSON 缺少 'Name' 或 'name' 字段: {obj}")
     num_products = len(product_names)
     target_product = product_names[prod_idx-1]
     print(f"Target product: {target_product}", flush=True)
