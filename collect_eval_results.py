@@ -79,6 +79,14 @@ def collect_all_results(results_dir: str = "results_datasets_5") -> Dict[str, Li
     
     # 遍历所有 eval.json 文件
     for eval_file in results_path.rglob("eval.json"):
+        # 检查是否有 sts.txt（确保训练已完成）
+        run_dir = eval_file.parent
+        sts_file = run_dir / "sts.txt"
+        
+        # 只统计有 sts.txt 的评估结果（确保训练已完成）
+        if not sts_file.exists():
+            continue
+        
         # 解析路径: results_datasets_5/{algorithm}/{category}/self/llama/default/product{idx}/run{run}/eval.json
         parts = eval_file.parts
         try:
@@ -96,6 +104,15 @@ def collect_all_results(results_dir: str = "results_datasets_5") -> Dict[str, Li
                     
                     eval_data = load_eval_json(str(eval_file))
                     if eval_data:
+                        # 额外检查：确保 eval.json 包含必要字段且数据有效
+                        if 'rank_list' not in eval_data or 'rank_list_opt' not in eval_data:
+                            print(f"⚠️ 跳过不完整的 eval.json: {eval_file}")
+                            continue
+                        
+                        if not eval_data.get('rank_list') or not eval_data.get('rank_list_opt'):
+                            print(f"⚠️ 跳过空的排名列表: {eval_file}")
+                            continue
+                        
                         metrics = calculate_metrics(eval_data)
                         if metrics:
                             metrics['algorithm'] = algorithm
@@ -204,4 +221,5 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 
