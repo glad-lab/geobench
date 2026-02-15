@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """
-遍历 datasets_5 数据集，为每个类别文件的每个商品运行 rank_opt
+遍历 datasets_clean 数据集，为每个类别文件的第一个商品运行 rank_opt
+每个数据集只选取前 20 个 category（不足 20 个则全部遍历）
 每个商品只运行一次（run=1）
 """
 
@@ -12,9 +13,10 @@ from pathlib import Path
 import time
 
 # 配置参数
-BASE_DIR = Path("/home/exouser/Desktop/vscode/geobench")
-DATASETS_5_DIR = BASE_DIR / "datasets_5"
-RESULTS_BASE_DIR = BASE_DIR / "results_datasets_5"
+BASE_DIR = Path("/home/exouser/vscode/geobench")
+DATASETS_CLEAN_DIR = BASE_DIR / "datasets_clean"
+RESULTS_BASE_DIR = BASE_DIR / "Results_new"
+MAX_CATEGORIES_PER_DATASET = 20  # 每个数据集最多处理 20 个 category
 
 # rank_opt 参数
 MODE = "self"
@@ -23,7 +25,7 @@ TARGET_LLM = "llama"
 NUM_ITER = 2000
 TEST_ITER = 50
 RUN = 1  # 固定为1
-PYTHON_PATH = "python"
+PYTHON_PATH = "conda run -n geo python"
 
 # 显存优化环境变量
 os.environ["PYTORCH_CUDA_ALLOC_CONF"] = "expandable_segments:True,max_split_size_mb:64,garbage_collection_threshold:0.6"
@@ -80,8 +82,9 @@ def run_rank_opt(category_file, algorithm_name, category_name, product_idx, user
     # 构建命令
     # 注意：由于 rank_opt.py 的 catalog 参数限制，我们需要使用 category_name
     # 但如果 category_name 不在支持列表中，需要修改 rank_opt.py 或使用其他方法
-    cmd = [
-        PYTHON_PATH,
+    # PYTHON_PATH 可能包含多个部分（如 "conda run -n geo python"），需要拆分
+    python_cmd = PYTHON_PATH.split()
+    cmd = python_cmd + [
         str(BASE_DIR / "rank_opt.py"),
         "--results_dir", str(results_dir),
         "--catalog", category_name,  # 这里使用 category_name，需要在 rank_opt.py 中支持
@@ -110,10 +113,12 @@ def run_rank_opt(category_file, algorithm_name, category_name, product_idx, user
 def main():
     """主函数"""
     print("=" * 60)
-    print("开始遍历 datasets_5 数据集")
+    print("开始遍历 datasets_clean 数据集")
     print("=" * 60)
-    print(f"数据集目录: {DATASETS_5_DIR}")
+    print(f"数据集目录: {DATASETS_CLEAN_DIR}")
     print(f"结果保存目录: {RESULTS_BASE_DIR}")
+    print(f"每个数据集最多处理 {MAX_CATEGORIES_PER_DATASET} 个 category")
+    print(f"每个 category 只处理第一个商品 (product1)")
     print()
     
     total_tasks = 0
@@ -121,16 +126,28 @@ def main():
     skipped_tasks = 0
     failed_tasks = 0
     
-    # 遍历每个算法文件夹
-    for algorithm_dir in sorted(DATASETS_5_DIR.iterdir()):
-        if not algorithm_dir.is_dir():
+    # 遍历每个数据集文件夹
+    for dataset_dir in sorted(DATASETS_CLEAN_DIR.iterdir()):
+        if not dataset_dir.is_dir():
             continue
         
-        algorithm_name = algorithm_dir.name
-        print(f"📦 处理算法: {algorithm_name}")
+        dataset_name = dataset_dir.name
+        print(f"📦 处理数据集: {dataset_name}")
         
-        # 遍历该算法下的每个类别文件
-        for category_file in sorted(algorithm_dir.glob("*.jsonl")):
+        # 获取所有类别文件并排序
+        category_files = sorted(dataset_dir.glob("*.jsonl"))
+        total_categories = len(category_files)
+        
+        # 选择前 MAX_CATEGORIES_PER_DATASET 个 category（如果不足则全部）
+        selected_categories = category_files[:MAX_CATEGORIES_PER_DATASET]
+        
+        print(f"  总类别数: {total_categories}")
+        print(f"  将处理: {len(selected_categories)} 个类别")
+        if total_categories > MAX_CATEGORIES_PER_DATASET:
+            print(f"  ⚠️  超过 {MAX_CATEGORIES_PER_DATASET} 个，只处理前 {MAX_CATEGORIES_PER_DATASET} 个")
+        
+        # 遍历选中的类别文件
+        for category_file in selected_categories:
             category_name = category_file.stem
             print(f"  📁 处理类别: {category_name}")
             
@@ -138,32 +155,36 @@ def main():
             product_count = get_product_count(category_file)
             print(f"     商品数量: {product_count}")
             
+            if product_count == 0:
+                print(f"     ⚠️  跳过（无商品）")
+                continue
+            
             # 读取用户消息（从文件的第一行推断，或者使用通用消息）
             # 这里使用通用的用户消息
             user_msg = "I am looking for a product. Can I get some recommendations?"
             
-            # 遍历每个商品作为 target product
-            for product_idx in range(1, product_count + 1):
-                total_tasks += 1
-                print(f"      ▶️  product{product_idx}...", end=" ", flush=True)
-                
-                success, message = run_rank_opt(
-                    category_file, 
-                    algorithm_name, 
-                    category_name, 
-                    product_idx, 
-                    user_msg
-                )
-                
-                if message == "已跳过（已完成）":
-                    skipped_tasks += 1
-                    print(f"⏭️  跳过")
-                elif success:
-                    completed_tasks += 1
-                    print(f"✅ 完成")
-                else:
-                    failed_tasks += 1
-                    print(f"❌ {message}")
+            # 只处理第一个商品作为 target product
+            product_idx = 1
+            total_tasks += 1
+            print(f"      ▶️  product{product_idx}...", end=" ", flush=True)
+            
+            success, message = run_rank_opt(
+                category_file, 
+                dataset_name, 
+                category_name, 
+                product_idx, 
+                user_msg
+            )
+            
+            if message == "已跳过（已完成）":
+                skipped_tasks += 1
+                print(f"⏭️  跳过")
+            elif success:
+                completed_tasks += 1
+                print(f"✅ 完成")
+            else:
+                failed_tasks += 1
+                print(f"❌ {message}")
             
             print()
         
