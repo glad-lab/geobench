@@ -114,14 +114,16 @@ def prompt_generator_llama(target_product_idx, product_list, user_msg, tokenizer
         sts_idxs: The indices of the STS tokens.
     '''
     
-    system_prompt = "[INST] <<SYS>>\nA chat between a human and an artificial " \
+    # Llama 3.1 使用新的格式：<|start_header_id|>system<|end_header_id|>...<|eot_id|>
+    system_prompt = "<|start_header_id|>system<|end_header_id|>\n\n" \
+                    + "A chat between a human and an artificial " \
                     + "intelligence assistant. The assistant provides a numbered list of " \
                     + "product recommendations ranked based on the user's request. " \
                     + "IMPORTANT: The assistant must include ALL products mentioned in the product list " \
                     + "in the recommendations, without exception. Each product from the provided list must appear " \
                     + "exactly once in the numbered recommendations. When mentioning products, the assistant must " \
                     + "ensure that the product names match exactly with the names provided in the product list above.\n" \
-                    + "<</SYS>>\n\nProducts:\n"
+                    + "<|eot_id|>\n<|start_header_id|>user<|end_header_id|>\n\nProducts:\n"
     
     # system_prompt = "[INST] <<SYS>>\nA chat between a human and an artificial " \
     #                 + "intelligence assistant. The assistant provides a list of " \
@@ -159,7 +161,7 @@ def prompt_generator_llama(target_product_idx, product_list, user_msg, tokenizer
         else:
             tail += json.dumps(product) + "\n"
 
-    tail += "\n" + user_msg + " [/INST]"
+    tail += "\n" + user_msg + "<|eot_id|>\n<|start_header_id|>assistant<|end_header_id|>\n\n"
 
     head_tokens = tokenizer(head, return_tensors="pt")["input_ids"].to(device)
     sts_tokens = sts_tokens.to(device)
@@ -519,7 +521,7 @@ if __name__ == "__main__":
     top_candidates = args.top_candidates
     save_state = args.save_state
     # Use models with similar tokenizers
-    model_path_llama_7b = "/media/volume/v4/Llama-2-7b-chat-hf"
+    model_path_llama_7b = "/media/volume/geo-model/Llama-3.1-8B-Instruct"  # 更新为 Llama-3.1-8B-Instruct
     model_path_llama32_1b = "/media/volume/v4/Llama-3.2-1B-Instruct"
     model_path_vicuna_7b = "lmsys/vicuna-7b-v1.5"
     
@@ -593,18 +595,19 @@ if __name__ == "__main__":
             param.requires_grad = False
 
     else:
-        # Load Llama-2-7b-chat model (default)
+        # Load Llama-3.1-8B-Instruct model (default, updated from Llama-2-7b-chat)
         model_llama_7b = transformers.AutoModelForCausalLM.from_pretrained(
             model_path_llama_7b,
-            torch_dtype=torch.float16,
+            torch_dtype=torch.bfloat16,  # Llama 3.1 推荐使用 bfloat16
             trust_remote_code=True,
             low_cpu_mem_usage=True,
             use_cache=False,
+            device_map="auto",  # 自动分配设备
             )
         
         # Put model in eval mode and turn off gradients of model parameters
-        # model_llama_7b.to(device).eval()
-        model_llama_7b.to(torch.device("cuda:0")).eval()
+        # 注意：使用 device_map="auto" 时不需要手动调用 .to()
+        model_llama_7b.eval()
         for param in model_llama_7b.parameters():
             param.requires_grad = False
         
@@ -627,7 +630,7 @@ if __name__ == "__main__":
     if mode == "self" and target_llm == "llama32":
         tokenizer_llama = transformers.AutoTokenizer.from_pretrained(model_path_llama32_1b)
     else:
-        tokenizer_llama = transformers.AutoTokenizer.from_pretrained(model_path_llama_7b)
+        tokenizer_llama = transformers.AutoTokenizer.from_pretrained(model_path_llama_7b)  # 已更新为 Llama-3.1-8B-Instruct
 
     # -------------------------- 关键修改：读取JSON数组格式文件 --------------------------
     product_list = []

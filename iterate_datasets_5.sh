@@ -3,7 +3,7 @@ set -euo pipefail  # 严格模式：报错立即退出、未定义变量报错�
 shopt -s nullglob  # 如果通配符没有匹配到文件，返回空列表而不是字面量
 
 # ===================== 配置参数 =====================
-base_dir="/home/exouser/Desktop/vscode/geobench"
+base_dir="/home/exouser/vscode/geobench"
 datasets_5_dir="${base_dir}/datasets_5"
 
 # ===================== 防止并行执行锁机制 =====================
@@ -35,13 +35,14 @@ target_llm="llama"
 num_iter=1600
 test_iter=50
 run=1  # 固定为1，每个商品只跑一次
-python_path="python"
+python_path="conda run -n geo python -u"  # 使用 geo conda 环境，-u 参数禁用输出缓冲
 
 # ===================== 显存优化环境变量 =====================
 # 增加max_split_size_mb从64到256，减少内存分配/释放频率，提升速度
 export PYTORCH_CUDA_ALLOC_CONF="expandable_segments:True,max_split_size_mb:256,garbage_collection_threshold:0.6"
 export TRANSFORMERS_CACHE="/tmp"
 export CUDA_VISIBLE_DEVICES=0  # 单卡独占，避免多卡调度冲突
+export PYTHONUNBUFFERED=1  # 禁用 Python 输出缓冲，实时写入日志
 
 # ===================== 遍历函数 =====================
 echo "============================================================"
@@ -56,7 +57,7 @@ skipped_tasks=0
 completed_tasks=0
 
 # 按照指定顺序遍历算法文件夹
-algorithm_order=("StealthRank" "llm-rank-optimizer" "AdversarialSEO" "GEO" "Zero-Shot Rankers")
+algorithm_order=("StealthRank" "llm-rank-optimizer" "AdversarialSEO" "GEO" "Zero-Shot Rankers" "llmrank_subsampled")
 # RewriteToRank 跳过，不处理
 
 for algorithm_name in "${algorithm_order[@]}"; do
@@ -113,7 +114,7 @@ for algorithm_name in "${algorithm_order[@]}"; do
         fi
 
         # 统计商品数量（使用 Python）
-        product_count=$(python3 -c "
+        product_count=$(conda run -n geo python3 -c "
 import json
 with open('${category_file}', 'r', encoding='utf-8') as f:
     products = [json.loads(l) for l in f if l.strip()]

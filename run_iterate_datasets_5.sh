@@ -4,7 +4,7 @@
 set -euo pipefail
 
 # ===================== 配置参数 =====================
-base_dir="/home/exouser/Desktop/vscode/geobench"
+base_dir="/home/exouser/vscode/geobench"
 script_name="iterate_datasets_5.sh"
 script_path="${base_dir}/${script_name}"
 
