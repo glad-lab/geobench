@@ -1,74 +1,0 @@
-wandb: WARNING Malformed sweep config detected! This may cause your sweep to behave in unexpected ways.
-wandb: WARNING To avoid this, please fix the sweep config schema violations below:
-wandb: WARNING   Violation 1. Additional properties are not allowed ('wandb' was unexpected)
-wandb: Agent Starting Run: medlrvg4 with config:
-wandb: 	batch_size: 5
-wandb: 	catalog: coffee_machines
-wandb: 	comment: main experiment
-wandb: 	dataset: json
-wandb: 	fluency: 1
-wandb: 	iter_steps: [0, 50, 200, 500, 1500]
-wandb: 	length: 30
-wandb: 	lr: 0.03
-wandb: 	mode: suffix
-wandb: 	model: llama-3.1-8b
-wandb: 	ngram: 5
-wandb: 	noise_stds: [0.1, 0.05, 0.01, 0.005, 0.001]
-wandb: 	num_iter: 20
-wandb: 	precision: 16
-wandb: 	random_inference: True
-wandb: 	random_order: True
-wandb: 	result_dir: result/suffix/v1
-wandb: 	seed: 42
-wandb: 	similarity: 1
-wandb: 	target: 50
-wandb: 	target_product_idx: 8
-wandb: 	temperature: 0.1
-wandb: 	test_iter: 100
-wandb: 	topk: 10
-wandb: Currently logged in as: nimase (nimase-university-of-southern-california) to https://api.wandb.ai. Use `wandb login --relogin` to force relogin
-wandb: WARNING Ignoring project 'seo' when running a sweep.
-wandb: WARNING Ignoring entity '' when running a sweep.
-wandb: Using wandb-core as the SDK backend.  Please refer to https://wandb.me/wandb-core for more information.
-wandb: Tracking run with wandb version 0.19.6
-wandb: Run data is saved locally in /work/hdd/beaa/onimase/controllable-seo-project/geobench/wandb/run-20251018_202134-medlrvg4
-wandb: Run `wandb offline` to turn off syncing.
-wandb: Syncing run devoted-sweep-1
-wandb: ⭐️ View project at https://wandb.ai/nimase-university-of-southern-california/seo
-wandb: 🧹 View sweep at https://wandb.ai/nimase-university-of-southern-california/seo/sweeps/lvam2fcm
-wandb: 🚀 View run at https://wandb.ai/nimase-university-of-southern-california/seo/runs/medlrvg4
-`torch_dtype` is deprecated! Use `dtype` instead!
-Create sweep with ID: lvam2fcm
-Sweep URL: https://wandb.ai/nimase-university-of-southern-california/seo/sweeps/lvam2fcm
-Fetching 4 files:   0%|          | 0/4 [00:00<?, ?it/s]Fetching 4 files:  25%|██▌       | 1/4 [00:54<02:43, 54.66s/it]Fetching 4 files: 100%|██████████| 4/4 [00:54<00:00, 13.66s/it]
-Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards:  25%|██▌       | 1/4 [00:00<00:02,  1.03it/s]Loading checkpoint shards:  50%|█████     | 2/4 [00:01<00:01,  1.06it/s]Loading checkpoint shards:  75%|███████▌  | 3/4 [00:02<00:00,  1.07it/s]Loading checkpoint shards: 100%|██████████| 4/4 [00:03<00:00,  1.54it/s]Loading checkpoint shards: 100%|██████████| 4/4 [00:03<00:00,  1.32it/s]
-
-TARGET STR: 1. LatteArt Pro
-Training:   0%|          | 0/20 [00:00<?, ?iter/s]Training:   0%|          | 0/20 [00:01<?, ?iter/s, Total Loss=15.10, Target=1.76, Fluency=5.41, N-gram=15.70, Similarity=N/A, Rank=None]                                                                                                                                        Training:   0%|          | 0/20 [00:20<?, ?iter/s, Total Loss=15.10, Target=1.76, Fluency=5.41, N-gram=15.70, Similarity=N/A, Rank=None]Training:   5%|▌         | 1/20 [00:20<06:27, 20.37s/iter, Total Loss=15.10, Target=1.76, Fluency=5.41, N-gram=15.70, Similarity=N/A, Rank=None]Training:   5%|▌         | 1/20 [00:22<06:27, 20.37s/iter, Total Loss=25.41, Target=1.91, Fluency=8.41, N-gram=15.72, Similarity=N/A, Rank=1]   Training:  10%|█         | 2/20 [00:22<02:50,  9.47s/iter, Total Loss=25.41, Target=1.91, Fluency=8.41, N-gram=15.72, Similarity=N/A, Rank=1]Training:  10%|█         | 2/20 [00:23<02:50,  9.47s/iter, Total Loss=20.27, Target=1.78, Fluency=10.29, N-gram=15.78, Similarity=N/A, Rank=1]Training:  15%|█▌        | 3/20 [00:23<01:41,  5.96s/iter, Total Loss=20.27, Target=1.78, Fluency=10.29, N-gram=15.78, Similarity=N/A, Rank=1]Training:  15%|█▌        | 3/20 [00:25<01:41,  5.96s/iter, Total Loss=15.36, Target=1.66, Fluency=11.60, N-gram=15.83, Similarity=N/A, Rank=1]Training:  20%|██        | 4/20 [00:25<01:09,  4.32s/iter, Total Loss=15.36, Target=1.66, Fluency=11.60, N-gram=15.83, Similarity=N/A, Rank=1]Training:  20%|██        | 4/20 [00:27<01:09,  4.32s/iter, Total Loss=20.20, Target=1.75, Fluency=12.00, N-gram=15.86, Similarity=N/A, Rank=1]Training:  25%|██▌       | 5/20 [00:27<00:51,  3.41s/iter, Total Loss=20.20, Target=1.75, Fluency=12.00, N-gram=15.86, Similarity=N/A, Rank=1]Training:  25%|██▌       | 5/20 [00:29<00:51,  3.41s/iter, Total Loss=16.95, Target=1.68, Fluency=12.39, N-gram=15.93, Similarity=N/A, Rank=1]Training:  30%|███       | 6/20 [00:29<00:40,  2.86s/iter, Total Loss=16.95, Target=1.68, Fluency=12.39, N-gram=15.93, Similarity=N/A, Rank=1]Training:  30%|███       | 6/20 [00:31<00:40,  2.86s/iter, Total Loss=16.38, Target=1.67, Fluency=12.70, N-gram=15.98, Similarity=N/A, Rank=1]Training:  35%|███▌      | 7/20 [00:31<00:32,  2.52s/iter, Total Loss=16.38, Target=1.67, Fluency=12.70, N-gram=15.98, Similarity=N/A, Rank=1]Training:  35%|███▌      | 7/20 [00:32<00:32,  2.52s/iter, Total Loss=15.55, Target=1.66, Fluency=12.46, N-gram=16.00, Similarity=N/A, Rank=1]Training:  40%|████      | 8/20 [00:32<00:27,  2.29s/iter, Total Loss=15.55, Target=1.66, Fluency=12.46, N-gram=16.00, Similarity=N/A, Rank=1]Training:  40%|████      | 8/20 [00:34<00:27,  2.29s/iter, Total Loss=15.47, Target=1.67, Fluency=12.52, N-gram=16.08, Similarity=N/A, Rank=1]Training:  45%|████▌     | 9/20 [00:34<00:23,  2.14s/iter, Total Loss=15.47, Target=1.67, Fluency=12.52, N-gram=16.08, Similarity=N/A, Rank=1]Training:  45%|████▌     | 9/20 [00:36<00:23,  2.14s/iter, Total Loss=3.42, Target=1.43, Fluency=12.37, N-gram=16.12, Similarity=N/A, Rank=1] Training:  50%|█████     | 10/20 [00:36<00:20,  2.03s/iter, Total Loss=3.42, Target=1.43, Fluency=12.37, N-gram=16.12, Similarity=N/A, Rank=1]Training:  50%|█████     | 10/20 [00:38<00:20,  2.03s/iter, Total Loss=9.72, Target=1.56, Fluency=12.29, N-gram=16.15, Similarity=N/A, Rank=1]Training:  55%|█████▌    | 11/20 [00:38<00:17,  1.96s/iter, Total Loss=9.72, Target=1.56, Fluency=12.29, N-gram=16.15, Similarity=N/A, Rank=1]Training:  55%|█████▌    | 11/20 [00:40<00:17,  1.96s/iter, Total Loss=16.83, Target=1.71, Fluency=12.43, N-gram=16.24, Similarity=N/A, Rank=1]Training:  60%|██████    | 12/20 [00:40<00:15,  1.92s/iter, Total Loss=16.83, Target=1.71, Fluency=12.43, N-gram=16.24, Similarity=N/A, Rank=1]Training:  60%|██████    | 12/20 [00:42<00:15,  1.92s/iter, Total Loss=15.69, Target=1.69, Fluency=12.41, N-gram=16.27, Similarity=N/A, Rank=1]Training:  65%|██████▌   | 13/20 [00:42<00:13,  1.88s/iter, Total Loss=15.69, Target=1.69, Fluency=12.41, N-gram=16.27, Similarity=N/A, Rank=1]Training:  65%|██████▌   | 13/20 [00:43<00:13,  1.88s/iter, Total Loss=10.73, Target=1.60, Fluency=12.16, N-gram=16.31, Similarity=N/A, Rank=1]Training:  70%|███████   | 14/20 [00:43<00:11,  1.86s/iter, Total Loss=10.73, Target=1.60, Fluency=12.16, N-gram=16.31, Similarity=N/A, Rank=1]Training:  70%|███████   | 14/20 [00:45<00:11,  1.86s/iter, Total Loss=8.60, Target=1.57, Fluency=12.19, N-gram=16.38, Similarity=N/A, Rank=1] Training:  75%|███████▌  | 15/20 [00:45<00:09,  1.84s/iter, Total Loss=8.60, Target=1.57, Fluency=12.19, N-gram=16.38, Similarity=N/A, Rank=1]Training:  75%|███████▌  | 15/20 [00:47<00:09,  1.84s/iter, Total Loss=11.50, Target=1.63, Fluency=12.22, N-gram=16.41, Similarity=N/A, Rank=1]Training:  80%|████████  | 16/20 [00:47<00:07,  1.83s/iter, Total Loss=11.50, Target=1.63, Fluency=12.22, N-gram=16.41, Similarity=N/A, Rank=1]Training:  80%|████████  | 16/20 [00:49<00:07,  1.83s/iter, Total Loss=13.16, Target=1.67, Fluency=12.21, N-gram=16.47, Similarity=N/A, Rank=1]Training:  85%|████████▌ | 17/20 [00:49<00:05,  1.83s/iter, Total Loss=13.16, Target=1.67, Fluency=12.21, N-gram=16.47, Similarity=N/A, Rank=1]Training:  85%|████████▌ | 17/20 [00:51<00:05,  1.83s/iter, Total Loss=11.99, Target=1.64, Fluency=12.32, N-gram=16.50, Similarity=N/A, Rank=1]Training:  90%|█████████ | 18/20 [00:51<00:03,  1.82s/iter, Total Loss=11.99, Target=1.64, Fluency=12.32, N-gram=16.50, Similarity=N/A, Rank=1]Training:  90%|█████████ | 18/20 [00:52<00:03,  1.82s/iter, Total Loss=7.42, Target=1.56, Fluency=11.98, N-gram=16.53, Similarity=N/A, Rank=1] Training:  95%|█████████▌| 19/20 [00:52<00:01,  1.82s/iter, Total Loss=7.42, Target=1.56, Fluency=11.98, N-gram=16.53, Similarity=N/A, Rank=1]Training:  95%|█████████▌| 19/20 [00:54<00:01,  1.82s/iter, Total Loss=18.04, Target=1.78, Fluency=11.84, N-gram=16.55, Similarity=N/A, Rank=1]                                                                                                                                               Training:  95%|█████████▌| 19/20 [01:13<00:01,  1.82s/iter, Total Loss=18.04, Target=1.78, Fluency=11.84, N-gram=16.55, Similarity=N/A, Rank=1]Training: 100%|██████████| 20/20 [01:13<00:00,  7.59s/iter, Total Loss=18.04, Target=1.78, Fluency=11.84, N-gram=16.55, Similarity=N/A, Rank=1]Training: 100%|██████████| 20/20 [01:13<00:00,  3.70s/iter, Total Loss=18.04, Target=1.78, Fluency=11.84, N-gram=16.55, Similarity=N/A, Rank=1]
-wandb:                                                                                
-wandb: 
-wandb: Run history:
-wandb:     eval/batch_idx ▁█
-wandb:  eval/product_rank ▁▁
-wandb: train/fluency_loss ▁▄▆▇▇████████▇████▇▇
-wandb:         train/loss ▅█▆▅▆▅▅▅▅▁▃▅▅▃▃▄▄▄▂▆
-wandb:   train/ngram_loss ▁▁▂▂▂▃▃▄▄▄▅▅▆▆▇▇▇███
-wandb:  train/target_loss ▆█▆▄▆▅▄▄▄▁▃▅▅▃▃▄▄▄▃▆
-wandb: 
-wandb: Run summary:
-wandb:     eval/batch_idx 3
-wandb:  eval/product_rank 1
-wandb: train/fluency_loss 11.8404
-wandb:         train/loss 18.04253
-wandb:   train/ngram_loss 16.55457
-wandb:  train/target_loss 1.7793
-wandb: 
-wandb: 🚀 View run seotarget_product_idx=8 at: https://wandb.ai/nimase-university-of-southern-california/seo/runs/medlrvg4
-wandb: ⭐️ View project at: https://wandb.ai/nimase-university-of-southern-california/seo
-wandb: Synced 5 W&B file(s), 3 media file(s), 6 artifact file(s) and 0 other file(s)
-wandb: Find logs at: ./wandb/run-20251018_202134-medlrvg4/logs
-wandb: Sweep Agent: Waiting for job.
-wandb: Sweep Agent: Exiting.
-Evaluation completed at iteration 1 Rank: 1
-Evaluation completed at iteration 20 Rank: 1
-Local result saved to result/suffix/v1/llama-3.1-8b/json/coffee_machines/8/random_inference=True.csv
