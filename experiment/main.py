@@ -199,7 +199,22 @@ def get_args():
 if __name__ == "__main__":
     args = get_args()
 
-    with open(f'configs/{args.mode}_{args.model}.yaml', 'r') as f:
+    # Try dataset-specific config first, then model-specific, then generic
+    dataset_label = args.dataset.replace("_subsampled", "") if args.dataset else None
+    config_path = None
+    for candidate in [
+        f'configs/{args.mode}_{args.model}_{dataset_label}.yaml' if dataset_label else None,
+        f'configs/{args.mode}_{args.model}.yaml',
+        f'configs/{args.mode}.yaml',
+    ]:
+        if candidate and os.path.exists(candidate):
+            config_path = candidate
+            break
+
+    if config_path is None:
+        raise FileNotFoundError(f"No config file found for mode={args.mode}, model={args.model}, dataset={args.dataset}")
+
+    with open(config_path, 'r') as f:
         sweep_config = yaml.safe_load(f)
     search_hparams = get_search_hparams(sweep_config)
 
