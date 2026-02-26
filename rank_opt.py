@@ -525,7 +525,7 @@ if __name__ == "__main__":
     model_path_llama32_1b = "/media/volume/v4/Llama-3.2-1B-Instruct"
     model_path_vicuna_7b = "lmsys/vicuna-7b-v1.5"
     
-    batch_size = 120  # 从50增加到120，充分利用A100 40GB显存（当前只用了44%）
+    batch_size = 64  # batch_size 设置为 64
 
     # Set device
     # device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
