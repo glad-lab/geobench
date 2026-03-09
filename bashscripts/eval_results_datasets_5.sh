@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# 自动遍历 results_datasets_5 中所有包含 sts.txt 的目录，
+# 自动遍历 Results_new 中所有包含 sts.txt 的目录，
 # 调用 evaluate.py 计算 eval.json，并用 plot/plot_dist.py 画图。
 # 参考：bashscripts/eval_self.sh
 
@@ -9,12 +9,12 @@ set -euo pipefail
 # 计算工程根目录和结果根目录
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 PROJECT_ROOT="$(cd "${SCRIPT_DIR}/.." && pwd)"
-ROOT_DIR="${PROJECT_ROOT}/results_datasets_5"
+ROOT_DIR="${PROJECT_ROOT}/Results_new"
 NUM_ITER=200          # 每个 sts 评价多少次，可按需调整
 PROD_ORD="random"
 
 echo "=========================================="
-echo "自动评估 results_datasets_5 中的所有 sts.txt"
+echo "自动评估 Results_new 中的所有 sts.txt"
 echo "根目录: ${ROOT_DIR}"
 echo "每个 STS 评估迭代次数: ${NUM_ITER}"
 echo "=========================================="

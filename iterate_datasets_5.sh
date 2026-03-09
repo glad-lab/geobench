@@ -130,13 +130,14 @@ for algorithm_name in "${dataset_folders[@]}"; do
             fi
         fi
 
-        # 统计商品数量（使用 Python）
-        product_count=$(conda run -n geo python3 -c "
+        # 统计商品数量（使用 Python，路径通过 argv 传入，避免文件名中的单引号导致语法错误）
+        product_count=$(conda run -n geo python3 -c '
 import json
-with open('${category_file}', 'r', encoding='utf-8') as f:
+import sys
+with open(sys.argv[1], "r", encoding="utf-8") as f:
     products = [json.loads(l) for l in f if l.strip()]
 print(len(products))
-")
+' "${category_file}")
         
         echo "     商品数量: ${product_count}"
         
