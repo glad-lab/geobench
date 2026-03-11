@@ -32,6 +32,16 @@ while IFS= read -r sts_path; do
     # 检查是否已经成功评估过（类似 iterate_datasets_5.sh 的检查逻辑）
     eval_json="${run_dir}/eval.json"
     eval_log="${run_dir}/eval.log"
+    skip_eval=false
+    need_plot=false
+    plot_files=(
+        "${run_dir}/ranks.png"
+        "${run_dir}/ranks_cleaned.png"
+        "${run_dir}/rank_barplot.png"
+        "${run_dir}/rank_barplot_cleaned.png"
+        "${run_dir}/advantage.png"
+        "${run_dir}/advantage_cleaned.png"
+    )
     
     # 如果 eval.json 存在，检查是否有效（文件大小 > 0，且包含有效 JSON）
     if [ -f "${eval_json}" ]; then
@@ -48,8 +58,8 @@ while IFS= read -r sts_path; do
                         echo "⚠️ 检测到 eval 错误日志，将重新评估: ${run_dir}"
                         rm -f "${eval_json}" "${eval_log}"
                     else
-                        echo "✅ 已存在有效的 eval.json，跳过: ${run_dir}"
-                        continue
+                        echo "✅ 已存在有效的 eval.json：将跳过评估并检查是否需要补画图: ${run_dir}"
+                        skip_eval=true
                     fi
                 else
                     echo "⚠️ eval.json 格式无效，将重新评估: ${run_dir}"
@@ -58,13 +68,27 @@ while IFS= read -r sts_path; do
             else
                 # 如果没有 jq，简单检查文件大小和基本内容
                 if grep -q "rank_list" "${eval_json}" 2>/dev/null; then
-                    echo "✅ 已存在 eval.json（未验证格式），跳过: ${run_dir}"
-                    continue
+                    echo "✅ 已存在 eval.json（未验证格式）：将跳过评估并检查是否需要补画图: ${run_dir}"
+                    skip_eval=true
                 else
                     echo "⚠️ eval.json 可能无效，将重新评估: ${run_dir}"
                     rm -f "${eval_json}"
                 fi
             fi
+        fi
+    fi
+
+    # 如果已经有 eval.json，检查图是否齐全；缺失则补画图
+    if [ -f "${eval_json}" ] && [ "${skip_eval}" = "true" ]; then
+        for pf in "${plot_files[@]}"; do
+            if [ ! -f "${pf}" ]; then
+                need_plot=true
+                break
+            fi
+        done
+        # 如果之前日志里明确出现 plot_dist 失败，也强制补画
+        if [ -f "${eval_log}" ] && grep -qi "plot_dist" "${eval_log}" 2>/dev/null; then
+            need_plot=true
         fi
     fi
 
@@ -110,33 +134,44 @@ while IFS= read -r sts_path; do
     
     # 如果 exp_config.json 里记录的是 data/ 路径但文件不存在，尝试从原始位置找
     if [ ! -f "${PROJECT_ROOT}/${catalog_path}" ]; then
-        # 从 run_dir 路径推断算法名称（如 StealthRank, GEO, AdversarialSEO 等）
+        # 从 run_dir 解析算法名称：Results_new/<algorithm_name>/...
+        # 这样可以覆盖 Ragroll/Ragdoll/RewriteToRank_Subsampled/LLMRank/STSData/C-SEO 等
         algorithm_name=""
-        if echo "${run_dir}" | grep -q "StealthRank"; then
-            algorithm_name="StealthRank"
-        elif echo "${run_dir}" | grep -q "GEO"; then
-            algorithm_name="GEO"
-        elif echo "${run_dir}" | grep -q "AdversarialSEO"; then
-            algorithm_name="AdversarialSEO"
-        elif echo "${run_dir}" | grep -q "Zero-Shot Rankers"; then
-            algorithm_name="Zero-Shot Rankers"
-        elif echo "${run_dir}" | grep -q "llm-rank-optimizer"; then
-            algorithm_name="llm-rank-optimizer"
+        if echo "${run_dir}" | grep -q "/Results_new/"; then
+            rel="${run_dir#${PROJECT_ROOT}/Results_new/}"
+            algorithm_name="${rel%%/*}"
         fi
         
-        # 尝试从 datasets_5 找到原始文件（直接使用，不复制）
-        if [ -n "${algorithm_name}" ]; then
-            source_file="${PROJECT_ROOT}/datasets_5/${algorithm_name}/${catalog_base}.jsonl"
-            if [ -f "${source_file}" ]; then
-                catalog_path="datasets_5/${algorithm_name}/${catalog_base}.jsonl"
-                echo "  ℹ️ 使用原始 catalog 文件: ${catalog_path}"
-            else
-                echo "❌ 无法找到 catalog 文件: ${catalog_path_raw} 或 datasets_5/${algorithm_name}/${catalog_base}.jsonl"
-                echo "   跳过: ${run_dir}"
-                continue
+        if [ -z "${algorithm_name}" ]; then
+            echo "❌ 无法从路径解析算法名称，无法定位 catalog 文件"
+            echo "   跳过: ${run_dir}"
+            continue
+        fi
+
+        # 依次尝试多个可能位置（以便兼容不同生成方式）
+        candidate_paths=(
+            "${PROJECT_ROOT}/${catalog_path_raw}"
+            "${PROJECT_ROOT}/data/${catalog_base}.jsonl"
+            "${PROJECT_ROOT}/datasets_5/${algorithm_name}/${catalog_base}.jsonl"
+            "${PROJECT_ROOT}/Datasets_clean_20/${algorithm_name}/${catalog_base}.jsonl"
+        )
+
+        found=""
+        for p in "${candidate_paths[@]}"; do
+            if [ -f "${p}" ]; then
+                found="${p}"
+                break
             fi
+        done
+
+        if [ -n "${found}" ]; then
+            catalog_path="${found#${PROJECT_ROOT}/}"
+            echo "  ℹ️ 使用定位到的 catalog 文件: ${catalog_path}"
         else
-            echo "❌ 无法从路径推断算法名称，无法定位 catalog 文件"
+            echo "❌ 无法找到 catalog 文件。尝试过："
+            for p in "${candidate_paths[@]}"; do
+                echo "   - ${p}"
+            done
             echo "   跳过: ${run_dir}"
             continue
         fi
@@ -171,32 +206,40 @@ while IFS= read -r sts_path; do
 
     # 调用 evaluate.py，将输出保存到日志文件（用于错误检测）
     eval_log="${run_dir}/eval.log"
-    echo "  开始评估，日志保存至: ${eval_log}"
-    
-    if python evaluate.py \
-        --model_path "${model_path}" \
-        --prod_idx "${prod_idx}" \
-        --sts_dir "${run_dir}" \
-        --catalog "${catalog_arg}" \
-        --catalog_path "${catalog_path}" \
-        --num_iter "${NUM_ITER}" \
-        --prod_ord "${PROD_ORD}" \
-        --user_msg_type "${user_msg_type}" \
-        > "${eval_log}" 2>&1; then
-        echo "  ✅ 评估完成"
+    if [ "${skip_eval}" = "true" ]; then
+        echo "  ⏭️  跳过评估（已存在有效 eval.json）"
     else
-        echo "  ❌ 评估失败，查看日志: ${eval_log}"
-        # 如果失败，删除可能不完整的 eval.json
-        rm -f "${run_dir}/eval.json"
-        continue
+        echo "  开始评估，日志保存至: ${eval_log}"
+        if python evaluate.py \
+            --model_path "${model_path}" \
+            --prod_idx "${prod_idx}" \
+            --sts_dir "${run_dir}" \
+            --catalog "${catalog_arg}" \
+            --catalog_path "${catalog_path}" \
+            --num_iter "${NUM_ITER}" \
+            --prod_ord "${PROD_ORD}" \
+            --user_msg_type "${user_msg_type}" \
+            > "${eval_log}" 2>&1; then
+            echo "  ✅ 评估完成"
+        else
+            echo "  ❌ 评估失败，查看日志: ${eval_log}"
+            # 如果失败，删除可能不完整的 eval.json
+            rm -f "${run_dir}/eval.json"
+            continue
+        fi
+        need_plot=true
     fi
 
-    # 画 rank 分布图（如果生成了 eval.json）
+    # 画 rank 分布图（如果生成了 eval.json；或已存在 eval.json 但缺图则补画）
     if [ -f "${run_dir}/eval.json" ]; then
-        if python plot/plot_dist.py "${run_dir}/eval.json" >> "${eval_log}" 2>&1; then
-            echo "  ✅ 绘图完成"
+        if [ "${need_plot}" = "true" ]; then
+            if python plot/plot_dist.py "${run_dir}/eval.json" >> "${eval_log}" 2>&1; then
+                echo "  ✅ 绘图完成"
+            else
+                echo "  ⚠️ plot_dist 绘图失败: ${run_dir}"
+            fi
         else
-            echo "  ⚠️ plot_dist 绘图失败: ${run_dir}"
+            echo "  ✅ 绘图文件已齐全，跳过绘图"
         fi
     else
         echo "  ⚠️ 未找到 eval.json，跳过绘图: ${run_dir}"
