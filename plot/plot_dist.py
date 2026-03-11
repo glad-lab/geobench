@@ -86,6 +86,8 @@ def rank_barplot(rank_list, rank_list_opt, num_prod, plot_title="Rank Distributi
     rank_df["After"] = (rank_df["After"] / total_values_after)
 
     rank_df = rank_df.melt("Rank", var_name="Rank Type", value_name="Frequency")
+    # Avoid duplicate index labels when appending rows later (seaborn/pandas can fail on reindex)
+    rank_df = rank_df.reset_index(drop=True)
 
     # Calculate confidence intervals
     num_rows = rank_df.shape[0]
@@ -95,8 +97,14 @@ def rank_barplot(rank_list, rank_list_opt, num_prod, plot_title="Rank Distributi
         error = 1.96 * np.sqrt(freq * (1 - freq) / total_values_before)
         lower_bound = max(0, freq - error)
         upper_bound = min(1, freq + error)
-        rank_df = pd.concat([rank_df, pd.DataFrame({"Rank": [row["Rank"]], "Rank Type": [row["Rank Type"]], "Frequency": [lower_bound]})])
-        rank_df = pd.concat([rank_df, pd.DataFrame({"Rank": [row["Rank"]], "Rank Type": [row["Rank Type"]], "Frequency": [upper_bound]})])
+        rank_df = pd.concat(
+            [rank_df, pd.DataFrame({"Rank": [row["Rank"]], "Rank Type": [row["Rank Type"]], "Frequency": [lower_bound]})],
+            ignore_index=True,
+        )
+        rank_df = pd.concat(
+            [rank_df, pd.DataFrame({"Rank": [row["Rank"]], "Rank Type": [row["Rank Type"]], "Frequency": [upper_bound]})],
+            ignore_index=True,
+        )
 
     # Scale up to 100
     rank_df["Frequency"] *= 100
