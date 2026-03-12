@@ -60,3 +60,22 @@
 | RewriteToRank_Subsampled | 7.5 | 3.7 | 0.3889 | 0.7 | 0.5 | 0.7 | 0.5 | 0.1111 |
 | STSData | 6.3333 | 5.0 | 0.1482 | 0.3333 | 0.3333 | 0.3333 | 0.3333 | 0.0 |
 | llm-rank-optimizer | 8.5 | 3.5 | 0.5 | 0.75 | 0.75 | 0.75 | 0.75 | 0.0 |
+
+## Summary by algorithm (mean $\pm$ std) for paper.tex
+
+Copy/paste the following LaTeX snippet into your table body (column order matches: NRG / Success@0.1 / Promote@0.1 / KVR / PPL-R).
+
+```latex
+\begin{tabular}{l|c|c|c|c|c}
+\toprule
+\textbf{Test Dataset} & \textbf{NRG} & \textbf{Success@0.1} & \textbf{Promote@0.1} & \textbf{KVR} & \textbf{PPL-R} \\
+\midrule
+C-SEO & 0.500 $\pm$ 0.837 & 0.667 & 0.667 & 0.000 $\pm$ 0.000 & 13.46 $\pm$ 10.82 \\
+LLM Rank & 0.122 $\pm$ 0.495 & 0.900 & 0.400 & 0.100 $\pm$ 0.316 & 37.58 $\pm$ 55.24 \\
+LLM Rank Optimizer & 0.500 $\pm$ 1.000 & 0.750 & 0.750 & 0.000 $\pm$ 0.000 & 31.59 $\pm$ 7.40 \\
+Ragroll & 0.300 $\pm$ 0.423 & 1.000 & 0.400 & 0.300 $\pm$ 0.483 & 22.60 $\pm$ 13.06 \\
+RewriteToRank & 0.389 $\pm$ 0.442 & 0.700 & 0.500 & 0.111 $\pm$ 0.333 & 41.32 $\pm$ 54.86 \\
+STSData & 0.148 $\pm$ 0.612 & 0.333 & 0.333 & 0.000 $\pm$ 0.000 & 28.24 $\pm$ 17.21 \\
+\bottomrule
+\end{tabular}
+```

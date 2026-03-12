@@ -268,12 +268,73 @@ def _calculate_perplexity(text: str, model: Any, tokenizer: Any, device: str, ma
 
 
 def _get_ppl_model_and_tokenizer(model_path: str, device: str, cache: dict) -> tuple[Any, Any]:
-    """Load model/tokenizer by path; cache by path to avoid reloading."""
+    """Load model/tokenizer for PPL only (no generation_config changes to avoid 'bool' is not callable)."""
+    import torch
+    import transformers
     if not model_path or not os.path.exists(model_path):
         raise FileNotFoundError(f"Model path not found: {model_path}")
     if model_path not in cache:
-        from experiment.get import get_model
-        cache[model_path] = get_model(model_path, 16, device)
+        model = transformers.AutoModelForCausalLM.from_pretrained(
+            model_path,
+            torch_dtype=torch.float16,
+            trust_remote_code=True,
+            low_cpu_mem_usage=True,
+            use_cache=False,
+            use_safetensors=True,
+        ).to(device).eval()
+        for param in model.parameters():
+            param.requires_grad = False
+        tokenizer = None
+        # Tokenizer loading can break with some model snapshots (e.g. newer tokenizer config vs older transformers).
+        try:
+            tokenizer = transformers.AutoTokenizer.from_pretrained(
+                model_path,
+                trust_remote_code=True,
+                use_fast=True,
+            )
+        except Exception:
+            tokenizer = None
+
+        if isinstance(tokenizer, bool) or tokenizer is None or not callable(getattr(tokenizer, "__call__", None)):
+            # Fallback: load fast tokenizer directly from tokenizer.json + special token map.
+            tok_json = os.path.join(model_path, "tokenizer.json")
+            if not os.path.exists(tok_json):
+                raise RuntimeError("Failed to load tokenizer via AutoTokenizer, and tokenizer.json not found for fallback.")
+            tokenizer = transformers.PreTrainedTokenizerFast(tokenizer_file=tok_json)
+            stm_path = os.path.join(model_path, "special_tokens_map.json")
+            if os.path.exists(stm_path):
+                try:
+                    with open(stm_path, "r", encoding="utf-8") as f:
+                        stm = json.load(f)
+                    # stm values can be dicts like {"content": "..."}; normalize to strings
+                    def _norm(v: Any) -> Optional[str]:
+                        if isinstance(v, str):
+                            return v
+                        if isinstance(v, dict):
+                            c = v.get("content")
+                            return c if isinstance(c, str) else None
+                        return None
+
+                    bos = _norm(stm.get("bos_token"))
+                    eos = _norm(stm.get("eos_token"))
+                    pad = _norm(stm.get("pad_token"))
+                    if bos:
+                        tokenizer.bos_token = bos
+                    if eos:
+                        tokenizer.eos_token = eos
+                    if pad:
+                        tokenizer.pad_token = pad
+                except Exception:
+                    pass
+
+        if "llama" in model_path.lower() and not isinstance(tokenizer, bool):
+            pad = getattr(tokenizer, "pad_token", None)
+            if not isinstance(pad, str) or not pad:
+                eos = getattr(tokenizer, "eos_token", None)
+                if isinstance(eos, str) and eos:
+                    tokenizer.pad_token = eos
+            tokenizer.padding_side = "left"
+        cache[model_path] = (model, tokenizer)
     return cache[model_path]
 
 
@@ -285,6 +346,7 @@ def main() -> int:
     parser.add_argument("--alphas", default="0.1,0.2", help="Comma-separated α for Success@α / Promote@α")
     parser.add_argument("--ppl_max_length", type=int, default=2048, help="Max tokens for PPL truncation")
     parser.add_argument("--skip_ppl", action="store_true", help="Skip PPL-R (faster; only rank + KVR)")
+    parser.add_argument("--max_runs", type=int, default=0, help="If >0, only evaluate the first N runs (useful for quick sanity checks).")
     args = parser.parse_args()
 
     repo_root = args.repo_root or _REPO_ROOT
@@ -301,7 +363,9 @@ def main() -> int:
     device = "cuda" if __import__("torch").cuda.is_available() else "cpu"
 
     rows: list[dict] = []
-    for run in sorted(runs, key=lambda r: (r.algorithm, r.category, r.run_dir)):
+    for i, run in enumerate(sorted(runs, key=lambda r: (r.algorithm, r.category, r.run_dir)), start=1):
+        if args.max_runs and i > args.max_runs:
+            break
         rank_csv = os.path.join(run.run_dir, "rank.csv")
         sts_path = os.path.join(run.run_dir, "sts.txt")
 
@@ -370,7 +434,7 @@ def main() -> int:
                     row["ppl_orig"] = row["ppl_adv"] = row["ppl_r"] = None
             except Exception as e:
                 row["ppl_orig"] = row["ppl_adv"] = row["ppl_r"] = None
-                row["ppl_error"] = str(e)
+                row["ppl_error"] = str(e).replace("\n", " ").replace("\r", " ").strip() or repr(e)
         else:
             row["ppl_orig"] = row["ppl_adv"] = row["ppl_r"] = None
 
