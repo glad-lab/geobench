@@ -192,14 +192,29 @@ def get_args():
     args.add_argument("--mode", type=str, choices=['suffix', 'paraphrase'], default='suffix')
     args.add_argument("--catalog", type=str, default=None)
     args.add_argument("--model", type=str, choices=['llama-3.1-8b', 'llama-2-7b', 'vicuna-7b', 'mistral-7b', 'deepseek-7b'], default=None)
-    args.add_argument("--dataset", type=str, default="amazon", choices=["amazon", "json", "ragroll", "rewrite_to_rank", "llm_rank_subsampled"])
+    args.add_argument("--dataset", type=str, default="llmrank_subsampled", choices=["amazon", "json", "ragroll", "rewrite_to_rank", "llm_rank_subsampled", "llmrank_subsampled", "ragdoll_subsampled", "cseo_subsampled"])
     return args.parse_args()
 
 
 if __name__ == "__main__":
     args = get_args()
 
-    with open(f'configs/{args.mode}_{args.model}.yaml', 'r') as f:
+    # Try dataset-specific config first, then model-specific, then generic
+    dataset_label = args.dataset.replace("_subsampled", "") if args.dataset else None
+    config_path = None
+    for candidate in [
+        f'configs/{args.mode}_{args.model}_{dataset_label}.yaml' if dataset_label else None,
+        f'configs/{args.mode}_{args.model}.yaml',
+        f'configs/{args.mode}.yaml',
+    ]:
+        if candidate and os.path.exists(candidate):
+            config_path = candidate
+            break
+
+    if config_path is None:
+        raise FileNotFoundError(f"No config file found for mode={args.mode}, model={args.model}, dataset={args.dataset}")
+
+    with open(config_path, 'r') as f:
         sweep_config = yaml.safe_load(f)
     search_hparams = get_search_hparams(sweep_config)
 
