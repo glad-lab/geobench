@@ -141,7 +141,7 @@ if __name__ == "__main__":
     os.makedirs(output_dir, exist_ok=True)
     result_dir = "results_new/full/suffix/v1"
     
-    models = ['vicuna-7b', 'llama-3.1-8b', 'mistral-7b', 'deepseek-7b']
+    models = ['llama-3.1-8b']
     catalogs = ['books', 'coffee_machines', 'cameras']
     
     device = "cuda" if torch.cuda.is_available() else "cpu"
@@ -151,9 +151,9 @@ if __name__ == "__main__":
         results = []
         
         for model in models:
-            metrics = calculate_metrics(result_dir, model, catalog, True, 
+            metrics = calculate_metrics(result_dir, model, catalog, True,
                                        perplexity_model, perplexity_tokenizer, device,
-                                       indices=[1,2,3,4,5,6,7,8], L=10)
+                                       indices=[1,2,3,4,5,6,7,8,9,10], L=10)
             
             if metrics is None:
                 print(f"No results for {model}, {catalog}")
