@@ -26,6 +26,7 @@ PRODUCT_IDX=$(( (SLURM_ARRAY_TASK_ID - 1) % 10 + 1 ))
 
 CATALOG=${CATALOGS[$CATALOG_IDX]}
 
+export WANDB_MODE=offline
 python rank_opt.py \
     --model llama-3.1-8b \
     --dataset llm_rank_subsampled \

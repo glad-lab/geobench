@@ -15,4 +15,5 @@ conda activate /path/to/work/env-sts
 export HF_HOME=/path/to/work/hf_cache
 cd /path/to/work/geobench-sts
 
+export WANDB_MODE=offline
 python evaluate_sts_llmrank.py
