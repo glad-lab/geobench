@@ -13,8 +13,8 @@
 
 source ~/miniconda3/bin/activate
 conda activate controllable-seo
-export HF_HOME=/work/hdd/beaa/anonymous/hf_cache
-cd /work/hdd/beaa/anonymous/controllable-seo-project/geobench
+export HF_HOME=/path/to/work/hf_cache
+cd /path/to/work/geobench-sts
 
 # Catalogs for cseo_subsampled (6 catalogs x 10 products = 60 jobs)
 CATALOGS=("books" "debate" "news" "retail" "videogames" "web")

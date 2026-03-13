@@ -11,7 +11,7 @@
 
 source ~/miniconda3/bin/activate
 conda activate controllable-seo
-export HF_HOME=/work/hdd/beaa/anonymous/hf_cache
-cd /work/hdd/beaa/anonymous/controllable-seo-project/geobench
+export HF_HOME=/path/to/work/hf_cache
+cd /path/to/work/geobench-sts
 
 python evaluate_sts_llmrank.py

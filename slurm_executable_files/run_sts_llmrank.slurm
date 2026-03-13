@@ -13,8 +13,8 @@
 
 source ~/miniconda3/bin/activate
 conda activate controllable-seo
-export HF_HOME=/work/hdd/beaa/anonymous/hf_cache
-cd /work/hdd/beaa/anonymous/controllable-seo-project/geobench
+export HF_HOME=/path/to/work/hf_cache
+cd /path/to/work/geobench-sts
 
 # Catalogs for llm_rank_subsampled (11 catalogs x 10 products = 110 jobs)
 CATALOGS=("action" "adventure" "appliances" "automotive" "baby" "books" "cameras" "children's" "coffee_machines" "comedy" "computers")

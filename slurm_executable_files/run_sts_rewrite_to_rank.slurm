@@ -13,8 +13,8 @@
 
 source ~/miniconda3/bin/activate
 conda activate controllable-seo
-export HF_HOME=/work/hdd/beaa/anonymous/hf_cache
-cd /work/hdd/beaa/anonymous/controllable-seo-project/geobench
+export HF_HOME=/path/to/work/hf_cache
+cd /path/to/work/geobench-sts
 
 # Catalogs for rewrite_to_rank_subsampled (20 catalogs x 10 products = 200 jobs)
 CATALOGS=("Apparel" "Automotive Lighting" "Automotive Parts" "Computer Accessories" "Education" "Fishing Gear" "Flooring" "Food" "Footwear" "Golf Clubs" "Handbags" "Health and Beauty" "Jewelry" "Lighting" "Lighting Fixtures" "Motorcycle Accessories" "Party Supplies" "Plumbing Fixtures" "Vitamins & Supplements" "Womens Clothing")
