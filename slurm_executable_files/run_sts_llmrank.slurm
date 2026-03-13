@@ -11,8 +11,9 @@
 #SBATCH --error=logs/sts-llmrank-%j.err
 #SBATCH --array=1-110
 
-source ~/miniconda3/bin/activate
-conda activate controllable-seo
+module load miniforge3-python
+eval "$(conda shell.bash hook)"
+conda activate /path/to/work/env-sts
 export HF_HOME=/path/to/work/hf_cache
 cd /path/to/work/geobench-sts
 
