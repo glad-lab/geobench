@@ -192,7 +192,7 @@ def get_args():
     args.add_argument("--mode", type=str, choices=['suffix', 'paraphrase'], default='suffix')
     args.add_argument("--catalog", type=str, default=None)
     args.add_argument("--model", type=str, choices=['llama-3.1-8b', 'llama-2-7b', 'vicuna-7b', 'mistral-7b', 'deepseek-7b'], default=None)
-    args.add_argument("--dataset", type=str, default="llmrank_subsampled", choices=["amazon", "json", "ragroll", "rewrite_to_rank", "llm_rank_subsampled", "llmrank_subsampled", "ragdoll_subsampled", "cseo_subsampled"])
+    args.add_argument("--dataset", type=str, default="llmrank_subsampled", choices=["amazon", "json", "ragroll", "rewrite_to_rank", "rewrite_to_rank_subsampled", "llm_rank_subsampled", "llmrank_subsampled", "ragdoll_subsampled", "cseo_subsampled"])
     return args.parse_args()
 
 
@@ -222,7 +222,7 @@ if __name__ == "__main__":
         sweep_config['parameters']['model']['value'] = args.model
 
     if args.catalog:
-        sweep_config['parameters']['catalog']['value'] = args.catalog
+        sweep_config['parameters']['catalog'] = {'value': args.catalog}
 
     if args.dataset:
         sweep_config['parameters']['dataset']['value'] = args.dataset

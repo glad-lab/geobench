@@ -40,9 +40,7 @@ DATASET = "llmrank_subsampled"
 
 CATALOGS = [
     "action", "adventure", "appliances", "automotive", "baby", "books", "cameras",
-    "children's", "coffee_machines", "comedy", "computers", "crime", "documentary",
-    "drama", "election_articles", "film-noir", "grocery", "horror", "musical",
-    "mystery", "romance", "sci-fi", "software", "thriller", "war", "western"
+    "children's", "coffee_machines", "comedy", "computers"
 ]
 
 SPAN_TAG_RE = re.compile(r"</?span[^>]*>", re.IGNORECASE)
