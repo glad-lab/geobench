@@ -24,8 +24,9 @@ CATALOGS=(
 CATALOG=${CATALOGS[$SLURM_ARRAY_TASK_ID]}
 echo "Running catalog: ${CATALOG} (task ${SLURM_ARRAY_TASK_ID})"
 
-source ~/miniconda3/bin/activate
-conda activate controllable-seo
+module load miniforge3-python
+eval "$(conda shell.bash hook)"
+conda activate /path/to/work/env
 export HF_HOME=/path/to/work/hf_cache
 cd /path/to/work/geobench-stealth
 
