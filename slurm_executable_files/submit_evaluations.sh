@@ -4,7 +4,7 @@
 
 DIR="$(dirname "$0")"
 
-echo "Submitting evaluation array (5 datasets: cseo, llmrank, rewrite_to_rank, ragdoll, llm_rank_optimizer)..."
+echo "Submitting evaluation array (4 datasets: cseo, llmrank, rewrite_to_rank, llm_rank_optimizer)..."
 sbatch "$DIR/array_evaluate.slurm"
 
 echo "Monitor with: squeue -u \$USER"
