@@ -17,4 +17,5 @@ export HF_HOME=/work/hdd/bfsl/onimase/hf_cache
 cd /work/hdd/bfsl/onimase/geobench-stealth
 
 export WANDB_AGENT_MAX_INITIAL_FAILURES=0
+export WANDB_MODE=offline
 python -m experiment.main_llm_rank_optimizer --model llama-3.1-8b --dataset llm_rank_optimizer_subsampled --mode suffix

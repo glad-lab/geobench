@@ -17,4 +17,5 @@ export HF_HOME=/work/hdd/bfsl/onimase/hf_cache
 cd /work/hdd/bfsl/onimase/geobench-stealth
 
 export WANDB_AGENT_MAX_INITIAL_FAILURES=0
+export WANDB_MODE=offline
 python -m experiment.main --model llama-3.1-8b --dataset rewrite_to_rank_subsampled --mode suffix --catalog "Plumbing Fixtures"

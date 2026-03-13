@@ -28,4 +28,5 @@ conda activate /work/hdd/bfsl/onimase/env
 export HF_HOME=/work/hdd/bfsl/onimase/hf_cache
 cd /work/hdd/bfsl/onimase/geobench-stealth
 
+export WANDB_MODE=offline
 python -m ${EVAL_SCRIPT}
