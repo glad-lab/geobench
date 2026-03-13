@@ -7,16 +7,15 @@
 #SBATCH --cpus-per-task=8
 #SBATCH --mem=64G
 #SBATCH --time=20:00:00
-#SBATCH --array=0-4
+#SBATCH --array=0-3
 #SBATCH --output=logs/eval-sts-%A_%a.out
 #SBATCH --error=logs/eval-sts-%A_%a.err
 
-# 5 evaluation scripts for all datasets
+# 4 evaluation scripts for all datasets
 EVAL_SCRIPTS=(
     "evaluate_sts_cseo"
     "evaluate_sts_llmrank"
     "evaluate_sts_rewrite_to_rank"
-    "evaluate_sts_ragdoll"
     "evaluate_sts_llm_rank_optimizer"
 )
 

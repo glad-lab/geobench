@@ -17,9 +17,6 @@ sbatch "$DIR/run_sts_rewrite_to_rank.slurm"
 echo "Submitting llm_rank_optimizer array (4 catalogs x 10 products = 40 jobs)..."
 sbatch "$DIR/run_sts_llm_rank_optimizer.slurm"
 
-echo "Submitting ragdoll array (50 catalogs x 10 products = 500 jobs)..."
-sbatch "$DIR/run_sts_ragdoll.slurm"
-
 echo ""
-echo "Total: 910 array tasks submitted across 5 array jobs."
+echo "Total: 410 array tasks submitted across 4 array jobs."
 echo "Monitor with: squeue -u \$USER"
