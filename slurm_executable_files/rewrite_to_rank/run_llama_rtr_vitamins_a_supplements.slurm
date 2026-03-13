@@ -12,8 +12,8 @@
 
 source ~/miniconda3/bin/activate
 conda activate controllable-seo
-export HF_HOME=/work/hdd/beaa/anonymous/hf_cache
-cd /work/hdd/beaa/anonymous/controllable-seo-project/geobench
+export HF_HOME=/path/to/work/hf_cache
+cd /path/to/work/geobench-stealth
 
 export WANDB_AGENT_MAX_INITIAL_FAILURES=0
 python -m experiment.main --model llama-3.1-8b --dataset rewrite_to_rank_subsampled --mode suffix --catalog "Vitamins & Supplements"
