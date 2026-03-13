@@ -36,13 +36,11 @@ BAD_PHRASES = {
     "should appear", "must appear", "guarantee recommendation", "ensure recommendation"
 }
 
-DATASET = "llmrank_subsampled"
+DATASET = "llm_rank_subsampled"
 
 CATALOGS = [
     "action", "adventure", "appliances", "automotive", "baby", "books", "cameras",
-    "children's", "coffee_machines", "comedy", "computers", "crime", "documentary",
-    "drama", "election_articles", "film-noir", "grocery", "horror", "musical",
-    "mystery", "romance", "sci-fi", "software", "thriller", "war", "western"
+    "children's", "coffee_machines", "comedy", "computers"
 ]
 
 

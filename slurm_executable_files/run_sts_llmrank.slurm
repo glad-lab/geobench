@@ -9,15 +9,15 @@
 #SBATCH --time=48:00:00
 #SBATCH --output=logs/sts-llmrank-%j.out
 #SBATCH --error=logs/sts-llmrank-%j.err
-#SBATCH --array=1-260
+#SBATCH --array=1-110
 
 source ~/miniconda3/bin/activate
 conda activate controllable-seo
 export HF_HOME=/work/hdd/beaa/onimase/hf_cache
 cd /work/hdd/beaa/onimase/controllable-seo-project/geobench
 
-# Catalogs for llmrank_subsampled (26 catalogs x 10 products = 260 jobs)
-CATALOGS=("action" "adventure" "appliances" "automotive" "baby" "books" "cameras" "children's" "coffee_machines" "comedy" "computers" "crime" "documentary" "drama" "election_articles" "film-noir" "grocery" "horror" "musical" "mystery" "romance" "sci-fi" "software" "thriller" "war" "western")
+# Catalogs for llm_rank_subsampled (11 catalogs x 10 products = 110 jobs)
+CATALOGS=("action" "adventure" "appliances" "automotive" "baby" "books" "cameras" "children's" "coffee_machines" "comedy" "computers")
 
 # Calculate catalog index and product index from array task ID
 CATALOG_IDX=$(( (SLURM_ARRAY_TASK_ID - 1) / 10 ))
@@ -27,11 +27,11 @@ CATALOG=${CATALOGS[$CATALOG_IDX]}
 
 python rank_opt.py \
     --model llama-3.1-8b \
-    --dataset llmrank_subsampled \
+    --dataset llm_rank_subsampled \
     --catalog "$CATALOG" \
     --target_product_idx $PRODUCT_IDX \
     --num_iter 500 \
     --test_iter 100 \
     --random_order \
     --save_state \
-    --results_dir results/benchmark_results/sts/v1/llama-3.1-8b/llmrank_subsampled/$CATALOG/$PRODUCT_IDX
+    --results_dir results/benchmark_results/sts/v1/llama-3.1-8b/llm_rank_subsampled/$CATALOG/$PRODUCT_IDX

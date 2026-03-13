@@ -418,8 +418,8 @@ if __name__ == "__main__":
     argparser.add_argument("--user_msg_type", type=str, default="default", choices=["default", "custom"], help="User message type.")
     argparser.add_argument("--save_state", action="store_true", help="Whether to save the state of the optimization procedure. If interrupted, the experiment can be resumed.")
     argparser.add_argument("--model", type=str, default="llama-3.1-8b", choices=["llama-3.1-8b"], help="The language model to use.")
-    argparser.add_argument("--dataset", type=str, default="llmrank_subsampled",
-                           choices=["llmrank_subsampled", "ragdoll_subsampled", "cseo_subsampled", "llm_rank_optimizer_subsampled", "rewrite_to_rank_subsampled"],
+    argparser.add_argument("--dataset", type=str, default="llm_rank_subsampled",
+                           choices=["llm_rank_subsampled", "llmrank_subsampled", "ragdoll_subsampled", "cseo_subsampled", "llm_rank_optimizer_subsampled", "rewrite_to_rank_subsampled"],
                            help="Dataset to use")
     argparser.add_argument("--result_dir", type=str, default="results/benchmark_results/sts", help="Base result directory")
 
