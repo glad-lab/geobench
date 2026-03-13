@@ -36,8 +36,8 @@ def analyze_dataset(base_path):
     return stats
 
 # Analyze both datasets
-ragroll_stats = analyze_dataset('/work/hdd/beaa/onimase/controllable-seo-project/geobench/data2/ragroll')
-stsdata_stats = analyze_dataset('/work/hdd/beaa/onimase/controllable-seo-project/geobench/data2/json')
+ragroll_stats = analyze_dataset('/work/hdd/bfsl/onimase/geobench-stealth/data2/ragroll')
+stsdata_stats = analyze_dataset('/work/hdd/bfsl/onimase/geobench-stealth/data2/json')
 
 # Print results
 print("=" * 60)

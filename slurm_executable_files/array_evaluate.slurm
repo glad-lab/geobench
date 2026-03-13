@@ -24,7 +24,7 @@ echo "Running evaluation: ${EVAL_SCRIPT} (task ${SLURM_ARRAY_TASK_ID})"
 
 source ~/miniconda3/bin/activate
 conda activate controllable-seo
-export HF_HOME=/work/hdd/beaa/onimase/hf_cache
-cd /work/hdd/beaa/onimase/controllable-seo-project/geobench
+export HF_HOME=/work/hdd/bfsl/onimase/hf_cache
+cd /work/hdd/bfsl/onimase/geobench-stealth
 
 python -m ${EVAL_SCRIPT}

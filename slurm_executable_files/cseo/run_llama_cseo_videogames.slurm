@@ -12,8 +12,8 @@
 
 source ~/miniconda3/bin/activate
 conda activate controllable-seo
-export HF_HOME=/work/hdd/beaa/onimase/hf_cache
-cd /work/hdd/beaa/onimase/controllable-seo-project/geobench
+export HF_HOME=/work/hdd/bfsl/onimase/hf_cache
+cd /work/hdd/bfsl/onimase/geobench-stealth
 
 export WANDB_AGENT_MAX_INITIAL_FAILURES=0
 python -m experiment.main --model llama-3.1-8b --dataset cseo_subsampled --mode suffix --catalog videogames
