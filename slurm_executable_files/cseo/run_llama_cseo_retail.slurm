@@ -17,4 +17,5 @@ export HF_HOME=/path/to/work/hf_cache
 cd /path/to/work/geobench-stealth
 
 export WANDB_AGENT_MAX_INITIAL_FAILURES=0
+export WANDB_MODE=offline
 python -m experiment.main --model llama-3.1-8b --dataset cseo_subsampled --mode suffix --catalog retail
