@@ -11,7 +11,6 @@
 #SBATCH --output=logs/rtr-%A_%a.out
 #SBATCH --error=logs/rtr-%A_%a.err
 
-# 20 catalogs
 CATALOGS=(
     "Apparel"
     "Automotive Lighting"
@@ -44,6 +43,5 @@ conda activate /work/hdd/bfsl/onimase/env
 export HF_HOME=/work/hdd/bfsl/onimase/hf_cache
 cd /work/hdd/bfsl/onimase/geobench-stealth
 
-export WANDB_AGENT_MAX_INITIAL_FAILURES=0
-export WANDB_MODE=offline
-python -m experiment.main --model llama-3.1-8b --dataset rewrite_to_rank_subsampled --mode suffix --catalog "${CATALOG}"
+export WANDB_DISABLED=true
+python -m experiment.run_no_wandb --model llama-3.1-8b --dataset rewrite_to_rank_subsampled --mode suffix --catalog "${CATALOG}"
