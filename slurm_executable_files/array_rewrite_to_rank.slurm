@@ -1,7 +1,7 @@
 #!/bin/bash
 #SBATCH --job-name=rtr-array
-#SBATCH --partition=gpuA100x4
-#SBATCH --account=bfsl-delta-gpu
+#SBATCH --partition=gpu
+#SBATCH --account=YOUR_SLURM_ACCOUNT
 #SBATCH --nodes=1
 #SBATCH --gpus-per-node=1
 #SBATCH --cpus-per-task=16
@@ -37,11 +37,11 @@ CATALOGS=(
 CATALOG=${CATALOGS[$SLURM_ARRAY_TASK_ID]}
 echo "Running catalog: ${CATALOG} (task ${SLURM_ARRAY_TASK_ID})"
 
-module load miniforge3-python
+module load conda
 eval "$(conda shell.bash hook)"
-conda activate /path/to/work/env
-export HF_HOME=/path/to/work/hf_cache
-cd /path/to/work/geobench-stealth
+conda activate /path/to/scratch/geobench/env
+export HF_HOME=/path/to/scratch/hf_cache
+cd /path/to/scratch/geobench/geobench-stealth
 
 export WANDB_DISABLED=true
 python -m experiment.run_no_wandb --model llama-3.1-8b --dataset rewrite_to_rank_subsampled --mode suffix --catalog "${CATALOG}"
