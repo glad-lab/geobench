@@ -1,7 +1,7 @@
 #!/bin/bash
 #SBATCH --job-name=sts-llm-rank-opt
-#SBATCH --partition=gpuA100x4
-#SBATCH --account=bfsl-delta-gpu
+#SBATCH --partition=gpu
+#SBATCH --account=yzhao010_1245
 #SBATCH --nodes=1
 #SBATCH --gpus-per-node=1
 #SBATCH --cpus-per-task=16
@@ -11,10 +11,10 @@
 #SBATCH --error=logs/sts-llm-rank-opt-%j.err
 #SBATCH --array=1-40
 
-module load miniforge3-python
+module load conda
 eval "$(conda shell.bash hook)"
-conda activate /work/hdd/bfsl/onimase/env-sts
-export HF_HOME=/work/hdd/bfsl/onimase/hf_cache
+conda activate /scratch1/nimase/geobench/env-sts-sts
+export HF_HOME=/scratch1/nimase/hf_cache
 cd /work/hdd/bfsl/onimase/geobench-sts
 
 # Catalogs for llm_rank_optimizer_subsampled (4 catalogs x 10 products = 40 jobs)
