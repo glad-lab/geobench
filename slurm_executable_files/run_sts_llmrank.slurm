@@ -11,22 +11,20 @@
 #SBATCH --error=logs/sts-llmrank-%j.err
 #SBATCH --array=1-110
 
-module load conda
-eval "$(conda shell.bash hook)"
-conda activate /scratch1/nimase/geobench/env-sts-sts
+source /apps/conda/miniforge3/25.11.0-1/etc/profile.d/conda.sh
+conda activate /scratch1/nimase/geobench/env-sts
+
 export HF_HOME=/scratch1/nimase/hf_cache
-cd /work/hdd/bfsl/onimase/geobench-sts
+export OPENBLAS_NUM_THREADS=1
+export WANDB_DISABLED=true
 
-# Catalogs for llm_rank_subsampled (11 catalogs x 10 products = 110 jobs)
+cd /scratch1/nimase/geobench/geobench-sts
+
 CATALOGS=("action" "adventure" "appliances" "automotive" "baby" "books" "cameras" "children's" "coffee_machines" "comedy" "computers")
-
-# Calculate catalog index and product index from array task ID
 CATALOG_IDX=$(( (SLURM_ARRAY_TASK_ID - 1) / 10 ))
 PRODUCT_IDX=$(( (SLURM_ARRAY_TASK_ID - 1) % 10 + 1 ))
-
 CATALOG=${CATALOGS[$CATALOG_IDX]}
 
-export WANDB_MODE=offline
 python rank_opt.py \
     --model llama-3.1-8b \
     --dataset llm_rank_subsampled \

@@ -11,22 +11,20 @@
 #SBATCH --error=logs/sts-rewrite-%j.err
 #SBATCH --array=1-200
 
-module load conda
-eval "$(conda shell.bash hook)"
-conda activate /scratch1/nimase/geobench/env-sts-sts
+source /apps/conda/miniforge3/25.11.0-1/etc/profile.d/conda.sh
+conda activate /scratch1/nimase/geobench/env-sts
+
 export HF_HOME=/scratch1/nimase/hf_cache
-cd /work/hdd/bfsl/onimase/geobench-sts
+export OPENBLAS_NUM_THREADS=1
+export WANDB_DISABLED=true
 
-# Catalogs for rewrite_to_rank_subsampled (20 catalogs x 10 products = 200 jobs)
+cd /scratch1/nimase/geobench/geobench-sts
+
 CATALOGS=("Apparel" "Automotive Lighting" "Automotive Parts" "Computer Accessories" "Education" "Fishing Gear" "Flooring" "Food" "Footwear" "Golf Clubs" "Handbags" "Health and Beauty" "Jewelry" "Lighting" "Lighting Fixtures" "Motorcycle Accessories" "Party Supplies" "Plumbing Fixtures" "Vitamins & Supplements" "Womens Clothing")
-
-# Calculate catalog index and product index from array task ID
 CATALOG_IDX=$(( (SLURM_ARRAY_TASK_ID - 1) / 10 ))
 PRODUCT_IDX=$(( (SLURM_ARRAY_TASK_ID - 1) % 10 + 1 ))
-
 CATALOG=${CATALOGS[$CATALOG_IDX]}
 
-export WANDB_MODE=offline
 python rank_opt.py \
     --model llama-3.1-8b \
     --dataset rewrite_to_rank_subsampled \
