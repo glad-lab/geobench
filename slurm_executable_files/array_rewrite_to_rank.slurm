@@ -37,11 +37,15 @@ CATALOGS=(
 CATALOG=${CATALOGS[$SLURM_ARRAY_TASK_ID]}
 echo "Running catalog: ${CATALOG} (task ${SLURM_ARRAY_TASK_ID})"
 
-module load conda
-eval "$(conda shell.bash hook)"
+source /apps/conda/miniforge3/25.11.0-1/etc/profile.d/conda.sh
 conda activate /scratch1/nimase/geobench/env
-export HF_HOME=/scratch1/nimase/hf_cache
-cd /scratch1/nimase/geobench/geobench-stealth
 
+echo "Python path: $(which python)"
+echo "Conda env: $CONDA_PREFIX"
+
+export HF_HOME=/scratch1/nimase/hf_cache
+export OPENBLAS_NUM_THREADS=1
 export WANDB_DISABLED=true
+
+cd /scratch1/nimase/geobench/geobench-stealth
 python -m experiment.run_no_wandb --model llama-3.1-8b --dataset rewrite_to_rank_subsampled --mode suffix --catalog "${CATALOG}"

@@ -22,11 +22,12 @@ EVAL_SCRIPTS=(
 EVAL_SCRIPT=${EVAL_SCRIPTS[$SLURM_ARRAY_TASK_ID]}
 echo "Running evaluation: ${EVAL_SCRIPT} (task ${SLURM_ARRAY_TASK_ID})"
 
-module load conda
-eval "$(conda shell.bash hook)"
+source /apps/conda/miniforge3/25.11.0-1/etc/profile.d/conda.sh
 conda activate /scratch1/nimase/geobench/env
-export HF_HOME=/scratch1/nimase/hf_cache
-cd /scratch1/nimase/geobench/geobench-stealth
 
-export WANDB_MODE=offline
+export HF_HOME=/scratch1/nimase/hf_cache
+export OPENBLAS_NUM_THREADS=1
+export WANDB_DISABLED=true
+
+cd /scratch1/nimase/geobench/geobench-stealth
 python -m ${EVAL_SCRIPT}
