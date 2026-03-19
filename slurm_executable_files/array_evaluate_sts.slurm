@@ -1,7 +1,7 @@
 #!/bin/bash
 #SBATCH --job-name=eval-sts-array
-#SBATCH --partition=gpuA100x4
-#SBATCH --account=bfsl-delta-gpu
+#SBATCH --partition=gpu
+#SBATCH --account=YOUR_SLURM_ACCOUNT
 #SBATCH --nodes=1
 #SBATCH --gpus-per-node=1
 #SBATCH --cpus-per-task=8
@@ -22,10 +22,10 @@ EVAL_SCRIPTS=(
 EVAL_SCRIPT=${EVAL_SCRIPTS[$SLURM_ARRAY_TASK_ID]}
 echo "Running evaluation: ${EVAL_SCRIPT} (task ${SLURM_ARRAY_TASK_ID})"
 
-module load miniforge3-python
+module load conda
 eval "$(conda shell.bash hook)"
-conda activate /path/to/work/env-sts
-export HF_HOME=/path/to/work/hf_cache
+conda activate /path/to/scratch/geobench/env-sts-sts
+export HF_HOME=/path/to/scratch/hf_cache
 cd /path/to/work/geobench-sts
 
 export WANDB_MODE=offline
