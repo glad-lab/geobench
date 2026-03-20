@@ -7,7 +7,7 @@
 #SBATCH --cpus-per-task=16
 #SBATCH --mem=150G
 #SBATCH --time=48:00:00
-#SBATCH --array=0-19
+#SBATCH --array=2,12
 #SBATCH --output=logs/rtr-%A_%a.out
 #SBATCH --error=logs/rtr-%A_%a.err
 
