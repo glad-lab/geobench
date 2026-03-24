@@ -3,7 +3,7 @@
 #SBATCH --partition=gpu
 #SBATCH --account=yzhao010_1245
 #SBATCH --nodes=1
-#SBATCH --gpus-per-node=1
+#SBATCH --gpus-per-node=a100:1
 #SBATCH --cpus-per-task=16
 #SBATCH --mem=150G
 #SBATCH --time=48:00:00
