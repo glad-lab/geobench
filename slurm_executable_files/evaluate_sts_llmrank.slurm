@@ -2,7 +2,7 @@
 #SBATCH --job-name=eval-sts-llmrank
 #SBATCH --partition=gpu
 #SBATCH --account=YOUR_SLURM_ACCOUNT
-#SBATCH --gpus-per-node=1
+#SBATCH --gpus-per-node=a100:1
 #SBATCH --cpus-per-task=8
 #SBATCH --mem=64G
 #SBATCH --time=20:00:00
