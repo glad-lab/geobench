@@ -48,4 +48,5 @@ export OPENBLAS_NUM_THREADS=1
 export WANDB_DISABLED=true
 
 cd /scratch1/nimase/geobench/geobench-stealth
+export PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True
 python -m experiment.run_no_wandb --model llama-3.1-8b --dataset rewrite_to_rank_subsampled --mode suffix --catalog "${CATALOG}"
