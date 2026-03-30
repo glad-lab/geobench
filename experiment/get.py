@@ -48,7 +48,7 @@ def get_product_list(catalog, target_product_idx, dataset):
     target_product_idx = target_product_idx - 1
     
     target_product = product_list[target_product_idx]['Name']
-    target_product_natural = product_list[target_product_idx]['Natural']
+    target_product_natural = product_list[target_product_idx].get('Natural', product_list[target_product_idx]['Name'])
     target_str = "1. " + target_product
 
     return product_list, target_product, target_product_natural, target_str

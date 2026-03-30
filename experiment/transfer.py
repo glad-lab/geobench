@@ -20,11 +20,11 @@ def compose_transfer_prompt(product_list, attack_prompt, target_product, user_ms
 
     for i, product in enumerate(product_list):
         if i < target_product_idx:
-            result += product['Natural'] + "\n"
+            result += product.get('Natural', product['Name']) + "\n"
         elif i == target_product_idx:
-            result += product['Natural'] + attack_prompt + "\n"
+            result += product.get('Natural', product['Name']) + attack_prompt + "\n"
         else:
-            result += product['Natural'] + "\n"
+            result += product.get('Natural', product['Name']) + "\n"
     result = result.rstrip('\n')
     return result
 
