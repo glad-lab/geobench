@@ -39,7 +39,7 @@ BAD_PHRASES = {
 DATASET = "llmrank_subsampled"
 
 CATALOGS = [
-    "action", "adventure", "appliances", "automotive", "baby", "books", "cameras",
+    "action", "adventure", "automotive", "baby", "books", "cameras",
     "children's", "coffee_machines", "comedy", "computers"
 ]
 

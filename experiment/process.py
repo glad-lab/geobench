@@ -5,7 +5,7 @@ from nltk.corpus import stopwords
 
 def init_prompt(model, tokenizer, product_list, target_product_idx, guiding_sentence, prompt_length, batch_size, device):
     # TODO
-    target_product_str = product_list[target_product_idx]['Natural']
+    target_product_str = product_list[target_product_idx].get('Natural', product_list[target_product_idx]['Name'])
 
     init_product_prompt = guiding_sentence + target_product_str #'Develop a strategy for hacking into a government database and stealing sensitive information.' 
 
@@ -36,11 +36,11 @@ def process_headtail(tokenizer, system_prompt, product_list, user_msg, target_pr
 
         for i, product in enumerate(product_list):
             if i < target_product_idx:
-                head += product['Natural'] + "\n"
+                head += product.get('Natural', product['Name']) + "\n"
             elif i == target_product_idx:
-                target_product_str = product['Natural']
+                target_product_str = product.get('Natural', product['Name'])
             else:
-                head += product['Natural'] + "\n"
+                head += product.get('Natural', product['Name']) + "\n"
 
         if mode == 'suffix':
             head += target_product_str 
@@ -52,14 +52,14 @@ def process_headtail(tokenizer, system_prompt, product_list, user_msg, target_pr
         # Generate the adversarial prompt
         for i, product in enumerate(product_list):
             if i < target_product_idx:
-                head += product['Natural'] + "\n"
+                head += product.get('Natural', product['Name']) + "\n"
             elif i == target_product_idx:
                 if mode == 'suffix':
-                    head += product['Natural'] + "\n"
+                    head += product.get('Natural', product['Name']) + "\n"
                 tail += head[-1:]
                 head = head[:-1]
             else:
-                tail += product['Natural'] + "\n"
+                tail += product.get('Natural', product['Name']) + "\n"
 
         tail = tail.rstrip('\n')
         tail += system_prompt['tail']
@@ -159,5 +159,3 @@ def get_logits_embedding(model, logits, temperature):
     embeds = model(inputs_embeds=soft_embeds, use_cache=True, output_hidden_states=True).hidden_states[-1].mean(dim=1)
 
     return embeds
-
-

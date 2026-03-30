@@ -7,7 +7,7 @@
 #SBATCH --cpus-per-task=16
 #SBATCH --mem=150G
 #SBATCH --time=48:00:00
-#SBATCH --array=0-8
+#SBATCH --array=0
 #SBATCH --output=logs/llmrank-%A_%a.out
 #SBATCH --error=logs/llmrank-%A_%a.err
 

@@ -111,7 +111,7 @@ def calculate_metrics(result_dir, model, catalog, random_inference, ppl_model, t
         kvr_values.append(contains_bad_phrase(BAD_WORDS, BAD_PHRASES, attack_prompt))
         
         # Calculate PPL-R
-        orig_text = products[idx-1]['Natural']
+        orig_text = products[idx-1].get('Natural', products[idx-1]['Name'])
         adv_text = orig_text + " " + attack_prompt
         
         ppl_orig = calculate_perplexity(orig_text, ppl_model, tokenizer, device)
