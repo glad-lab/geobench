@@ -7,7 +7,7 @@
 #SBATCH --cpus-per-task=8
 #SBATCH --mem=64G
 #SBATCH --time=20:00:00
-#SBATCH --array=0-3
+#SBATCH --array=0,2,3%1
 #SBATCH --output=logs/eval-%A_%a.out
 #SBATCH --error=logs/eval-%A_%a.err
 
