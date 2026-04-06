@@ -2,6 +2,10 @@
 Zero-shot baseline: use Llama 3.1-8B to generate a single attack suffix per product,
 append it, then evaluate the resulting rank. No iterative optimization.
 
+Saves results in format compatible with StealthRank evaluation scripts:
+- iter=0: original rank (no attack)
+- iter=1: attacked rank (with zero-shot suffix)
+
 Usage:
     python -m experiment.zero_shot_baseline --dataset ragroll --catalog "laptop"
 """
@@ -11,7 +15,6 @@ import numpy as np
 import pandas as pd
 
 from experiment.get import get_user_query, get_model, get_product_list
-from experiment.process import process_headtail
 
 MODEL_PATH_DICT = {
     'llama-3.1-8b': 'meta-llama/Meta-Llama-3.1-8B-Instruct',
@@ -64,7 +67,6 @@ def generate_zero_shot_suffix(model, tokenizer, product_name, product_descriptio
         product_description=product_description,
     )
 
-    # Format as Llama 3.1 chat
     messages = [{"role": "user", "content": prompt}]
     input_text = tokenizer.apply_chat_template(messages, tokenize=False, add_generation_prompt=True)
     inputs = tokenizer(input_text, return_tensors="pt").to(device)
@@ -84,48 +86,49 @@ def generate_zero_shot_suffix(model, tokenizer, product_name, product_descriptio
     return suffix
 
 
-def evaluate_rank(model, tokenizer, product_list, target_product_idx, user_msg,
-                  system_prompt, attack_suffix, device, num_trials=10):
-    """Evaluate the rank of the target product with the attack suffix appended."""
-    ranks = []
+def evaluate_rank_single(model, tokenizer, product_list, target_product_idx, user_msg,
+                         system_prompt, attack_suffix, device):
+    """Evaluate rank once with a random order. If attack_suffix is None, no attack."""
     target_product = product_list[target_product_idx]['Name']
 
-    for trial in range(num_trials):
-        # Shuffle product order for each trial
-        shuffled_list = product_list.copy()
-        random.shuffle(shuffled_list)
+    shuffled_list = product_list.copy()
+    random.shuffle(shuffled_list)
 
-        # Find target in shuffled list
-        shuffled_names = [p['Name'] for p in shuffled_list]
-        shuffled_target_idx = shuffled_names.index(target_product)
+    shuffled_names = [p['Name'] for p in shuffled_list]
+    shuffled_target_idx = shuffled_names.index(target_product)
 
-        # Build prompt with attack suffix on target product
-        head = system_prompt['head'] + user_msg + "\n\nProducts:\n"
-        for i, product in enumerate(shuffled_list):
-            desc = product.get('Natural', product['Name'])
-            if i == shuffled_target_idx:
-                desc = desc + " " + attack_suffix
-            head += desc + "\n"
-        head = head.rstrip('\n')
-        full_prompt = head + system_prompt['tail']
+    head = system_prompt['head'] + user_msg + "\n\nProducts:\n"
+    for i, product in enumerate(shuffled_list):
+        desc = product.get('Natural', product['Name'])
+        if i == shuffled_target_idx and attack_suffix is not None:
+            desc = desc + " " + attack_suffix
+        head += desc + "\n"
+    head = head.rstrip('\n')
+    full_prompt = head + system_prompt['tail']
 
-        inputs = tokenizer(full_prompt, return_tensors="pt").to(device)
-        with torch.no_grad():
-            outputs = model.generate(
-                **inputs,
-                max_new_tokens=512,
-                do_sample=False,
-                pad_token_id=tokenizer.eos_token_id,
-            )
+    inputs = tokenizer(full_prompt, return_tensors="pt").to(device)
+    with torch.no_grad():
+        outputs = model.generate(
+            **inputs,
+            max_new_tokens=512,
+            do_sample=False,
+            pad_token_id=tokenizer.eos_token_id,
+        )
 
-        generated = outputs[0][inputs["input_ids"].shape[1]:]
-        response = tokenizer.decode(generated, skip_special_tokens=True)
+    generated = outputs[0][inputs["input_ids"].shape[1]:]
+    response = tokenizer.decode(generated, skip_special_tokens=True)
+    return parse_rank(response, target_product, len(product_list))
 
-        # Parse rank from response
-        rank = parse_rank(response, target_product, len(product_list))
+
+def evaluate_rank_mean(model, tokenizer, product_list, target_product_idx, user_msg,
+                       system_prompt, attack_suffix, device, num_trials=10):
+    """Average rank across multiple random orderings."""
+    ranks = []
+    for _ in range(num_trials):
+        rank = evaluate_rank_single(model, tokenizer, product_list, target_product_idx,
+                                    user_msg, system_prompt, attack_suffix, device)
         ranks.append(rank)
-
-    return ranks
+    return sum(ranks) / len(ranks)
 
 
 def parse_rank(response, target_product, L):
@@ -135,7 +138,6 @@ def parse_rank(response, target_product, L):
 
     for i, line in enumerate(lines):
         if target_lower in line.lower():
-            # Try to extract rank number
             stripped = line.strip()
             if stripped and stripped[0].isdigit():
                 try:
@@ -145,27 +147,34 @@ def parse_rank(response, target_product, L):
                     pass
             return i + 1
 
-    return L + 1  # Not found
+    return L + 1
 
 
 def result_exists(result_dir, model, dataset, catalog, target_product_idx):
-    result_path = f'{result_dir}/{model}/{dataset}/{catalog}/{target_product_idx}/zero_shot_result.csv'
+    result_path = f'{result_dir}/{model}/{dataset}/{catalog}/{target_product_idx}/random_inference=True.csv'
     return os.path.exists(result_path)
 
 
 def save_result(result_dir, model_name, dataset, catalog, target_product_idx,
-                attack_suffix, ranks, product_name):
+                attack_suffix, original_rank, attacked_rank):
+    """Save in StealthRank-compatible format.
+    
+    iter=0: original rank (no attack)
+    iter=1: best attacked rank (with zero-shot suffix)
+    """
     result_path = f'{result_dir}/{model_name}/{dataset}/{catalog}/{target_product_idx}'
     os.makedirs(result_path, exist_ok=True)
 
     df = pd.DataFrame({
-        'product_name': [product_name] * len(ranks),
-        'attack_suffix': [attack_suffix] * len(ranks),
-        'trial': list(range(len(ranks))),
-        'product_rank': ranks,
+        'iter': [0, 1],
+        'attack_prompt': ['', attack_suffix],
+        'complete_prompt': ['', ''],
+        'generated_result': ['', ''],
+        'product_rank': [original_rank, attacked_rank],
     })
-    df.to_csv(f'{result_path}/zero_shot_result.csv', index=False)
-    print(f"Saved to {result_path}/zero_shot_result.csv")
+    save_path = f'{result_path}/random_inference=True.csv'
+    df.to_csv(save_path, index=False)
+    print(f"Saved to {save_path}")
 
 
 if __name__ == "__main__":
@@ -205,19 +214,25 @@ if __name__ == "__main__":
         print(f"Product {idx}: {product_name}")
         print(f"{'='*60}")
 
-        # Generate attack suffix
+        # Measure original rank (no attack)
+        original_rank = evaluate_rank_mean(
+            model, tokenizer, product_list, idx - 1, user_msg,
+            sys_prompt, None, device, num_trials=args.num_trials,
+        )
+        print(f"Original mean rank: {original_rank:.1f}")
+
+        # Generate attack suffix (single shot)
         suffix = generate_zero_shot_suffix(model, tokenizer, product_name, product_desc, device)
         print(f"Generated suffix: {suffix}")
 
         # Evaluate rank with suffix
-        ranks = evaluate_rank(
+        attacked_rank = evaluate_rank_mean(
             model, tokenizer, product_list, idx - 1, user_msg,
             sys_prompt, suffix, device, num_trials=args.num_trials,
         )
-        print(f"Ranks across trials: {ranks}")
-        print(f"Mean rank: {sum(ranks)/len(ranks):.1f}")
+        print(f"Attacked mean rank: {attacked_rank:.1f}")
 
         save_result(args.result_dir, args.model, args.dataset, args.catalog, idx,
-                    suffix, ranks, product_name)
+                    suffix, original_rank, attacked_rank)
 
     print(f"\nAll products completed for catalog: {args.catalog}")
