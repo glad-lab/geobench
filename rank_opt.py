@@ -131,17 +131,17 @@ def prompt_generator_llama(target_product_idx, product_list, user_msg, tokenizer
 
     # Generate the adversarial prompt
     for i, product in enumerate(product_list):
+        # Fallback for catalogs whose JSONL uses structured fields instead of a
+        # pre-rendered 'Natural' blurb (e.g. llm_rank_optimizer_subsampled/*).
+        prod_text = product.get('Natural') if 'Natural' in product else json.dumps(product)
         if i < target_product_idx:
-            # head += json.dumps(product) + "\n"
-            head += product['Natural'] + "\n"
+            head += prod_text + "\n"
         elif i == target_product_idx:
-            # head += json.dumps(product) + "\n"
-            head += product['Natural'] + "\n"
+            head += prod_text + "\n"
             tail += head[-1:]
             head = head[:-1]
         else:
-            # tail += json.dumps(product) + "\n"
-            tail += product['Natural'] + "\n"
+            tail += prod_text + "\n"
 
     tail += "\n" + user_msg + system_prompt['tail']
 
@@ -419,7 +419,7 @@ if __name__ == "__main__":
     argparser.add_argument("--save_state", action="store_true", help="Whether to save the state of the optimization procedure. If interrupted, the experiment can be resumed.")
     argparser.add_argument("--model", type=str, default="llama-3.1-8b", choices=["llama-3.1-8b"], help="The language model to use.")
     argparser.add_argument("--dataset", type=str, default="llm_rank_subsampled",
-                           choices=["llm_rank_subsampled", "llmrank_subsampled", "cseo_subsampled", "llm_rank_optimizer_subsampled", "rewrite_to_rank_subsampled"],
+                           choices=["llm_rank_subsampled", "llmrank_subsampled", "cseo_subsampled", "llm_rank_optimizer_subsampled", "rewrite_to_rank_subsampled", "sts_subsampled", "ragroll_subsampled"],
                            help="Dataset to use")
     argparser.add_argument("--result_dir", type=str, default="results/benchmark_results/sts", help="Base result directory")
 
@@ -438,7 +438,7 @@ if __name__ == "__main__":
     save_state = args.save_state
     # Use models with similar tokenizers
     # model_path_llama_7b = "meta-llama/Llama-2-7b-chat-hf"
-    MODEL_PATH_DICT = {'llama-3.1-8b': 'meta-llama/Meta-Llama-3.1-8B-Instruct'}
+    MODEL_PATH_DICT = {'llama-3.1-8b': 'NousResearch/Meta-Llama-3.1-8B-Instruct'}
 
 
     SYSTEM_PROMPT = {'llama': {'head': f'<|begin_of_text|><|start_header_id|>system<|end_header_id|>\n\n{ASSSISTANT_PROMPT}<|eot_id|><|start_header_id|>user<|end_header_id|>\n\nProducts:\n',
