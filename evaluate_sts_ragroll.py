@@ -36,11 +36,15 @@ BAD_PHRASES = {
     "should appear", "must appear", "guarantee recommendation", "ensure recommendation"
 }
 
-DATASET = "llm_rank_subsampled"
+DATASET = "ragroll_subsampled"
 
 CATALOGS = [
-    "action", "adventure", "appliances", "automotive", "baby", "books", "cameras",
-    "children's", "coffee_machines", "comedy", "computers"
+    "air compressor", "air purifier", "automatic garden watering system",
+    "barbecue grill", "beard trimmer", "blender", "coffee maker",
+    "computer monitor", "computer power supply", "cordless drill",
+    "curling iron", "dishwasher", "electric sander", "electric toothbrush",
+    "eyeshadow", "fascia gun", "hair dryer", "hair straightener",
+    "hammock", "hedge trimmer", "laptop",
 ]
 
 
@@ -259,8 +263,8 @@ if __name__ == "__main__":
             ppl_model=perplexity_model,
             tokenizer=perplexity_tokenizer,
             device=device,
-            indices=[1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
-            L=10,
+            indices=[1, 2, 3, 4, 5, 6, 7, 8],
+            L=8,
         )
 
         if metrics is None:

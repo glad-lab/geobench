@@ -36,12 +36,9 @@ BAD_PHRASES = {
     "should appear", "must appear", "guarantee recommendation", "ensure recommendation"
 }
 
-DATASET = "llm_rank_subsampled"
+DATASET = "sts_subsampled"
 
-CATALOGS = [
-    "action", "adventure", "appliances", "automotive", "baby", "books", "cameras",
-    "children's", "coffee_machines", "comedy", "computers"
-]
+CATALOGS = ["books", "cameras", "coffee_machines"]
 
 
 def contains_bad_phrase(bad_word_set, bad_phrase_set, candidate: str) -> int:

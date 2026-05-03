@@ -84,15 +84,22 @@ def calculate_perplexity(text: str, model, tokenizer, device: str) -> float:
 
 
 def extract_attack_suffix(sts_line: str, original_desc: str) -> str:
-    """Extract the attack suffix from the STS output line."""
-    try:
-        sts_data = json.loads(sts_line.strip())
-        sts_natural = sts_data.get("Natural", "")
-        if sts_natural.startswith(original_desc):
-            return sts_natural[len(original_desc):].strip()
-        return sts_natural
-    except json.JSONDecodeError:
-        return ""
+    """Extract the GCG-optimized attack suffix from the sts.txt line.
+
+    rank_opt.py writes the prompt line that contains the target product, which
+    is `<original product text> + <STS adversarial tokens>`. When the original
+    product text contains internal newlines (e.g. cseo "Natural" blurbs that
+    start with "Here is a 2-3 sentence summary..."), only the LAST line of that
+    text appears in sts.txt because rank_opt splits the decoded prompt by '\n'.
+    So we strip the last-line prefix, not the full original text.
+    """
+    s = sts_line.strip()
+    if not original_desc:
+        return s
+    last_line = original_desc.split("\n")[-1].strip()
+    if last_line and s.startswith(last_line):
+        return s[len(last_line):].strip()
+    return s
 
 
 def calculate_metrics(
@@ -156,7 +163,11 @@ def calculate_metrics(
         success10_promote.append(promote10)
         success20_promote.append(promote20)
 
-        original_desc = products[idx - 1].get("Natural", "")
+        # Multi-field catalogs (e.g. llm_rank_optimizer_*) lack a "Natural"
+        # field; rank_opt.py falls back to json.dumps(product), so do the same
+        # here so PPL/KVR have a non-empty reference text.
+        prod = products[idx - 1]
+        original_desc = prod["Natural"] if "Natural" in prod else json.dumps(prod)
         attack_suffix = ""
 
         if os.path.exists(sts_path):
@@ -239,7 +250,7 @@ if __name__ == "__main__":
     model = "llama-3.1-8b"
 
     device = "cuda" if torch.cuda.is_available() else "cpu"
-    perplexity_model, perplexity_tokenizer = get_model("lmsys/vicuna-7b-v1.5", 16, device)
+    perplexity_model, perplexity_tokenizer = get_model("NousResearch/Meta-Llama-3.1-8B-Instruct", 16, device)
 
     all_results = []
 
