@@ -251,7 +251,7 @@ if __name__ == "__main__":
     model = "llama-3.1-8b"
 
     device = "cuda" if torch.cuda.is_available() else "cpu"
-    perplexity_model, perplexity_tokenizer = get_model("NousResearch/Meta-Llama-3.1-8B-Instruct", 16, device)
+    perplexity_model, perplexity_tokenizer = get_model("lmsys/vicuna-7b-v1.5", 16, device)
 
     all_results = []
 
