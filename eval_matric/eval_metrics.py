@@ -274,13 +274,17 @@ def _get_ppl_model_and_tokenizer(model_path: str, device: str, cache: dict) -> t
     if not model_path or not os.path.exists(model_path):
         raise FileNotFoundError(f"Model path not found: {model_path}")
     if model_path not in cache:
+        # Auto-detect safetensors vs pytorch_model.bin (Vicuna-7B-v1.5 only ships .bin).
+        has_safetensors = any(
+            f.endswith(".safetensors") for f in os.listdir(model_path)
+        ) if os.path.isdir(model_path) else False
         model = transformers.AutoModelForCausalLM.from_pretrained(
             model_path,
             torch_dtype=torch.float16,
             trust_remote_code=True,
             low_cpu_mem_usage=True,
             use_cache=False,
-            use_safetensors=True,
+            use_safetensors=has_safetensors,
         ).to(device).eval()
         for param in model.parameters():
             param.requires_grad = False
@@ -347,7 +351,14 @@ def main() -> int:
     parser.add_argument("--ppl_max_length", type=int, default=2048, help="Max tokens for PPL truncation")
     parser.add_argument("--skip_ppl", action="store_true", help="Skip PPL-R (faster; only rank + KVR)")
     parser.add_argument("--max_runs", type=int, default=0, help="If >0, only evaluate the first N runs (useful for quick sanity checks).")
+    parser.add_argument("--ppl_model_path", default=None,
+                        help="Override PPL model path for ALL runs (e.g. point at Vicuna snapshot dir to match other algorithms' PPL baseline).")
     args = parser.parse_args()
+
+    if args.ppl_model_path:
+        if not os.path.exists(args.ppl_model_path):
+            raise SystemExit(f"--ppl_model_path does not exist: {args.ppl_model_path}")
+        print(f"Overriding PPL model for all runs -> {args.ppl_model_path}", flush=True)
 
     repo_root = args.repo_root or _REPO_ROOT
     results_root = os.path.join(repo_root, args.results_root)
@@ -366,6 +377,8 @@ def main() -> int:
     for i, run in enumerate(sorted(runs, key=lambda r: (r.algorithm, r.category, r.run_dir)), start=1):
         if args.max_runs and i > args.max_runs:
             break
+        if args.ppl_model_path:
+            run.model_path = args.ppl_model_path
         rank_csv = os.path.join(run.run_dir, "rank.csv")
         sts_path = os.path.join(run.run_dir, "sts.txt")
 
