@@ -1,0 +1,68 @@
+method: grid
+metric:
+  goal: minimize
+  name: eval/product_rank
+name: seo_suffix
+parameters:
+  batch_size:
+    value: 3
+  catalog:
+    value: coffee_machines
+  comment:
+    value: main experiment
+  dataset:
+    value: ragroll
+  fluency:
+    value: 1
+  iter_steps:
+    value:
+    - 0
+    - 25
+    - 100
+    - 250
+    - 750
+  length:
+    value: 30
+  lr:
+    value: 0.05
+  mode:
+    value: suffix
+  model:
+    value: deepseek-7b
+  ngram:
+    value: 5
+  noise_stds:
+    value:
+    - 0.05
+    - 0.025
+    - 0.01
+    - 0.005
+    - 0.001
+  num_iter:
+    value: 1000
+  precision:
+    value: 16
+  random_inference:
+    value: true
+  random_order:
+    value: true
+  result_dir:
+    value: result/suffix/v1
+  seed:
+    value: 42
+  similarity:
+    value: 1
+  target:
+    value: 50
+  target_product_idx:
+    values:
+    - 8
+  temperature:
+    value: 0.05
+  test_iter:
+    value: 100
+  topk:
+    value: 10
+wandb:
+  entity: nimase
+  project: controllable-seo
