@@ -1,0 +1,62 @@
+method: 'grid'
+name: 'seo_suffix'
+metric: 
+    name: 'eval/product_rank'
+    goal: 'minimize'   
+
+parameters: 
+  seed:
+    value: 42
+
+  model: 
+    value: llama-3.1-8b # deepseek-7b # vicuna-7b # mistral-7b
+  mode:
+    value: "paraphrase" # Choices: ["paraphrase", "suffix"]
+
+  batch_size: 
+    value: 5
+  length: 
+    value: 50 # 30 for suffix, 50 for paraphrase
+  temperature:
+    values: [0.1, 0.2]
+  lr: 
+    values: [0.03, 0.01]
+  topk: 
+    value: 10
+  num_iter: 
+    value: 1
+  test_iter: 
+    value: 100
+  precision: 
+    value: 16
+  fluency:
+    value: 1
+  ngram:
+    values: [5, 10, 50] # 10
+  target:
+    values: [50, 100]
+  similarity:
+    value: 1
+
+  iter_steps:
+    value: [0, 50, 200, 500, 1500]
+  noise_stds:
+    value: [0.1, 0.05, 0.01, 0.001, 0.01]  # [1, 0.5, 0.1, 0.05, 0.01]
+  # result_dir: 
+  #   value: "result"
+  catalog: 
+    value: "coffee_machines" # Choices: ["election_articles", "coffee_machines", "books", "cameras"]
+  random_order: 
+    value: True 
+  random_inference:
+    values: [False]
+  target_product_idx: 
+    value: 5
+  user_msg_type: 
+    value: "default" # Choices: ["default", "custom"]
+
+  result_dir:
+    value: "test/paraphrase/v1"
+
+  comment:
+    value: "grid search paraphrase"
