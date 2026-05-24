@@ -1,0 +1,81 @@
+[build-system]
+requires = ["setuptools>=64", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "c-seo-bench"
+version = "0.2.0"
+description = "C-SEO Bench: Query-based and cohort-based benchmark for citation optimization"
+readme = "README.md"
+requires-python = ">=3.10"
+license = {text = "MIT"}
+authors = [
+    {name = "C-SEO Bench Team"}
+]
+keywords = ["nlp", "seo", "llm", "benchmark", "citation", "generative-engine-optimization"]
+
+dependencies = [
+    "datasets>=3.6.0",
+    "openai>=1.78.1",
+    "anthropic>=0.45.0",
+    "scipy>=1.15.3",
+    "statsmodels>=0.14.4",
+    "sentence-transformers>=3.2.1",
+    "hnswlib>=0.8.0",
+    "scikit-learn>=1.5.2",
+    "pandas>=2.2.3",
+    "numpy>=2.1.3",
+    "huggingface-hub",
+]
+
+[project.optional-dependencies]
+dev = [
+    "jupyter",
+    "ipykernel",
+    "pytest>=7.0",
+    "pytest-cov>=4.0",
+    "black>=23.0",
+    "ruff>=0.1.0",
+    "mypy>=1.0",
+]
+dotenv = [
+    "python-dotenv>=1.0.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/parameterlab/c-seo-bench"
+Repository = "https://github.com/parameterlab/c-seo-bench"
+Issues = "https://github.com/parameterlab/c-seo-bench/issues"
+
+[tool.setuptools]
+# Support both legacy (src/) and noquery (noquery/src/) structures
+packages = {find = {where = ["."], include = ["noquery*"], exclude = ["legacy*", "experiments*"]}}
+
+[tool.black]
+line-length = 100
+target-version = ['py310', 'py311']
+extend-exclude = '''
+/(
+  legacy
+  | experiments
+  | \.eggs
+  | \.git
+  | \.mypy_cache
+  | build
+  | dist
+)/
+'''
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+select = ["E", "W", "F", "I", "B", "C4", "UP"]
+ignore = ["E501", "B008", "C901"]
+exclude = ["legacy", "experiments", ".git", ".mypy_cache", "build", "dist"]
+
+[tool.mypy]
+python_version = "3.10"
+warn_return_any = true
+warn_unused_configs = true
+check_untyped_defs = true
+exclude = ["legacy", "experiments", "build"]
