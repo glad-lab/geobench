@@ -82,9 +82,3 @@ pip install -r requirements.txt
 
 Methods read their data from the shared `Datasets/` tree; most expect either a
 unified JSON or a category JSONL from `Datasets_subsampled_all/`.
-
-## License & Attribution
-
-Each method retains the license and attribution of its original repository
-(see the `LICENSE` / `README.md` inside each method). Please cite the original
-papers when using a specific method.
