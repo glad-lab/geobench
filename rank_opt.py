@@ -466,6 +466,15 @@ if __name__ == "__main__":
     argparser.add_argument("--user_msg_type", type=str, default="default", choices=["default", "custom"], help="User message type.")
     argparser.add_argument("--save_state", action="store_true", help="Whether to save the state of the optimization procedure. If interrupted, the experiment can be resumed.")
     argparser.add_argument("--max_products_in_prompt", type=int, default=None, help="Maximum number of products to include in the prompt. If None, include all products. If set, only the first N products (including target product) will be used.")
+    argparser.add_argument("--llama_path", type=str,
+                           default=os.environ.get("LLAMA_PATH", "/media/volume/geo-model/Llama-3.1-8B-Instruct"),
+                           help="Path or HF repo id for the Llama-3.1-8B-Instruct ranking model. Defaults to $LLAMA_PATH, then a local path.")
+    argparser.add_argument("--llama32_path", type=str,
+                           default=os.environ.get("LLAMA32_PATH", "/media/volume/v4/Llama-3.2-1B-Instruct"),
+                           help="Path or HF repo id for the Llama-3.2-1B-Instruct model (used when --target_llm llama32). Defaults to $LLAMA32_PATH.")
+    argparser.add_argument("--vicuna_path", type=str,
+                           default=os.environ.get("VICUNA_PATH", "lmsys/vicuna-7b-v1.5"),
+                           help="Path or HF repo id for Vicuna-7B (transfer mode). Defaults to $VICUNA_PATH.")
     args = argparser.parse_args()
 
     results_dir = args.results_dir
@@ -520,10 +529,11 @@ if __name__ == "__main__":
     target_llm = args.target_llm
     top_candidates = args.top_candidates
     save_state = args.save_state
-    # Use models with similar tokenizers
-    model_path_llama_7b = "/media/volume/geo-model/Llama-3.1-8B-Instruct"  # 更新为 Llama-3.1-8B-Instruct
-    model_path_llama32_1b = "/media/volume/v4/Llama-3.2-1B-Instruct"
-    model_path_vicuna_7b = "lmsys/vicuna-7b-v1.5"
+    # Use models with similar tokenizers. Override via --llama_path / --llama32_path /
+    # --vicuna_path or the corresponding env vars (LLAMA_PATH, LLAMA32_PATH, VICUNA_PATH).
+    model_path_llama_7b = args.llama_path
+    model_path_llama32_1b = args.llama32_path
+    model_path_vicuna_7b = args.vicuna_path
     
     batch_size = 64  # batch_size 设置为 64
 
