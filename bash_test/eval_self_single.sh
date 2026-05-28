@@ -2,6 +2,9 @@
 set -euo pipefail
 
 # ===================== 配置参数 =====================
+# Override via env var: e.g. LLAMA2_PATH=/path/to/Llama-2-7b-chat-hf bash bash_test/eval_self_single.sh
+LLAMA2_PATH="${LLAMA2_PATH:-/media/volume/v4/Llama-2-7b-chat-hf}"
+
 catalog="cameras"
 num_iter=200
 user_msg_type="default"
@@ -18,6 +21,7 @@ nohup bash -c '
     num_iter=100
     user_msg_type="default"
     python_path="'"${python_path}"'"
+    llama2_path="'"${LLAMA2_PATH}"'"
 
     for run in 1
     do
@@ -36,7 +40,7 @@ nohup bash -c '
 
             # 执行评估
             "${python_path}" evaluate.py \
-                --model_path "/media/volume/v4/Llama-2-7b-chat-hf" \
+                --model_path "${llama2_path}" \
                 --prod_idx "${product}" \
                 --sts_dir "${eval_dir}" \
                 --catalog "${catalog}" \

@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Override via env var: e.g. LLAMA2_PATH=/path/to/Llama-2-7b-chat-hf bash bash_test/eval_self_new.sh
+LLAMA2_PATH="${LLAMA2_PATH:-/media/volume/v4/Llama-2-7b-chat-hf}"
+
 catalog="cameras"
 num_iter=200
 user_msg_type="default"
@@ -18,7 +21,7 @@ do
 
         # Evaluate the STS
         python evaluate.py \
-            --model_path /media/volume/v4/Llama-2-7b-chat-hf \
+            --model_path "$LLAMA2_PATH" \
             --prod_idx $product \
             --sts_dir $eval_dir \
             --catalog $catalog \
