@@ -6,7 +6,7 @@
 
 set -u
 
-LOG_DIR="/media/volume/geo3/geobench_logs"
+LOG_DIR="/media/volume/geo2/geobench_logs"
 mkdir -p "$LOG_DIR"
 
 # ---------------------------------------------------------------
@@ -26,9 +26,9 @@ if [ "${STS_RUNNER_DAEMONIZED:-0}" != "1" ]; then
 fi
 
 REPO_DIR="/home/exouser/geobench"
-RESULTS_DIR="/media/volume/geo3/geobench_results"
-HF_HOME_DIR="/media/volume/geo3/hf_cache"
-CONDA_ENV="/media/volume/geo3/conda_envs/env-sts"
+RESULTS_DIR="/media/volume/geo2/geobench_results"
+HF_HOME_DIR="/media/volume/geo2/hf_cache"
+CONDA_ENV="/media/volume/geo2/conda_envs/env-sts"
 MAIN_LOG="$LOG_DIR/run_local_sts.log"
 METRICS_DIR="$REPO_DIR/metric/benchmark"
 
