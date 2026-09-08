@@ -1,0 +1,16 @@
+# --- secrets: never commit ---
+config.json
+**/config.json
+.env
+*.key
+# --- python ---
+__pycache__/
+*.pyc
+.venv*/
+*.egg-info/
+# --- OS / editors ---
+.DS_Store
+# --- large raw outputs (keep per-instance CSVs under results/unified) ---
+logs/
+wandb/
+results/unified/clean_ranks/

@@ -70,6 +70,8 @@ AFFIRMATIVE_TEMPLATES = [
 
 
 MODEL_PATH_DICT = {'llama-3.1-8b': 'meta-llama/Meta-Llama-3.1-8B-Instruct',
+    'qwen2.5-7b': 'Qwen/Qwen2.5-7B-Instruct',
+    'qwen2.5-14b': 'Qwen/Qwen2.5-14B-Instruct',
                    'llama-2-7b': "meta-llama/Llama-2-7b-chat-hf", 
                    'vicuna-7b': "lmsys/vicuna-7b-v1.5",
                    'mistral-7b': 'mistralai/Mistral-7B-Instruct-v0.3',
@@ -78,8 +80,9 @@ MODEL_PATH_DICT = {'llama-3.1-8b': 'meta-llama/Meta-Llama-3.1-8B-Instruct',
                    'phi-2.7b': 'microsoft/phi-2'}
 
 
-SYSTEM_PROMPT = {'llama': {'head': f'<<SYS>>\n{ASSSISTANT_PROMPT}\n<<SYS>>\n\n', 
-                            'tail': ' [/INST] {"ranked_products": ["'},
+SYSTEM_PROMPT = {'llama': {'head': f'<|start_header_id|>system<|end_header_id|>\n\n{ASSSISTANT_PROMPT}<|eot_id|><|start_header_id|>user<|end_header_id|>\n\n',
+                            'tail': '<|eot_id|><|start_header_id|>assistant<|end_header_id|>\n\n{"ranked_products": ["'},
+                'qwen2.5': {'head': f'<|im_start|>system\n{ASSSISTANT_PROMPT}<|im_end|>\n<|im_start|>user\n', 'tail': '<|im_end|>\n<|im_start|>assistant\n{"ranked_products": ["'},
                 'vicuna': {'head': f'{ASSSISTANT_PROMPT}\n\nUser:',
                            'tail': '\n\nAssistant: {"ranked_products": ["'},
                 'mistral': {'head': f'<s>[INST] {ASSSISTANT_PROMPT}\n\n',
@@ -91,8 +94,8 @@ SYSTEM_PROMPT = {'llama': {'head': f'<<SYS>>\n{ASSSISTANT_PROMPT}\n<<SYS>>\n\n',
                 'phi': {'head': f'<<SYS>>\n{ASSSISTANT_PROMPT}\n<<SYS>>\n\n',
                         'tail': 'Output: {"ranked_products": ["'},}
 
-SRP_SYSTEM_PROMPT = {'llama': {'head': f'[INST] <<SYS>>\n{SRP_ASSSISTANT_PROMPT}\n<<SYS>>\n\n', 
-                            'tail': ' [/INST]'},
+SRP_SYSTEM_PROMPT = {'llama': {'head': f'<|start_header_id|>system<|end_header_id|>\n\n{SRP_ASSSISTANT_PROMPT}<|eot_id|><|start_header_id|>user<|end_header_id|>\n\n',
+                            'tail': '<|eot_id|><|start_header_id|>assistant<|end_header_id|>\n\n'},
                 'vicuna': {'head': f'{SRP_ASSSISTANT_PROMPT}\n\nUser:',
                            'tail': '\n\nAssistant: '},
                 'mistral': {'head': f'<s>[INST] {SRP_ASSSISTANT_PROMPT}\n\n',
@@ -230,7 +233,7 @@ def get_args():
     parser = argparse.ArgumentParser()
     parser.add_argument("--mode", type=str, choices=['suffix', 'paraphrase'], default='suffix')
     parser.add_argument("--catalog", type=str, default='coffee_machines')
-    parser.add_argument("--model", type=str, choices=['llama-3.1-8b', 'llama-2-7b', 'vicuna-7b', 'mistral-7b', 'deepseek-7b', 'qwen-4b', 'phi-2.7b'], default='vicuna-7b')
+    parser.add_argument("--model", type=str, choices=['llama-3.1-8b', 'llama-2-7b', 'vicuna-7b', 'mistral-7b', 'deepseek-7b', 'qwen-4b', 'phi-2.7b', 'qwen2.5-7b', 'qwen2.5-14b'], default='vicuna-7b')
     parser.add_argument("--dataset", type=str, default="ragroll")
     parser.add_argument("--target_product_idx", type=int, default=8)
     parser.add_argument("--seed", type=int, default=42)

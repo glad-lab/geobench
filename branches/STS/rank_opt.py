@@ -417,7 +417,7 @@ if __name__ == "__main__":
     argparser.add_argument("--mode", type=str, default="self", choices=["self", "transfer"], help="Mode of optimization.")
     argparser.add_argument("--user_msg_type", type=str, default="default", choices=["default", "custom"], help="User message type.")
     argparser.add_argument("--save_state", action="store_true", help="Whether to save the state of the optimization procedure. If interrupted, the experiment can be resumed.")
-    argparser.add_argument("--model", type=str, default="llama-3.1-8b", choices=["llama-3.1-8b"], help="The language model to use.")
+    argparser.add_argument("--model", type=str, default="llama-3.1-8b", choices=["llama-3.1-8b", "mistral-7b", "vicuna-7b", "qwen2.5-7b", "qwen2.5-14b"], help="The language model to use.")
     argparser.add_argument("--dataset", type=str, default="llm_rank_subsampled",
                            choices=["llm_rank_subsampled", "llmrank_subsampled", "cseo_subsampled", "llm_rank_optimizer_subsampled", "rewrite_to_rank_subsampled", "sts_subsampled", "ragroll_subsampled"],
                            help="Dataset to use")
@@ -438,11 +438,18 @@ if __name__ == "__main__":
     save_state = args.save_state
     # Use models with similar tokenizers
     # model_path_llama_7b = "meta-llama/Llama-2-7b-chat-hf"
-    MODEL_PATH_DICT = {'llama-3.1-8b': 'NousResearch/Meta-Llama-3.1-8B-Instruct'}
+    MODEL_PATH_DICT = {'llama-3.1-8b': 'NousResearch/Meta-Llama-3.1-8B-Instruct',
+                       'mistral-7b': 'mistralai/Mistral-7B-Instruct-v0.3',
+                       'vicuna-7b': 'lmsys/vicuna-7b-v1.5',
+                       'qwen2.5-7b': 'Qwen/Qwen2.5-7B-Instruct',
+                       'qwen2.5-14b': 'Qwen/Qwen2.5-14B-Instruct'}
 
 
-    SYSTEM_PROMPT = {'llama': {'head': f'<|begin_of_text|><|start_header_id|>system<|end_header_id|>\n\n{ASSSISTANT_PROMPT}<|eot_id|><|start_header_id|>user<|end_header_id|>\n\nProducts:\n',
-                            'tail': '<|eot_id|><|start_header_id|>assistant<|end_header_id|>\n\n'}}
+    SYSTEM_PROMPT = {'llama': {'head': f'<|start_header_id|>system<|end_header_id|>\n\n{ASSSISTANT_PROMPT}<|eot_id|><|start_header_id|>user<|end_header_id|>\n\nProducts:\n',
+                            'tail': '<|eot_id|><|start_header_id|>assistant<|end_header_id|>\n\n'},
+                     'mistral': {'head': f'[INST] {ASSSISTANT_PROMPT}\n\nProducts:\n', 'tail': ' [/INST]'},
+                     'vicuna': {'head': f'{ASSSISTANT_PROMPT}\n\nUser: Products:\n', 'tail': '\n\nAssistant: '},
+                     'qwen2.5': {'head': f'<|im_start|>system\n{ASSSISTANT_PROMPT}<|im_end|>\n<|im_start|>user\nProducts:\n', 'tail': '<|im_end|>\n<|im_start|>assistant\n'}}
 
     model_path_llama_7b = MODEL_PATH_DICT[args.model]
     system_prompt = SYSTEM_PROMPT[args.model.split('-')[0]]

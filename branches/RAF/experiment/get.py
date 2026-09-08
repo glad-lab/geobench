@@ -49,7 +49,7 @@ def get_model(model_path, precision, device):
                                                            use_cache=True)
 
     if 'llama' in model_path:
-        tokenizer.pad_token = tokenizer.unk_token
+        tokenizer.pad_token = tokenizer.unk_token if tokenizer.unk_token is not None else tokenizer.eos_token
         tokenizer.padding_side = 'left'
 
     return model, tokenizer
