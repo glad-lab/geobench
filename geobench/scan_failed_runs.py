@@ -38,10 +38,16 @@ def main():
     a = ap.parse_args()
     reports = []
     for p in a.instances:
-        if p.stat().st_size == 0:
+        try:
+            raw = pd.read_csv(p)
+        except pd.errors.EmptyDataError:
             print(f"[scan] {p} is empty; skipping"); continue
-        df = scan(pd.read_csv(p))
-        m = df.method.iloc[0] if len(df) else p.stem
+        if raw.empty:
+            print(f"[scan] {p} has no rows; skipping"); continue
+        df = scan(raw)
+        m = df.method.iloc[0]
+        if m == "clean":                      # baseline is *supposed* to be unchanged; report coverage only
+            df["any_flag"] = False
         for ds, g in df.groupby("dataset"):
             man = load_manifest(ds)
             reports.append({"method": m, "dataset": ds, "manifest_N": len(man), "collected_N": len(g),

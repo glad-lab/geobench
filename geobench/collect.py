@@ -229,6 +229,11 @@ def main():
         df = collect(a.method, a.datasets, a.model, a.root, a.select, override)
         name = a.method
     out = a.out or (RESULTS_ROOT / "instances" / f"{name}.csv")
+    if df.empty:
+        print(f"[collect] nothing collected for {name}; not writing {out}")
+        if out.exists() and out.stat().st_size < 64:
+            out.unlink()                      # remove a stale empty file from an earlier run
+        return
     out.parent.mkdir(parents=True, exist_ok=True)
     df.to_csv(out, index=False)
     print(f"[collect] wrote {len(df)} rows -> {out}")
