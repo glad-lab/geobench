@@ -13,6 +13,7 @@ export HF_HOME=${HF_HOME:-/scratch1/nimase/hf_cache}
 export HF_HUB_CACHE=${HF_HUB_CACHE:-$HF_HOME}
 export HF_HUB_OFFLINE=${HF_HUB_OFFLINE:-0}                          # set 1 to forbid downloads on compute nodes
 export TIME=${TIME:-24:00:00}
+export OPENBLAS_NUM_THREADS=4 OMP_NUM_THREADS=4 PYTHONNOUSERSITE=1   # also for the submitter itself
 
 # Everything each job's shell needs; expanded INSIDE the heredoc at submit time.
 common_env() {
@@ -29,6 +30,7 @@ export TOKENIZERS_PARALLELISM=false
 export OPENBLAS_NUM_THREADS=4
 export OMP_NUM_THREADS=4
 export PYTHONUNBUFFERED=1
+export PYTHONNOUSERSITE=1
 export PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True
 cd $REPO
 mkdir -p logs results/unified
