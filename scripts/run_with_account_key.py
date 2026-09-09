@@ -13,8 +13,11 @@ from datetime import datetime, timezone
 logging.disable(logging.CRITICAL)
 parser = argparse.ArgumentParser(description=__doc__)
 parser.add_argument('--stage', choices=['all', 'generate', 'evaluate'], default='all')
-parser.add_argument('--workers', type=int, default=16)
-parser.add_argument('--eval-workers', type=int, default=32)
+parser.add_argument('--workers', type=int, default=4)
+parser.add_argument('--eval-workers', type=int, default=4)
+parser.add_argument('--background', action='store_true',
+                    help='Detach after hidden credential entry; keep progress in logs/')
+parser.add_argument('--background-child', action='store_true', help=argparse.SUPPRESS)
 args = parser.parse_args()
 if not (1 <= args.workers <= 64 and 1 <= args.eval_workers <= 64):
     parser.error('workers must be between 1 and 64')
@@ -22,7 +25,8 @@ root = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(root))
 from geobench.run_state import atomic_text, run_lock
 
-key = getpass.getpass('BlockRun account key (hidden; not saved): ').strip().replace('\\_', '_')
+key = (os.environ.pop('GEOBENCH_ACCOUNT_KEY') if args.background_child else
+       getpass.getpass('BlockRun account key (hidden; not saved): ')).strip().replace('\\_', '_')
 if not key.startswith('brk_live_'):
     raise SystemExit('Expected a BlockRun account key')
 environment = dict(os.environ, OPENAI_API_KEY=key,
@@ -38,6 +42,18 @@ state_path = root / 'logs' / 'revision_api_status.json'
 state = dict(stage=args.stage, started_utc=stamp, log=str(log_path),
              workers=args.workers, eval_workers=args.eval_workers, status='starting')
 log_path.parent.mkdir(parents=True, exist_ok=True)
+if args.background:
+    child_environment = dict(os.environ, GEOBENCH_ACCOUNT_KEY=key)
+    with (root / 'logs/revision_api_supervisor.log').open('a') as startup_log:
+        supervisor = subprocess.Popen(
+            [sys.executable, str(Path(__file__).resolve()), '--stage', args.stage,
+             '--workers', str(args.workers), '--eval-workers', str(args.eval_workers),
+             '--background-child'], cwd=root, env=child_environment,
+            start_new_session=True, stdin=subprocess.DEVNULL,
+            stdout=subprocess.DEVNULL, stderr=startup_log)
+    print(json.dumps(dict(supervisor_pid=supervisor.pid, status_file=str(state_path))), flush=True)
+    raise SystemExit(0)
+state.update(supervisor_pid=os.getpid(), background=args.background_child)
 with run_lock(root / 'logs/revision_api.lock'):
     with log_path.open('w', buffering=1) as log:
         process = subprocess.Popen(['bash', 'scripts/run_revision_api.sh', args.stage],
