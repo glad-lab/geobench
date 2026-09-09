@@ -15,6 +15,7 @@ from typing import List, Optional, Sequence
 
 from .config import RANKERS
 from .prompts import build_messages, target_rank
+from .api import ChatAPI
 
 
 def orderings(L: int, K: int, seed: int) -> List[List[int]]:
@@ -101,27 +102,17 @@ class OpenAIRanker(BaseRanker):
     server (vLLM, Together, DeepSeek) via OPENAI_BASE_URL / OPENAI_API_KEY."""
 
     def __init__(self, model_id: str, max_new_tokens: int = 512, sleep: float = 0.0):
-        from openai import OpenAI
         self.name = model_id
-        self.client = OpenAI(base_url=os.environ.get("OPENAI_BASE_URL"))
+        self.client = ChatAPI(model_id)
+        self.identity = self.client.identity
         self.max_new_tokens = max_new_tokens
         self.sleep = sleep
 
     def _one(self, messages: List[dict]) -> str:
-        for attempt in range(6):
-            try:
-                r = self.client.chat.completions.create(
-                    model=self.name, messages=messages, temperature=0,
-                    max_tokens=self.max_new_tokens,
-                )
-                if self.sleep:
-                    time.sleep(self.sleep)
-                return r.choices[0].message.content or ""
-            except Exception as e:  # rate limits etc.
-                wait = 2 ** attempt
-                print(f"[openai] {e!r}; retry in {wait}s")
-                time.sleep(wait)
-        raise RuntimeError("openai ranker: too many failures")
+        text = self.client.complete(messages, temperature=0, max_tokens=self.max_new_tokens)
+        if self.sleep:
+            time.sleep(self.sleep)
+        return text
 
     def generate(self, batch_messages: List[List[dict]]) -> List[str]:
         return [self._one(m) for m in batch_messages]

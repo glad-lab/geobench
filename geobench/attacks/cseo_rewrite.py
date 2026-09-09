@@ -21,7 +21,9 @@ import argparse
 from typing import Dict
 
 from ..config import PAPER_DATASETS
-from .common import Generator, iter_instances, strip_fences, write_instances
+from .common import Generator, GenerationRun, generation_identity, iter_instances, strip_fences
+from ..run_state import digest, api_workers, completed_calls
+from pathlib import Path
 
 SYSTEM = (
     "You are an expert ml researcher having previous background in SEO and search engines in general. You are working on "
@@ -148,23 +150,35 @@ def post_process(strategy: str, out: str) -> str:
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--rewriter", default="gpt-4o-mini")
-    ap.add_argument("--methods", nargs="+", default=list(STRATEGIES))
+    ap.add_argument("--methods", nargs="+", choices=list(STRATEGIES), default=list(STRATEGIES))
     ap.add_argument("--datasets", nargs="+", default=PAPER_DATASETS)
     ap.add_argument("--temperature", type=float, default=0.7)
     ap.add_argument("--max-new-tokens", type=int, default=600)
     ap.add_argument("--tag", default="")
     a = ap.parse_args()
-    gen = Generator(a.rewriter, a.temperature, 0.9, a.max_new_tokens)
+    targets = list(iter_instances(a.datasets))
+    gen = None
     for strat in a.methods:
-        rows = []
-        for ds, cat, idx, items, noun in iter_instances(a.datasets):
-            it = items[idx - 1]
-            new = post_process(strat, gen(SYSTEM_FOR[strat], STRATEGIES[strat].format(description=it.text)))
-            adv = (new + "\n\n" + it.text) if strat == "llm_guidance" else new
-            rows.append({"method": strat, "dataset": ds, "category": cat, "target_idx": idx, "target_name": it.name,
+        config = {k: v for k, v in vars(a).items() if k != "methods"}
+        config.update(api=generation_identity(a.rewriter), prompt=STRATEGIES[strat], system=SYSTEM_FOR[strat],
+                      top_p=0.9, code=digest([Path(__file__).read_text(), Path(__file__).with_name('common.py').read_text()]))
+        with GenerationRun(strat, a.tag, config, targets) as run:
+            pending = [t for t in targets if t[:3] not in run.done]
+            if pending:
+                gen = gen or Generator(a.rewriter, a.temperature, 0.9, a.max_new_tokens)
+            def generate(t):
+                ds, cat, idx, items, noun = t
+                it = items[idx - 1]
+                new = post_process(strat, gen(SYSTEM_FOR[strat], STRATEGIES[strat].format(description=it.text)))
+                if not new:
+                    raise ValueError("Empty rewrite; checkpoint not advanced")
+                adv = (new + "\n\n" + it.text) if strat == "llm_guidance" else new
+                return {"dataset": ds, "category": cat, "target_idx": idx, "target_name": it.name,
                          "L": len(items), "orig_text": it.text, "adv_suffix": "", "adv_text": adv,
-                         "select_rule": "single", "source_path": f"rewriter={a.rewriter}"})
-        write_instances(rows, strat, a.tag)
+                         "select_rule": "single", "source_path": f"rewriter={a.rewriter}"}
+            workers = api_workers() if generation_identity(a.rewriter)['provider'] != 'hf' else 1
+            for row in completed_calls(generate, pending, workers):
+                run.add(row)
 
 
 if __name__ == "__main__":

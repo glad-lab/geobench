@@ -26,6 +26,7 @@ import pandas as pd
 from scipy import stats as sps
 
 from .config import METHOD_GROUPS, RESULTS_ROOT
+from .run_state import base_method
 
 METRICS = ["nrg", "success@0.1", "promote@0.1", "kvr", "ppl_r"]
 
@@ -43,10 +44,19 @@ def bootstrap_ci(x: np.ndarray, n_boot: int = 2000, alpha: float = 0.05, seed: i
 
 def load_per_instance(ranker: str) -> pd.DataFrame:
     d = RESULTS_ROOT / "per_instance" / ranker
-    frames = [pd.read_csv(p) for p in sorted(d.glob("*.csv"))]
+    frames = []
+    for p in sorted(d.glob("*.csv")):
+        frame = pd.read_csv(p)
+        if "__" in p.stem:
+            if not frame.method.isin([base_method(p.stem), p.stem]).all():
+                raise ValueError(f"Variant filename conflicts with method column: {p}")
+            frame["method"] = p.stem
+        frames.append(frame)
     if not frames:
         raise SystemExit(f"no per-instance files under {d}")
     df = pd.concat(frames, ignore_index=True)
+    if df.duplicated(["method", "dataset", "category", "target_idx"]).any():
+        raise ValueError("Duplicate per-instance results; refusing to pool experiments")
     df["key"] = df.dataset + "|" + df.category + "|" + df.target_idx.astype(str)
     return df
 
@@ -149,8 +159,8 @@ def group_tests(df: pd.DataFrame, metric: str = "nrg") -> pd.DataFrame:
     """Best-in-group vs best-in-group on shared instances, plus group means."""
     rows = []
     inv = {m: g for g, ms in METHOD_GROUPS.items() for m in ms}
-    df = df[df.method.isin(inv)].copy()
-    df["group"] = df.method.map(inv)
+    df = df[df.method.map(base_method).isin(inv)].copy()
+    df["group"] = df.method.map(base_method).map(inv)
     gm = df.groupby(["group", "method"])[metric].mean().reset_index()
     best = gm.sort_values(metric, ascending=False).groupby("group").head(1)
     best_of = dict(zip(best.group, best.method))

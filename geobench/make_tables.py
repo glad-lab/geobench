@@ -19,6 +19,18 @@ import numpy as np
 import pandas as pd
 
 from .config import METHOD_GROUPS, METHOD_LABELS, PAPER_DATASETS, RESULTS_ROOT
+from .run_state import base_method
+
+
+def method_label(name, latex=False):
+    base, _, tag = name.partition("__")
+    label = METHOD_LABELS.get(base, base) + (f" [{tag}]" if tag else "")
+    return label.replace("_", r"\_") if latex else label
+
+
+def ordered_methods(available):
+    return [name for methods in METHOD_GROUPS.values() for base in methods
+            for name in sorted(set(available)) if base_method(name) == base]
 
 DS_LABEL = {"ragroll": "Ragroll", "ragroll_sub": "Ragroll", "stsdata": "STSData", "rewrite_to_rank": "R2R",
             "llm_rank_optimizer": "LLM R. Opt.", "cseo": "C-SEO Bench", "llmrank": "LLMRank"}
@@ -53,11 +65,11 @@ def _best_masks(vals: Dict[str, float], metric: str, groups: Dict[str, List[str]
 
 def table_main(ranker: str, methods: List[str], datasets: List[str], out_dir: Path) -> Path:
     s = pd.read_csv(RESULTS_ROOT / "summary" / f"{ranker}_summary.csv")
-    groups = {g: [m for m in ms if m in methods] for g, ms in METHOD_GROUPS.items()}
+    groups = {g: [m for m in methods if base_method(m) in ms] for g, ms in METHOD_GROUPS.items()}
     groups = {g: ms for g, ms in groups.items() if ms}
     cols = [m for ms in groups.values() for m in ms]
     lines = [r"\begin{tabular}{ll" + "c" * len(cols) + "}", r"\toprule",
-             "Dataset & Metric & " + " & ".join(METHOD_LABELS.get(m, m) for m in cols) + r" \\", r"\midrule"]
+             "Dataset & Metric & " + " & ".join(method_label(m, latex=True) for m in cols) + r" \\", r"\midrule"]
     for ds in datasets:
         sub = s[s.dataset == ds]
         if sub.empty:
@@ -105,7 +117,7 @@ def table_rankers(rankers: List[str], methods: List[str], out_dir: Path) -> Path
         for r in rankers:
             v = o[(o.method == m) & (o.ranker == r) & (o.metric == "nrg")]
             cells.append(_fmt(float(v["mean"].iloc[0]), float(v.ci_lo.iloc[0]), float(v.ci_hi.iloc[0]), "nrg") if len(v) else "--")
-        lines.append(METHOD_LABELS.get(m, m) + " & " + " & ".join(cells) + r" \\")
+        lines.append(method_label(m, latex=True) + " & " + " & ".join(cells) + r" \\")
     lines += [r"\bottomrule", r"\end{tabular}"]
     # Spearman correlation of method orderings between rankers (does the leaderboard flip?)
     piv = o[o.metric == "nrg"].pivot(index="method", columns="ranker", values="mean")
@@ -134,8 +146,8 @@ def fig_tradeoff(ranker: str, methods: List[str], out_dir: Path) -> Path:
         size = 40 + 60 * float(np.clip(piv.loc[m].get("ppl_r", 1.0), 0, 8))
         ax.errorbar(x, y, xerr=[[x - lo.loc[m, "nrg"]], [hi.loc[m, "nrg"] - x]],
                     yerr=[[y - lo.loc[m, "kvr"]], [hi.loc[m, "kvr"] - y]], fmt="none", ecolor="#999", lw=0.8, zorder=1)
-        ax.scatter(x, y, s=size, color=color.get(inv.get(m), "#333"), alpha=0.8, edgecolor="k", lw=0.5, zorder=2)
-        ax.annotate(METHOD_LABELS.get(m, m), (x, y), xytext=(5, 4), textcoords="offset points", fontsize=8)
+        ax.scatter(x, y, s=size, color=color.get(inv.get(base_method(m)), "#333"), alpha=0.8, edgecolor="k", lw=0.5, zorder=2)
+        ax.annotate(method_label(m), (x, y), xytext=(5, 4), textcoords="offset points", fontsize=8)
     ax.set_xlabel("Effectiveness: mean NRG (higher = stronger promotion)")
     ax.set_ylabel("Keyword violation rate (lower = stealthier)")
     ax.set_title(f"Effectiveness-stealth trade-off, ranker = {ranker}; marker size = PPL-R; bars = 95% CI", fontsize=8)
@@ -154,12 +166,12 @@ def main():
     out_dir = RESULTS_ROOT / "tables"; out_dir.mkdir(parents=True, exist_ok=True)
     for r in a.rankers:
         s = pd.read_csv(RESULTS_ROOT / "summary" / f"{r}_summary.csv")
-        methods = a.methods or [m for ms in METHOD_GROUPS.values() for m in ms if m in set(s.method)]
+        methods = a.methods or ordered_methods(s.method)
         print("wrote", table_main(r, methods, a.datasets, out_dir))
         print("wrote", fig_tradeoff(r, methods, out_dir))
     if len(a.rankers) > 1:
         s = pd.read_csv(RESULTS_ROOT / "summary" / f"{a.rankers[0]}_summary.csv")
-        methods = a.methods or [m for ms in METHOD_GROUPS.values() for m in ms if m in set(s.method)]
+        methods = a.methods or ordered_methods(s.method)
         print("wrote", table_rankers(a.rankers, methods, out_dir))
 
 

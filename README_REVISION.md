@@ -78,6 +78,57 @@ make tables RANKERS="llama-3.1-8b qwen2.5-7b mistral-7b gpt-4o-mini"
 #      fig_tradeoff_<ranker>.pdf, appendix_repro.tex
 ```
 
+### Local API-only revision run (BlockRun)
+
+Account-key production entry point (prompts without echoing or saving the key):
+` .venv-geobench/bin/python scripts/run_with_account_key.py `.
+This selects `https://api.blockrun.ai/v1`, uses 16 generation workers and 32
+evaluation workers, and records redacted progress and token usage in `logs/`.
+It preserves the original capped-output behavior: text stopped at the requested
+token limit is retained, with `finish_reason` recorded in the usage log. Empty or
+filtered responses still fail. Concurrency changes scheduling, not K, prompts,
+model selection, temperatures or token limits. The general launchers stay serial
+unless `GEOBENCH_API_WORKERS` is set (1–64).
+
+The requested C-SEO, GPT-4o-mini zero-shot ablation and GPT-4o-mini evaluation
+can run locally without GPU/Slurm. TAP is excluded from this launcher.
+
+```bash
+# Optional on a fresh machine: create an environment and install API-only dependencies.
+python3 -m venv .venv-geobench
+.venv-geobench/bin/python -m pip install -r requirements-api.txt
+
+# Safe preflight: no inference or background jobs.
+bash scripts/run_revision_api.sh --dry-run
+DRY_RUN=1 RANKERS=gpt-4o-mini bash scripts/slurm/submit_eval_api.sh
+
+# After configuring BlockRun credentials locally and checking the run budget:
+bash scripts/run_revision_api.sh all       # generate both families, then evaluate + stats
+# Or select a stage: generate / evaluate. Repeating the same command resumes.
+```
+
+Launchers discover the repository and prefer `.venv-geobench/bin/python`;
+override `REPO`, `PYTHON_BIN` or `GEOBENCH_RESULTS` as needed. They default
+to `GEOBENCH_API_PROVIDER=blockrun` (wallet SDK, `BLOCKRUN_WALLET_KEY` or the
+SDK's existing wallet file). A wallet private key is never an OpenAI API key.
+For a bearer-compatible BlockRun endpoint, set
+`GEOBENCH_API_PROVIDER=blockrun-openai`, `OPENAI_BASE_URL`, and
+`OPENAI_API_KEY`. Use `GEOBENCH_API_PROVIDER=openai` for direct OpenAI calls.
+When running the Python commands directly, export the provider explicitly;
+the Python default remains `openai` for backward compatibility.
+
+Tagged experiments retain their identity in CSVs, evaluation, and statistics;
+for example `zero_shot__att-gpt4omini` remains separate from `zero_shot`.
+Generation saves each successful target atomically. Configuration/input
+changes block resume instead of silently mixing experiments. Keep the adjacent
+`*.run.json` metadata with result CSVs. Incomplete generation files cannot be
+evaluated; rerun generation to finish them. Legacy evaluation outputs without
+resume metadata require a separate results directory.
+
+The evaluation launcher still includes **all** instance CSVs in the selected
+results directory. See [API_READINESS.md](API_READINESS.md) for the tested
+environment, workload and remaining live validation.
+
 ### Running on USC CARC
 
 All submitters live in `scripts/slurm/` and follow the heredoc-`sbatch` pattern
