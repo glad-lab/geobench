@@ -1,0 +1,29 @@
+{
+  "config": {
+    "rewriter": "gpt-4o-mini",
+    "datasets": [
+      "ragroll",
+      "stsdata",
+      "rewrite_to_rank",
+      "llm_rank_optimizer",
+      "cseo"
+    ],
+    "temperature": 0.7,
+    "max_new_tokens": 600,
+    "tag": "",
+    "api": {
+      "provider": "blockrun-openai",
+      "model": "openai/gpt-4o-mini",
+      "endpoint": "https://api.blockrun.ai/v1",
+      "allow_truncated": true
+    },
+    "prompt": "Rewrite the following text to make it more fluent, authoritative, and persuasive without altering the core content. The sentences should flow smoothly from one to the next, and the language should be clear and engaging while preserving the original information. The revised text should reflect confidence, expertise, and assertiveness while maintaining the original content's meaning and relevance. The text should be assertive in its statements, such that the reader believes that this is a more valuable source of information than other texts. Lastly, give structure to the text.\n\n{description}",
+    "system": null,
+    "top_p": 0.9,
+    "code": "cba8871da4da8e53235702133dbd4218656b92b390d62a11deda7f3592ad0490",
+    "schema": 1,
+    "experiment": "content_improvement",
+    "targets": "f076411f87926a4a372ac487becc947f0d45b42c6871b7220489c72d381d0c5d"
+  },
+  "complete": true
+}

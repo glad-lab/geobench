@@ -1,0 +1,29 @@
+{
+  "config": {
+    "rewriter": "gpt-4o-mini",
+    "datasets": [
+      "ragroll",
+      "stsdata",
+      "rewrite_to_rank",
+      "llm_rank_optimizer",
+      "cseo"
+    ],
+    "temperature": 0.7,
+    "max_new_tokens": 600,
+    "tag": "",
+    "api": {
+      "provider": "blockrun-openai",
+      "model": "openai/gpt-4o-mini",
+      "endpoint": "https://api.blockrun.ai/v1",
+      "allow_truncated": true
+    },
+    "prompt": "Here is the source:\n```\n{description}\n```\n\n## Task:\nAdd positive, compelling statistics (even if hypothetical) at multiple relevant places in the text. Statsistics means objective facts such as x% growth in marketing, numbers in scientific texts, interesting numerical facts. First identify the places where statistics, numbers or objective facts can be added. Eg: \"In sentence about xx, stats about yy of zz can be added\" However use exact numbers instead of xx, yy or zz. Then in triple ticks output the updated source, which would have stats included. Do not explain the changes, just give me the revised source.\n\n## Guidelines to follow:\n1. Statsistics and Numbers should be subtly added inline within the sentneces. No explicit paragraphs or big chunks of text should be added.\n2. Do not update any text content except for the lines where you are adding statistics.\n3. Do not add or delete content except the statistics you are adding. Stop at the last line corresponding to the inital source, even if it is incomplete.\n4. Just output the optimized source text. No need to give any explanation or reasoning or conclusion.\n5. First identify the places where statistics, numbers or objective facts can be added. Eg: \"In sentence about xx, stats about yy of zz can be added\". However use exact numbers instead of xx, yy or zz. Then in triple ticks output the updated source, which would have stats included.\n\n\n## Output Format:\n1. Stat to be added\n2. Stat to be added.\n....\nk. Stat to be added.\n\nUpdated Output:\n```\n<Output>\n```\n",
+    "system": "You are an expert ml researcher having previous background in SEO and search engines in general. You are working on novel research ideas for next generation of products. These products will have language models augmented with search engines, with the task of answering questions based on sources backed by the search engine. This new set of systems will be collectively called language engines (generative search engines). This will require websites to update their SEO techniques to rank higher in the llm generated answer. Specifically they will use GEO (Generative Engine Optimization) techniques to boost their visibility in the final text answer outputted by the Language Engine.",
+    "top_p": 0.9,
+    "code": "cba8871da4da8e53235702133dbd4218656b92b390d62a11deda7f3592ad0490",
+    "schema": 1,
+    "experiment": "statistics",
+    "targets": "f076411f87926a4a372ac487becc947f0d45b42c6871b7220489c72d381d0c5d"
+  },
+  "complete": true
+}
