@@ -1,13 +1,14 @@
 #!/bin/bash
 # Shared CARC settings for every submitter in scripts/slurm/.  Edit here only.
 # Override any value on the command line, e.g.  ACCOUNT=yzhao010_1245 bash scripts/slurm/submit_eval.sh
-export REPO=${REPO:-/scratch1/nimase/geobench/geobench-rev}         # clone of the `revision` branch
+export REPO=${REPO:-$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)}   # the clone this script lives in (survives moving off /scratch1)
 export ACCOUNT=${ACCOUNT:-xiangren_1715}
 export PARTITION=${PARTITION:-nlp_hiprio}
 export GPU_TYPE=${GPU_TYPE:-rtxa6000}                                  # --gres=gpu:${GPU_TYPE}:N
 export CONDA_BIN=${CONDA_BIN:-/home1/nimase/.conda/envs/geobench/bin}  # env with requirements-geobench.txt
 export CONDA_BIN_STEALTH=${CONDA_BIN_STEALTH:-/scratch1/nimase/geobench/env/bin}      # branches/Stealth-Rank, RAF, zero-shot env
 export CONDA_BIN_STS=${CONDA_BIN_STS:-/scratch1/nimase/geobench/env-sts/bin}          # branches/STS env
+if [[ -z "${HF_HOME:-}" ]]; then for c in /scratch2/nimase/hf_cache /scratch1/nimase/hf_cache; do [[ -d $c ]] && { HF_HOME=$c; break; }; done; fi
 export HF_HOME=${HF_HOME:-/scratch1/nimase/hf_cache}
 # models--* dirs sit directly under hf_cache (not hf_cache/hub), so point the hub cache there too
 export HF_HUB_CACHE=${HF_HUB_CACHE:-$HF_HOME}

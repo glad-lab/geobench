@@ -87,7 +87,7 @@ class Perplexity:
         self.torch = torch
         self.device = device or ("cuda" if torch.cuda.is_available() else "cpu")
         self.tok = AutoTokenizer.from_pretrained(model_id)
-        self.model = AutoModelForCausalLM.from_pretrained(model_id, torch_dtype=getattr(torch, dtype)).to(self.device).eval()
+        self.model = AutoModelForCausalLM.from_pretrained(model_id, dtype=getattr(torch, dtype)).to(self.device).eval()
 
     def __call__(self, text: str) -> float:
         if not isinstance(text, str) or not text.strip():

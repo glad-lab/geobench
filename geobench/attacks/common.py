@@ -33,7 +33,7 @@ class Generator:
             if self.tok.pad_token is None:
                 self.tok.pad_token = self.tok.eos_token
             self.tok.padding_side = "left"
-            self.model = AutoModelForCausalLM.from_pretrained(model, torch_dtype=getattr(torch, dtype), device_map="auto").eval()
+            self.model = AutoModelForCausalLM.from_pretrained(model, dtype=getattr(torch, dtype), device_map="auto").eval()
 
     def __call__(self, system: Optional[str], user: str) -> str:
         msgs = ([{"role": "system", "content": system}] if system else []) + [{"role": "user", "content": user}]

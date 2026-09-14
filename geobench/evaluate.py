@@ -70,6 +70,16 @@ def evaluate(instances: pd.DataFrame, ranker_key: str, K: int, agg: str, seed: i
               for ds, cat in sorted(set(zip(instances.dataset, instances.category)))]
     config = dict(protocol, input=digest(instances.to_csv(index=False)), source=digest(source),
                   ppl=None if ppl is None else {"model": getattr(ppl.model.config, "_name_or_path", "unknown")})
+    # Outputs written before the sidecar scheme (schema 1) have no .run.json.  If
+    # every requested instance is already scored there, keep them as-is; only a
+    # partial legacy file is refused (bind_config), because it cannot be resumed safely.
+    if out_path.exists() and not out_path.with_suffix(".run.json").exists():
+        prev = pd.read_csv(out_path, keep_default_na=False)
+        have = {f"{r['method']}|{_ikey(r)}" for r in prev.to_dict("records")}
+        want = {f"{r['method']}|{_ikey(r)}" for r in instances.to_dict("records")}
+        if want <= have:
+            print(f"[evaluate] {out_path.name}@{ranker_key}: legacy output already complete ({len(have)} rows); skipping")
+            return
     with run_lock(out_path.with_suffix(".lock")):
         bind_config(out_path, config)
         return _evaluate(instances, ranker_key, K, agg, seed, ppl, out_path, ranker,

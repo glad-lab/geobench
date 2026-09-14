@@ -62,7 +62,7 @@ class HFRanker(BaseRanker):
             self.tok.pad_token = self.tok.eos_token
         self.tok.padding_side = "left"
         self.model = AutoModelForCausalLM.from_pretrained(
-            model_id, torch_dtype=getattr(torch, dtype), device_map=device_map
+            model_id, dtype=getattr(torch, dtype), device_map=device_map
         ).eval()
         self._torch = torch
 
@@ -88,7 +88,7 @@ class HFRanker(BaseRanker):
             enc = self.tok(chunk, return_tensors="pt", padding=True, add_special_tokens=False).to(self.model.device)
             with torch.no_grad():
                 gen = self.model.generate(
-                    **enc, max_new_tokens=self.max_new_tokens, do_sample=False,
+                    **enc, max_new_tokens=self.max_new_tokens, do_sample=False, temperature=None, top_p=None,
                     pad_token_id=self.tok.pad_token_id,
                 )
             gen = gen[:, enc["input_ids"].shape[1]:]

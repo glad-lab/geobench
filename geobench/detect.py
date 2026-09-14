@@ -52,7 +52,7 @@ class HFJudge:
         from transformers import AutoModelForCausalLM, AutoTokenizer
         self.torch = torch
         self.tok = AutoTokenizer.from_pretrained(model_id)
-        self.model = AutoModelForCausalLM.from_pretrained(model_id, torch_dtype=getattr(torch, dtype), device_map="auto").eval()
+        self.model = AutoModelForCausalLM.from_pretrained(model_id, dtype=getattr(torch, dtype), device_map="auto").eval()
         self.yes_ids = [self.tok.encode(t, add_special_tokens=False)[0] for t in ("Yes", " Yes", "yes")]
         self.no_ids = [self.tok.encode(t, add_special_tokens=False)[0] for t in ("No", " No", "no")]
 
