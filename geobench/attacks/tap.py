@@ -99,8 +99,20 @@ def main():
 
     gen = Generator(a.attacker, temperature=1.0, top_p=0.95, max_new_tokens=200)
     ranker = load_ranker(a.ranker)
-    rows = []
+    # resume: keep rows already written by an earlier (interrupted) run
+    from ..config import RESULTS_ROOT
+    from ..run_state import experiment_name
+    prev_path = RESULTS_ROOT / "instances" / f"{experiment_name('tap', a.tag or a.ranker)}.csv"
+    rows, done = [], set()
+    if prev_path.exists():
+        import pandas as pd
+        prev = pd.read_csv(prev_path, keep_default_na=False)
+        rows = [{k: v for k, v in r.items() if k not in ("method", "base_method")} for r in prev.to_dict("records")]
+        done = {(r["dataset"], r["category"], int(r["target_idx"])) for r in rows}
+        print(f"[tap] resuming: {len(done)} instances already done in {prev_path}")
     for ds, cat, idx, items, noun in iter_instances(a.datasets):
+        if (ds, cat, idx) in done:
+            continue
         names = [it.name for it in items]; texts = [it.text for it in items]
         best, trace = run_tap(gen, ranker, noun, names, texts, idx - 1, roots=a.roots, branching=a.branching,
                               width=a.width, depth=a.depth, m=a.m, delta=a.delta, seed=a.seed + idx)
