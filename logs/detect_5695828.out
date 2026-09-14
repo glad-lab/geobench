@@ -1,0 +1,32 @@
+[judge] clean: 1458 scores -> /scratch1/nimase/geobench/geobench-rev/results/unified/detect/judge/Qwen_Qwen2.5-14B-Instruct/clean.csv
+[judge] raf: 932 scores -> /scratch1/nimase/geobench/geobench-rev/results/unified/detect/judge/Qwen_Qwen2.5-14B-Instruct/raf.csv
+[judge] stealthrank: 1458 scores -> /scratch1/nimase/geobench/geobench-rev/results/unified/detect/judge/Qwen_Qwen2.5-14B-Instruct/stealthrank.csv
+[judge] zero_shot: 1458 scores -> /scratch1/nimase/geobench/geobench-rev/results/unified/detect/judge/Qwen_Qwen2.5-14B-Instruct/zero_shot.csv
+     method            dataset   n    auroc  det_rate@fpr0.05  mean_p_manip
+      clean               cseo  60 0.500000          0.016667  1.103530e-13
+      clean llm_rank_optimizer  40 0.500000          0.050000  8.150351e-10
+      clean            ragroll 399 0.500000          0.002506  1.614691e-13
+      clean    rewrite_to_rank 200 0.500000          0.105000  9.122129e-03
+      clean            stsdata  30 0.500000          0.366667  8.242415e-05
+        raf llm_rank_optimizer  37 0.959797          0.783784  6.265391e-02
+        raf            ragroll 399 0.970955          0.528822  1.060937e-01
+        raf            stsdata  30 0.895000          0.966667  4.115082e-02
+stealthrank               cseo  60 1.000000          1.000000  3.239124e-01
+stealthrank llm_rank_optimizer  40 1.000000          1.000000  8.438819e-01
+stealthrank            ragroll 399 0.999994          0.997494  8.070655e-01
+stealthrank    rewrite_to_rank 200 0.994888          1.000000  7.854364e-01
+stealthrank            stsdata  30 1.000000          1.000000  9.072655e-01
+  zero_shot               cseo  60 0.901111          0.233333  8.018353e-04
+  zero_shot llm_rank_optimizer  40 0.820625          0.300000  2.144403e-04
+  zero_shot            ragroll 399 0.922745          0.050125  2.902916e-11
+  zero_shot    rewrite_to_rank 200 0.758075          0.105000  3.004833e-04
+  zero_shot            stsdata  30 0.609444          0.500000  1.245288e-03
+-> /scratch1/nimase/geobench/geobench-rev/results/unified/detect/judge/summary_Qwen_Qwen2.5-14B-Instruct.csv
+[drift] clean: mean cos(orig,adv)=1.000 -> /scratch1/nimase/geobench/geobench-rev/results/unified/detect/drift/clean.csv
+[drift] raf: mean cos(orig,adv)=0.982 -> /scratch1/nimase/geobench/geobench-rev/results/unified/detect/drift/raf.csv
+[drift] stealthrank: mean cos(orig,adv)=0.954 -> /scratch1/nimase/geobench/geobench-rev/results/unified/detect/drift/stealthrank.csv
+[drift] zero_shot: mean cos(orig,adv)=0.959 -> /scratch1/nimase/geobench/geobench-rev/results/unified/detect/drift/zero_shot.csv
+[rerank] clean@bge-reranker-v2-m3: mean NRG 0.000 -> /scratch1/nimase/geobench/geobench-rev/results/unified/per_instance/bge-reranker-v2-m3/clean.csv
+[rerank] raf@bge-reranker-v2-m3: mean NRG -0.010 -> /scratch1/nimase/geobench/geobench-rev/results/unified/per_instance/bge-reranker-v2-m3/raf.csv
+[rerank] stealthrank@bge-reranker-v2-m3: mean NRG 0.050 -> /scratch1/nimase/geobench/geobench-rev/results/unified/per_instance/bge-reranker-v2-m3/stealthrank.csv
+[rerank] zero_shot@bge-reranker-v2-m3: mean NRG 0.086 -> /scratch1/nimase/geobench/geobench-rev/results/unified/per_instance/bge-reranker-v2-m3/zero_shot.csv
