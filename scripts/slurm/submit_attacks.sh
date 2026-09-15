@@ -3,7 +3,7 @@
 # attacker), C-SEO rewrites (gpt-4o-mini), TAP (DeepSeek-R1 attacker, Llama ranker).
 # One 1-GPU job each so they run in parallel.  Needs OPENAI_API_KEY exported
 # (and OPENAI_BASE_URL=https://api.deepseek.com + a DeepSeek key for TAP).
-#   bash scripts/slurm/submit_attacks.sh            # TAP with open attackers (llama-8b self, qwen2.5-14b)
+#   bash scripts/slurm/submit_attacks.sh            # TAP with open attackers (llama-8b self, qwen2.5-14b); never while a TAP job is queued
 #   bash scripts/slurm/submit_attacks.sh ablation   # + attacker/rewriter-strength ablation (open models)
 #   bash scripts/slurm/submit_attacks.sh api        # GPT-4o-mini jobs (need OPENAI_API_KEY; already done by Zhe)
 #   bash scripts/slurm/submit_attacks.sh zeroshot   # regenerate paper-setting Zero-Shot
@@ -15,8 +15,10 @@ declare -A JOBS GPUS
 # (Qwen2.5-14B, 2 GPUs).  DeepSeek-R1-0528 is no longer served, so the paper's
 # TAP attacker is replaced by these two; the C-SEO GPT-4o-mini rewrites and the
 # GPT-4o-mini zero-shot attacker were produced off-cluster (results/unified/instances/).
-JOBS[tap_att_llama8b]="python -m geobench.attacks.tap --ranker llama-3.1-8b --attacker meta-llama/Meta-Llama-3.1-8B-Instruct --tag att-llama8b"
-JOBS[tap_att_qwen14b]="python -m geobench.attacks.tap --ranker llama-3.1-8b --attacker Qwen/Qwen2.5-14B-Instruct --tag att-qwen14b"; GPUS[tap_att_qwen14b]=2
+if [[ -z "${1:-}" || "${1:-}" == "tap" ]]; then     # ONLY with no argument (or "tap"): never alongside ablation/api/zeroshot,
+  JOBS[tap_att_llama8b]="python -m geobench.attacks.tap --ranker llama-3.1-8b --attacker meta-llama/Meta-Llama-3.1-8B-Instruct --tag att-llama8b"
+  JOBS[tap_att_qwen14b]="python -m geobench.attacks.tap --ranker llama-3.1-8b --attacker Qwen/Qwen2.5-14B-Instruct --tag att-qwen14b"; GPUS[tap_att_qwen14b]=2
+fi                                                    # two TAP jobs on one checkpoint file would corrupt it
 if [[ "${1:-}" == "zeroshot" ]]; then
   JOBS[zs_llama]="python -m geobench.attacks.zero_shot --attacker meta-llama/Meta-Llama-3.1-8B-Instruct"   # already run once (9/7)
 fi
