@@ -1,0 +1,138 @@
+[judge] authoritative: 1458 scores -> /scratch1/nimase/geobench/geobench-rev/results/unified/detect/judge/Qwen_Qwen2.5-14B-Instruct/authoritative.csv
+[judge] citations: 1458 scores -> /scratch1/nimase/geobench/geobench-rev/results/unified/detect/judge/Qwen_Qwen2.5-14B-Instruct/citations.csv
+[judge] clean: 1458 scores -> /scratch1/nimase/geobench/geobench-rev/results/unified/detect/judge/Qwen_Qwen2.5-14B-Instruct/clean.csv
+[judge] content_improvement: 1458 scores -> /scratch1/nimase/geobench/geobench-rev/results/unified/detect/judge/Qwen_Qwen2.5-14B-Instruct/content_improvement.csv
+[judge] fluency: 1458 scores -> /scratch1/nimase/geobench/geobench-rev/results/unified/detect/judge/Qwen_Qwen2.5-14B-Instruct/fluency.csv
+[judge] llm_guidance: 1458 scores -> /scratch1/nimase/geobench/geobench-rev/results/unified/detect/judge/Qwen_Qwen2.5-14B-Instruct/llm_guidance.csv
+[judge] quotes: 1458 scores -> /scratch1/nimase/geobench/geobench-rev/results/unified/detect/judge/Qwen_Qwen2.5-14B-Instruct/quotes.csv
+[judge] raf: 932 scores -> /scratch1/nimase/geobench/geobench-rev/results/unified/detect/judge/Qwen_Qwen2.5-14B-Instruct/raf.csv
+[judge] simple_language: 1458 scores -> /scratch1/nimase/geobench/geobench-rev/results/unified/detect/judge/Qwen_Qwen2.5-14B-Instruct/simple_language.csv
+[judge] statistics: 1458 scores -> /scratch1/nimase/geobench/geobench-rev/results/unified/detect/judge/Qwen_Qwen2.5-14B-Instruct/statistics.csv
+[judge] stealthrank: 1458 scores -> /scratch1/nimase/geobench/geobench-rev/results/unified/detect/judge/Qwen_Qwen2.5-14B-Instruct/stealthrank.csv
+[judge] technical_terms: 1458 scores -> /scratch1/nimase/geobench/geobench-rev/results/unified/detect/judge/Qwen_Qwen2.5-14B-Instruct/technical_terms.csv
+[judge] unique_words: 1458 scores -> /scratch1/nimase/geobench/geobench-rev/results/unified/detect/judge/Qwen_Qwen2.5-14B-Instruct/unique_words.csv
+[judge] zero_shot__att-gpt4omini: 1458 scores -> /scratch1/nimase/geobench/geobench-rev/results/unified/detect/judge/Qwen_Qwen2.5-14B-Instruct/zero_shot__att-gpt4omini.csv
+[judge] zero_shot: 1458 scores -> /scratch1/nimase/geobench/geobench-rev/results/unified/detect/judge/Qwen_Qwen2.5-14B-Instruct/zero_shot.csv
+                  method            dataset   n    auroc  det_rate@fpr0.05  mean_p_manip
+           authoritative               cseo  60 0.720556          0.050000  7.322394e-11
+           authoritative llm_rank_optimizer  40 0.754375          0.175000  1.642539e-07
+           authoritative            ragroll 399 0.830968          0.015038  1.767543e-12
+           authoritative    rewrite_to_rank 200 0.688538          0.105000  1.135772e-03
+           authoritative            stsdata  30 0.611667          0.533333  1.932610e-09
+               citations               cseo  60 0.844861          0.233333  7.460953e-06
+               citations llm_rank_optimizer  40 0.977187          0.850000  1.476137e-01
+               citations            ragroll 399 0.997959          0.839599  1.019813e-02
+               citations    rewrite_to_rank 200 0.962550          0.925000  8.956753e-02
+               citations            stsdata  30 0.865556          0.933333  1.512586e-03
+                   clean               cseo  60 0.500000          0.016667  1.103530e-13
+                   clean llm_rank_optimizer  40 0.500000          0.050000  8.150351e-10
+                   clean            ragroll 399 0.500000          0.002506  1.614691e-13
+                   clean    rewrite_to_rank 200 0.500000          0.105000  9.122129e-03
+                   clean            stsdata  30 0.500000          0.366667  8.242415e-05
+     content_improvement               cseo  60 0.880417          0.100000  4.364795e-10
+     content_improvement llm_rank_optimizer  40 0.927813          0.750000  7.018637e-03
+     content_improvement            ragroll 399 0.984733          0.250627  7.829338e-05
+     content_improvement    rewrite_to_rank 200 0.843450          0.260000  3.403215e-03
+     content_improvement            stsdata  30 0.900000          0.966667  2.258812e-02
+                 fluency               cseo  60 0.443750          0.016667  1.413244e-13
+                 fluency llm_rank_optimizer  40 0.657500          0.250000  5.338170e-05
+                 fluency            ragroll 399 0.536218          0.005013  9.242434e-14
+                 fluency    rewrite_to_rank 200 0.471637          0.035000  6.017288e-06
+                 fluency            stsdata  30 0.244444          0.066667  2.280565e-12
+            llm_guidance               cseo  60 0.715000          0.033333  3.489098e-13
+            llm_guidance llm_rank_optimizer  40 0.811250          0.300000  1.881834e-06
+            llm_guidance            ragroll 399 0.947174          0.017544  3.418251e-12
+            llm_guidance    rewrite_to_rank 200 0.798950          0.075000  1.320877e-07
+            llm_guidance            stsdata  30 0.872778          0.966667  1.273974e-03
+                  quotes               cseo  60 0.946806          0.383333  3.801746e-02
+                  quotes llm_rank_optimizer  40 0.990312          0.925000  1.747499e-01
+                  quotes            ragroll 399 0.999083          0.912281  3.367305e-02
+                  quotes    rewrite_to_rank 200 0.982000          0.990000  3.253661e-01
+                  quotes            stsdata  30 0.966667          1.000000  1.079729e-01
+                     raf llm_rank_optimizer  37 0.959797          0.783784  6.265391e-02
+                     raf            ragroll 399 0.970955          0.528822  1.060937e-01
+                     raf            stsdata  30 0.895000          0.966667  4.115082e-02
+         simple_language               cseo  60 0.503472          0.033333  1.822279e-12
+         simple_language llm_rank_optimizer  40 0.580313          0.075000  3.752961e-05
+         simple_language            ragroll 399 0.467020          0.002506  9.844390e-10
+         simple_language    rewrite_to_rank 200 0.455563          0.050000  7.704770e-03
+         simple_language            stsdata  30 0.340556          0.100000  1.457124e-11
+              statistics               cseo  60 0.928194          0.500000  1.361831e-01
+              statistics llm_rank_optimizer  40 0.987187          0.925000  2.891569e-01
+              statistics            ragroll 399 0.990223          0.749373  7.817102e-02
+              statistics    rewrite_to_rank 200 0.955462          0.855000  3.005052e-01
+              statistics            stsdata  30 0.930556          1.000000  1.584202e-01
+             stealthrank               cseo  60 1.000000          1.000000  3.239124e-01
+             stealthrank llm_rank_optimizer  40 1.000000          1.000000  8.438819e-01
+             stealthrank            ragroll 399 0.999994          0.997494  8.070655e-01
+             stealthrank    rewrite_to_rank 200 0.994888          1.000000  7.854364e-01
+             stealthrank            stsdata  30 1.000000          1.000000  9.072655e-01
+         technical_terms               cseo  60 0.742917          0.050000  3.983437e-09
+         technical_terms llm_rank_optimizer  40 0.602500          0.050000  8.805760e-12
+         technical_terms            ragroll 399 0.722901          0.020050  5.636995e-12
+         technical_terms    rewrite_to_rank 200 0.613775          0.095000  8.938452e-03
+         technical_terms            stsdata  30 0.301111          0.066667  1.568485e-11
+            unique_words               cseo  60 0.804167          0.066667  9.336131e-12
+            unique_words llm_rank_optimizer  40 0.792812          0.275000  1.649359e-06
+            unique_words            ragroll 399 0.920236          0.205514  1.972102e-03
+            unique_words    rewrite_to_rank 200 0.701237          0.215000  9.252212e-03
+            unique_words            stsdata  30 0.417222          0.233333  1.775678e-11
+               zero_shot               cseo  60 0.901111          0.233333  8.018353e-04
+               zero_shot llm_rank_optimizer  40 0.820625          0.300000  2.144403e-04
+               zero_shot            ragroll 399 0.922745          0.050125  2.902916e-11
+               zero_shot    rewrite_to_rank 200 0.758075          0.105000  3.004833e-04
+               zero_shot            stsdata  30 0.609444          0.500000  1.245288e-03
+zero_shot__att-gpt4omini               cseo  60 0.814861          0.133333  6.757029e-08
+zero_shot__att-gpt4omini llm_rank_optimizer  40 0.891875          0.450000  2.169713e-07
+zero_shot__att-gpt4omini            ragroll 399 0.877608          0.040100  2.754804e-11
+zero_shot__att-gpt4omini    rewrite_to_rank 200 0.674963          0.080000  1.853738e-03
+zero_shot__att-gpt4omini            stsdata  30 0.627222          0.566667  1.580889e-03
+-> /scratch1/nimase/geobench/geobench-rev/results/unified/detect/judge/summary_Qwen_Qwen2.5-14B-Instruct.csv
+[drift] authoritative: mean cos(orig,adv)=0.961 -> /scratch1/nimase/geobench/geobench-rev/results/unified/detect/drift/authoritative.csv
+[drift] citations: mean cos(orig,adv)=0.941 -> /scratch1/nimase/geobench/geobench-rev/results/unified/detect/drift/citations.csv
+[drift] clean: mean cos(orig,adv)=1.000 -> /scratch1/nimase/geobench/geobench-rev/results/unified/detect/drift/clean.csv
+[drift] content_improvement: mean cos(orig,adv)=0.917 -> /scratch1/nimase/geobench/geobench-rev/results/unified/detect/drift/content_improvement.csv
+[drift] fluency: mean cos(orig,adv)=0.967 -> /scratch1/nimase/geobench/geobench-rev/results/unified/detect/drift/fluency.csv
+[drift] llm_guidance: mean cos(orig,adv)=0.925 -> /scratch1/nimase/geobench/geobench-rev/results/unified/detect/drift/llm_guidance.csv
+[drift] quotes: mean cos(orig,adv)=0.929 -> /scratch1/nimase/geobench/geobench-rev/results/unified/detect/drift/quotes.csv
+[drift] raf: mean cos(orig,adv)=0.982 -> /scratch1/nimase/geobench/geobench-rev/results/unified/detect/drift/raf.csv
+[drift] simple_language: mean cos(orig,adv)=0.969 -> /scratch1/nimase/geobench/geobench-rev/results/unified/detect/drift/simple_language.csv
+[drift] statistics: mean cos(orig,adv)=0.943 -> /scratch1/nimase/geobench/geobench-rev/results/unified/detect/drift/statistics.csv
+[drift] stealthrank: mean cos(orig,adv)=0.954 -> /scratch1/nimase/geobench/geobench-rev/results/unified/detect/drift/stealthrank.csv
+[drift] technical_terms: mean cos(orig,adv)=0.946 -> /scratch1/nimase/geobench/geobench-rev/results/unified/detect/drift/technical_terms.csv
+[drift] unique_words: mean cos(orig,adv)=0.951 -> /scratch1/nimase/geobench/geobench-rev/results/unified/detect/drift/unique_words.csv
+[drift] zero_shot__att-gpt4omini: mean cos(orig,adv)=0.963 -> /scratch1/nimase/geobench/geobench-rev/results/unified/detect/drift/zero_shot__att-gpt4omini.csv
+[drift] zero_shot: mean cos(orig,adv)=0.959 -> /scratch1/nimase/geobench/geobench-rev/results/unified/detect/drift/zero_shot.csv
+[rerank] authoritative@bge-reranker-v2-m3: mean NRG 0.082 -> /scratch1/nimase/geobench/geobench-rev/results/unified/per_instance/bge-reranker-v2-m3/authoritative.csv
+[rerank] citations@bge-reranker-v2-m3: mean NRG 0.004 -> /scratch1/nimase/geobench/geobench-rev/results/unified/per_instance/bge-reranker-v2-m3/citations.csv
+[rerank] clean@bge-reranker-v2-m3: mean NRG 0.000 -> /scratch1/nimase/geobench/geobench-rev/results/unified/per_instance/bge-reranker-v2-m3/clean.csv
+[rerank] content_improvement@bge-reranker-v2-m3: mean NRG 0.162 -> /scratch1/nimase/geobench/geobench-rev/results/unified/per_instance/bge-reranker-v2-m3/content_improvement.csv
+[rerank] fluency@bge-reranker-v2-m3: mean NRG 0.054 -> /scratch1/nimase/geobench/geobench-rev/results/unified/per_instance/bge-reranker-v2-m3/fluency.csv
+[rerank] llm_guidance@bge-reranker-v2-m3: mean NRG 0.269 -> /scratch1/nimase/geobench/geobench-rev/results/unified/per_instance/bge-reranker-v2-m3/llm_guidance.csv
+[rerank] quotes@bge-reranker-v2-m3: mean NRG -0.084 -> /scratch1/nimase/geobench/geobench-rev/results/unified/per_instance/bge-reranker-v2-m3/quotes.csv
+[rerank] raf@bge-reranker-v2-m3: mean NRG -0.010 -> /scratch1/nimase/geobench/geobench-rev/results/unified/per_instance/bge-reranker-v2-m3/raf.csv
+[rerank] simple_language@bge-reranker-v2-m3: mean NRG 0.042 -> /scratch1/nimase/geobench/geobench-rev/results/unified/per_instance/bge-reranker-v2-m3/simple_language.csv
+[rerank] statistics@bge-reranker-v2-m3: mean NRG -0.030 -> /scratch1/nimase/geobench/geobench-rev/results/unified/per_instance/bge-reranker-v2-m3/statistics.csv
+[rerank] stealthrank@bge-reranker-v2-m3: mean NRG 0.050 -> /scratch1/nimase/geobench/geobench-rev/results/unified/per_instance/bge-reranker-v2-m3/stealthrank.csv
+[rerank] technical_terms@bge-reranker-v2-m3: mean NRG -0.023 -> /scratch1/nimase/geobench/geobench-rev/results/unified/per_instance/bge-reranker-v2-m3/technical_terms.csv
+[rerank] unique_words@bge-reranker-v2-m3: mean NRG -0.030 -> /scratch1/nimase/geobench/geobench-rev/results/unified/per_instance/bge-reranker-v2-m3/unique_words.csv
+[rerank] zero_shot__att-gpt4omini@bge-reranker-v2-m3: mean NRG 0.089 -> /scratch1/nimase/geobench/geobench-rev/results/unified/per_instance/bge-reranker-v2-m3/zero_shot__att-gpt4omini.csv
+[rerank] zero_shot@bge-reranker-v2-m3: mean NRG 0.086 -> /scratch1/nimase/geobench/geobench-rev/results/unified/per_instance/bge-reranker-v2-m3/zero_shot.csv
+metric                      nrg  promote@0.1  success@0.1
+method                                                   
+authoritative             0.051        0.075        0.160
+citations                 0.004        0.082        0.132
+content_improvement       0.122        0.168        0.235
+fluency                   0.034        0.094        0.172
+llm_guidance              0.288        0.356        0.448
+quotes                   -0.103        0.054        0.088
+raf                      -0.037        0.017        0.085
+simple_language           0.036        0.045        0.133
+statistics               -0.029        0.036        0.094
+stealthrank               0.078        0.163        0.234
+technical_terms          -0.044        0.062        0.120
+unique_words             -0.052        0.026        0.083
+zero_shot                 0.135        0.161        0.262
+zero_shot__att-gpt4omini  0.088        0.064        0.160
+
+[stats] wrote 4 files under /scratch1/nimase/geobench/geobench-rev/results/unified/summary
