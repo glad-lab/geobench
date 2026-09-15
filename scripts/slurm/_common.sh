@@ -13,7 +13,7 @@ export HF_HOME=${HF_HOME:-/scratch1/nimase/hf_cache}
 # models--* dirs sit directly under hf_cache (not hf_cache/hub), so point the hub cache there too
 export HF_HUB_CACHE=${HF_HUB_CACHE:-$HF_HOME}
 export HF_HUB_OFFLINE=${HF_HUB_OFFLINE:-0}                          # set 1 to forbid downloads on compute nodes
-export TIME=${TIME:-24:00:00}
+export TIME=${TIME:-48:00:00}
 export OPENBLAS_NUM_THREADS=4 OMP_NUM_THREADS=4 PYTHONNOUSERSITE=1   # also for the submitter itself
 
 # Everything each job's shell needs; expanded INSIDE the heredoc at submit time.

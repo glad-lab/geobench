@@ -165,6 +165,37 @@ collecting into `results/unified/instances/<method>__opt-<MODEL>.csv`.
 Evaluate those with `RANKERS=<MODEL>` (white-box) and `gpt-4o-mini` (transfer).
 Budget: ~200 GPU-h per additional open ranker for the three gradient attacks.
 
+### Full plan for the October ARR cycle (deadline Oct 12)
+
+Everything below resumes from checkpoints; re-running a step never repeats finished work.
+
+```bash
+# --- once, login node ---------------------------------------------------------
+bash scripts/10_branch_envs.sh              # branch envs for StealthRank/RAF (env) and STS (env-sts) + branch data
+bash scripts/11_prefetch_models.sh          # Qwen2.5-1.5B for the ablation (ungated, no token)
+python scripts/fix_legacy_names.py          # per_instance/*/raf.csv -> raf__opt-vicuna-7b.csv (pre-sidecar naming)
+
+# --- every login ----------------------------------------------------------------
+source "$(conda info --base)/etc/profile.d/conda.sh" && conda activate geobench
+export OPENBLAS_NUM_THREADS=4 OMP_NUM_THREADS=4 PYTHONNOUSERSITE=1 HF_HUB_OFFLINE=1
+
+# A. finish round 2 (resume; 48 h wall-clock now the default)
+RANKERS="qwen2.5-14b" bash scripts/slurm/submit_eval.sh      # 4 of 11 sets left
+bash scripts/slurm/submit_attacks.sh                          # TAP: resumes at 489/729 and 415/729
+# B. white-box re-optimisation under the unified prompt (per-catalog arrays; ~1 day wall-clock per model)
+bash scripts/slurm/submit_stage3.sh llama-3.1-8b
+bash scripts/slurm/submit_stage3.sh mistral-7b                # cross-ranker white-box (optional, same cost)
+# C. attacker / rewriter-strength ablation
+bash scripts/slurm/submit_ablation.sh
+# --- when B arrays are done ------------------------------------------------------
+bash scripts/slurm/submit_collect_whitebox.sh llama-3.1-8b     # -> instances/{stealthrank,raf,sts}__opt-llama-3.1-8b.csv
+RANKERS="llama-3.1-8b qwen2.5-14b mistral-7b" bash scripts/slurm/submit_eval.sh   # scores every new instance file (white-box + transfer)
+bash scripts/slurm/submit_detect.sh                            # judge / drift / reranker over the new files
+RANKERS=gpt-4o-mini bash scripts/slurm/submit_eval_api.sh      # Zhe (API key)
+# --- tables ----------------------------------------------------------------------
+RANKERS="llama-3.1-8b qwen2.5-14b mistral-7b gpt-4o-mini" bash scripts/05_tables.sh
+```
+
 ### What the coverage report will show first
 
 `make collect` prints, per (method, dataset), how many of the manifest's
