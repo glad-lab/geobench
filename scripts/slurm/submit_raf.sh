@@ -33,8 +33,8 @@ for ds in $DATASETS; do
 export CUDA_VISIBLE_DEVICES=0
 $(common_env "$CONDA_BIN_STEALTH")
 cd branches/RAF
-mapfile -t CATALOGS < <(ls data2/${ds}/*.jsonl | xargs -n1 basename | sed 's/\\.jsonl\$//' | sort)
-CAT=\${CATALOGS[\$SLURM_ARRAY_TASK_ID]}
+mapfile -t CATALOGS < <(cd "data2/${ds}" && for f in *.jsonl; do echo "\${f%.jsonl}"; done | sort)   # names contain spaces
+CAT=\${CATALOGS[\$SLURM_ARRAY_TASK_ID]}; [[ -n "\$CAT" ]] || { echo "no catalog for task \$SLURM_ARRAY_TASK_ID"; exit 1; }
 N=\$(wc -l < "data2/${ds}/\$CAT.jsonl")
 echo "catalog='\$CAT' targets=\$N"
 for idx in \$(seq 1 \$N); do

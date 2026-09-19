@@ -37,8 +37,8 @@ for ds in $DATASETS; do
 export CUDA_VISIBLE_DEVICES=0
 $(common_env "$CONDA_BIN_STS")
 cd branches/STS
-mapfile -t CATALOGS < <(ls benchmark_data/${ds}/*.jsonl | xargs -n1 basename | sed 's/\\.jsonl\$//' | sort)
-CATALOG=\${CATALOGS[\$SLURM_ARRAY_TASK_ID]}
+mapfile -t CATALOGS < <(cd "benchmark_data/${ds}" && for f in *.jsonl; do echo "\${f%.jsonl}"; done | sort)   # names contain spaces
+CATALOG=\${CATALOGS[\$SLURM_ARRAY_TASK_ID]}; [[ -n "\$CATALOG" ]] || { echo "no catalog for task \$SLURM_ARRAY_TASK_ID"; exit 1; }
 NPROD=\$(wc -l < "benchmark_data/${ds}/\$CATALOG.jsonl")
 for PRODUCT_IDX in \$(seq 1 \$NPROD); do
   OUT=results/benchmark_results/sts/v1/${MODEL}/${ds}/\$CATALOG/\$PRODUCT_IDX

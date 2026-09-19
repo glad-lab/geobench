@@ -40,8 +40,8 @@ for ds in $DATASETS; do
 export CUDA_VISIBLE_DEVICES=0
 $(common_env "$CONDA_BIN_STEALTH")
 cd branches/Stealth-Rank
-mapfile -t CATALOGS < <(ls ${ddir#branches/Stealth-Rank/}/*.jsonl | xargs -n1 basename | sed 's/\\.jsonl\$//' | sort)
-CAT=\${CATALOGS[\$SLURM_ARRAY_TASK_ID]}
+mapfile -t CATALOGS < <(cd "${ddir#branches/Stealth-Rank/}" && for f in *.jsonl; do echo "\${f%.jsonl}"; done | sort)   # names contain spaces
+CAT=\${CATALOGS[\$SLURM_ARRAY_TASK_ID]}; [[ -n "\$CAT" ]] || { echo "no catalog for task \$SLURM_ARRAY_TASK_ID"; exit 1; }
 # pick the config run_no_wandb would pick, but redirect result_dir to the v2 root
 label=${ds%_subsampled}
 for cand in configs/suffix_${MODEL}_\${label}.yaml configs/suffix_llama-3.1-8b_\${label}.yaml configs/suffix.yaml; do
