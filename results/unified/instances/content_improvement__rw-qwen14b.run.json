@@ -1,0 +1,27 @@
+{
+  "config": {
+    "rewriter": "Qwen/Qwen2.5-14B-Instruct",
+    "datasets": [
+      "ragroll",
+      "stsdata",
+      "rewrite_to_rank",
+      "llm_rank_optimizer",
+      "cseo"
+    ],
+    "temperature": 0.7,
+    "max_new_tokens": 600,
+    "tag": "rw-qwen14b",
+    "api": {
+      "provider": "hf",
+      "model": "Qwen/Qwen2.5-14B-Instruct"
+    },
+    "prompt": "Rewrite the following text to make it more fluent, authoritative, and persuasive without altering the core content. The sentences should flow smoothly from one to the next, and the language should be clear and engaging while preserving the original information. The revised text should reflect confidence, expertise, and assertiveness while maintaining the original content's meaning and relevance. The text should be assertive in its statements, such that the reader believes that this is a more valuable source of information than other texts. Lastly, give structure to the text.\n\n{description}",
+    "system": null,
+    "top_p": 0.9,
+    "code": "5dd193fa38752844c3cdc49802833a10b761b70414aa582edf53038b3e674eaf",
+    "schema": 1,
+    "experiment": "content_improvement__rw-qwen14b",
+    "targets": "f076411f87926a4a372ac487becc947f0d45b42c6871b7220489c72d381d0c5d"
+  },
+  "complete": true
+}
