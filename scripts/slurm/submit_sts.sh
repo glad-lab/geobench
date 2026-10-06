@@ -37,6 +37,8 @@ for ds in $DATASETS; do
 export CUDA_VISIBLE_DEVICES=0
 $(common_env "$CONDA_BIN_STS")
 cd branches/STS
+python -c "import tools" || { echo "STS env cannot import tools.py (missing package?)"; exit 1; }
+NFAIL=0
 mapfile -t CATALOGS < <(cd "benchmark_data/${ds}" && for f in *.jsonl; do echo "\${f%.jsonl}"; done | sort)   # names contain spaces
 CATALOG=\${CATALOGS[\$SLURM_ARRAY_TASK_ID]}; [[ -n "\$CATALOG" ]] || { echo "no catalog for task \$SLURM_ARRAY_TASK_ID"; exit 1; }
 NPROD=\$(wc -l < "benchmark_data/${ds}/\$CATALOG.jsonl")
@@ -45,8 +47,9 @@ for PRODUCT_IDX in \$(seq 1 \$NPROD); do
   [[ -f \$OUT/sts.txt ]] && { echo "exists: \$OUT"; continue; }
   echo "=== \$CATALOG target \$PRODUCT_IDX / \$NPROD  \$(date)"
   python rank_opt.py --model ${MODEL} --dataset ${ds} --catalog "\$CATALOG" --target_product_idx \$PRODUCT_IDX \\
-      --num_iter 500 --test_iter 100 --random_order --save_state --results_dir "\$OUT" || echo "FAILED target \$PRODUCT_IDX"
+      --num_iter 500 --test_iter 100 --random_order --save_state --results_dir "\$OUT" || { echo "FAILED target \$PRODUCT_IDX"; NFAIL=\$((NFAIL+1)); }
 done
+[[ \$NFAIL -eq 0 ]] || { echo "\$NFAIL targets failed"; exit 1; }
 SBEOF
 done
 echo "When all arrays finish:  bash scripts/slurm/submit_collect_whitebox.sh ${MODEL}"
