@@ -438,7 +438,7 @@ if __name__ == "__main__":
     save_state = args.save_state
     # Use models with similar tokenizers
     # model_path_llama_7b = "meta-llama/Llama-2-7b-chat-hf"
-    MODEL_PATH_DICT = {'llama-3.1-8b': 'NousResearch/Meta-Llama-3.1-8B-Instruct',
+    MODEL_PATH_DICT = {'llama-3.1-8b': 'meta-llama/Meta-Llama-3.1-8B-Instruct',
                        'mistral-7b': 'mistralai/Mistral-7B-Instruct-v0.3',
                        'vicuna-7b': 'lmsys/vicuna-7b-v1.5',
                        'qwen2.5-7b': 'Qwen/Qwen2.5-7B-Instruct',
