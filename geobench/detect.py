@@ -92,12 +92,29 @@ class APIJudge:
             return float("nan")
 
 
+def _exp_name(path, df):
+    """Experiment name: the variant file stem (e.g. raf__opt-llama-3.1-8b) when the
+    filename carries a tag, else the method column. Keeps variants from overwriting
+    each other's detection outputs."""
+    stem = Path(path).stem
+    return stem if "__" in stem else str(df.method.iloc[0])
+
+
+def _skip(out, force):
+    if out.exists() and not force:
+        print(f"[skip] {out} exists (use --force to recompute)")
+        return True
+    return False
+
+
 def cmd_judge(a):
     judge = APIJudge(a.judge) if a.judge.startswith("gpt") or a.judge.startswith("o") else HFJudge(a.judge)
     for p in a.instances:
         df = pd.read_csv(p)
-        method = df.method.iloc[0]
+        method = _exp_name(p, df)
         out = RESULTS_ROOT / "detect" / "judge" / a.judge.replace("/", "_") / f"{method}.csv"
+        if _skip(out, a.force):
+            continue
         out.parent.mkdir(parents=True, exist_ok=True)
         rows = []
         clean_seen = set()
@@ -142,17 +159,20 @@ def cmd_drift(a):
     enc = SentenceTransformer(a.embed)
     for p in a.instances:
         df = pd.read_csv(p)
-        method = df.method.iloc[0]
+        method = _exp_name(p, df)
+        path = RESULTS_ROOT / "detect" / "drift" / f"{method}.csv"
+        if _skip(path, a.force):
+            continue
         queries = [f"I am looking for a {query_noun(d, c)}." for d, c in zip(df.dataset, df.category)]
         E_o = enc.encode(df.orig_text.astype(str).tolist(), normalize_embeddings=True, batch_size=32)
         E_a = enc.encode(df.adv_text.astype(str).tolist(), normalize_embeddings=True, batch_size=32)
         E_q = enc.encode(queries, normalize_embeddings=True, batch_size=32)
         out = df[["method", "dataset", "category", "target_idx"]].copy()
+        out["method"] = method
         out["cos_orig_adv"] = (E_o * E_a).sum(1)
         out["cos_q_orig"] = (E_q * E_o).sum(1)
         out["cos_q_adv"] = (E_q * E_a).sum(1)
         out["query_sim_delta"] = out.cos_q_adv - out.cos_q_orig
-        path = RESULTS_ROOT / "detect" / "drift" / f"{method}.csv"
         path.parent.mkdir(parents=True, exist_ok=True)
         out.to_csv(path, index=False)
         print(f"[drift] {method}: mean cos(orig,adv)={out.cos_orig_adv.mean():.3f} -> {path}")
@@ -167,7 +187,10 @@ def cmd_rerank(a):
     tag = a.reranker.split("/")[-1]
     for p in a.instances:
         df = pd.read_csv(p)
-        method = df.method.iloc[0]
+        method = _exp_name(p, df)
+        out = RESULTS_ROOT / "per_instance" / tag / f"{method}.csv"
+        if _skip(out, a.force):
+            continue
         rows = []
         cat_scores = {}
         for _, r in df.iterrows():
@@ -187,7 +210,6 @@ def cmd_rerank(a):
                          "target_idx": r.target_idx, "L": L, "r_before": r_before, "r_after": r_after,
                          "score_orig": float(base[idx]), "score_adv": adv_s,
                          **instance_metrics(r_before, r_after, L)})
-        out = RESULTS_ROOT / "per_instance" / tag / f"{method}.csv"
         out.parent.mkdir(parents=True, exist_ok=True)
         pd.DataFrame(rows).to_csv(out, index=False)
         print(f"[rerank] {method}@{tag}: mean NRG {np.mean([x['nrg'] for x in rows]):.3f} -> {out}")
@@ -203,6 +225,8 @@ def main():
     d.add_argument("--embed", default="BAAI/bge-large-en-v1.5")
     rr = sub.add_parser("rerank"); rr.add_argument("--instances", nargs="+", type=Path, required=True)
     rr.add_argument("--reranker", default="BAAI/bge-reranker-v2-m3")
+    for sp in (j, d, rr):
+        sp.add_argument("--force", action="store_true", help="recompute outputs that already exist")
     a = ap.parse_args()
     if a.cmd == "judge":
         cmd_judge(a)
