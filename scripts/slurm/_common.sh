@@ -1,0 +1,41 @@
+#!/bin/bash
+# Shared the Slurm cluster settings for every submitter in scripts/slurm/.  Edit here only.
+# Override any value on the command line, e.g.  ACCOUNT=YOUR_SLURM_ACCOUNT bash scripts/slurm/submit_eval.sh
+export REPO=${REPO:-$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)}   # the clone this script lives in (survives moving off /scratch1)
+export ACCOUNT=${ACCOUNT:-YOUR_SLURM_ACCOUNT}
+export PARTITION=${PARTITION:-YOUR_PARTITION}
+export GPU_TYPE=${GPU_TYPE:-rtxa6000}                                  # --gres=gpu:${GPU_TYPE}:N
+export CONDA_BIN=${CONDA_BIN:-/path/to/home/.conda/envs/geobench/bin}  # env with requirements-geobench.txt
+export CONDA_BIN_STEALTH=${CONDA_BIN_STEALTH:-/path/to/scratch/geobench/env/bin}      # branches/Stealth-Rank, RAF, zero-shot env
+export CONDA_BIN_STS=${CONDA_BIN_STS:-/path/to/scratch/geobench/env-sts/bin}          # branches/STS env
+if [[ -z "${HF_HOME:-}" ]]; then for c in /path/to/scratch/hf_cache /path/to/scratch/hf_cache; do [[ -d $c ]] && { HF_HOME=$c; break; }; done; fi
+export HF_HOME=${HF_HOME:-/path/to/scratch/hf_cache}
+# models--* dirs sit directly under hf_cache (not hf_cache/hub), so point the hub cache there too
+export HF_HUB_CACHE=${HF_HUB_CACHE:-$HF_HOME}
+export HF_HUB_OFFLINE=${HF_HUB_OFFLINE:-0}                          # set 1 to forbid downloads on compute nodes
+export TIME=${TIME:-48:00:00}
+export OPENBLAS_NUM_THREADS=4 OMP_NUM_THREADS=4 PYTHONNOUSERSITE=1   # also for the submitter itself
+
+# Everything each job's shell needs; expanded INSIDE the heredoc at submit time.
+common_env() {
+cat <<EOT
+export PATH=$1:\$PATH
+export HF_HOME=$HF_HOME
+export HF_HUB_CACHE=$HF_HUB_CACHE
+export HF_HUB_OFFLINE=$HF_HUB_OFFLINE
+export HF_TOKEN=${HF_TOKEN:-}
+export OPENAI_API_KEY=${OPENAI_API_KEY:-}
+export OPENAI_BASE_URL=${OPENAI_BASE_URL:-}
+export WANDB_DISABLED=true
+export WANDB_MODE=disabled
+export WANDB_SILENT=true
+export TOKENIZERS_PARALLELISM=false
+export OPENBLAS_NUM_THREADS=4
+export OMP_NUM_THREADS=4
+export PYTHONUNBUFFERED=1
+export PYTHONNOUSERSITE=1
+export PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True
+cd $REPO
+mkdir -p logs results/unified
+EOT
+}

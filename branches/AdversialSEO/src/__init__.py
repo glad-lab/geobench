@@ -4,7 +4,7 @@ Reproduction study of Nestaas et al., 2024
 """
 
 __version__ = "0.1.0"
-__author__ = "Freddy Song"
+__author__ = "anonymous Song"
 
 from .attacks import AttackFactory, AttackGenerator, AttackType, Attack
 from .ranking import LLMRanker, SimpleRAG

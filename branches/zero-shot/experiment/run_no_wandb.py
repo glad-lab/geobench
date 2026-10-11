@@ -25,6 +25,8 @@ ORDERING_PROMPT = "The order in which you list the products is crucial, as the u
 
 MODEL_PATH_DICT = {
     'llama-3.1-8b': 'meta-llama/Meta-Llama-3.1-8B-Instruct',
+    'qwen2.5-7b': 'Qwen/Qwen2.5-7B-Instruct',
+    'qwen2.5-14b': 'Qwen/Qwen2.5-14B-Instruct',
     'llama-2-7b': "meta-llama/Llama-2-7b-chat-hf",
     'vicuna-7b': "lmsys/vicuna-7b-v1.5",
     'mistral-7b': 'mistralai/Mistral-7B-Instruct-v0.3',
@@ -32,7 +34,8 @@ MODEL_PATH_DICT = {
 }
 
 SYSTEM_PROMPT = {
-    'llama': {'head': f'[INST] <<SYS>>\n{ASSSISTANT_PROMPT}\n<<SYS>>\n\n', 'tail': ' [/INST]'},
+    'llama': {'head': f'<|start_header_id|>system<|end_header_id|>\n\n{ASSSISTANT_PROMPT}<|eot_id|><|start_header_id|>user<|end_header_id|>\n\n', 'tail': '<|eot_id|><|start_header_id|>assistant<|end_header_id|>\n\n'},
+    'qwen2.5': {'head': f'<|im_start|>system\n{ASSSISTANT_PROMPT}<|im_end|>\n<|im_start|>user\n', 'tail': '<|im_end|>\n<|im_start|>assistant\n'},
     'vicuna': {'head': f'{ASSSISTANT_PROMPT}\n\nUser:', 'tail': '\n\nAssistant: '},
     'mistral': {'head': f'<s>[INST] {ASSSISTANT_PROMPT}\n\n', 'tail': ' [/INST]'},
     'deepseek': {'head': f'{ASSSISTANT_PROMPT}\n\nUser:', 'tail': '\n\nAssistant: '},
@@ -182,7 +185,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--mode", type=str, choices=['suffix', 'paraphrase'], default='suffix')
     parser.add_argument("--catalog", type=str, required=True)
-    parser.add_argument("--model", type=str, choices=['llama-3.1-8b', 'llama-2-7b', 'vicuna-7b', 'mistral-7b', 'deepseek-7b'], default='llama-3.1-8b')
+    parser.add_argument("--model", type=str, choices=['llama-3.1-8b', 'llama-2-7b', 'vicuna-7b', 'mistral-7b', 'deepseek-7b', 'qwen2.5-7b', 'qwen2.5-14b'], default='llama-3.1-8b')
     parser.add_argument("--dataset", type=str, default="rewrite_to_rank_subsampled")
     parser.add_argument("--config", type=str, default=None, help="Path to config yaml")
     args = parser.parse_args()

@@ -1,0 +1,29 @@
+{
+  "config": {
+    "rewriter": "gpt-4o-mini",
+    "datasets": [
+      "ragroll",
+      "stsdata",
+      "rewrite_to_rank",
+      "llm_rank_optimizer",
+      "cseo"
+    ],
+    "temperature": 0.7,
+    "max_new_tokens": 600,
+    "tag": "",
+    "api": {
+      "provider": "blockrun-openai",
+      "model": "openai/gpt-4o-mini",
+      "endpoint": "https://api.blockrun.ai/v1",
+      "allow_truncated": true
+    },
+    "prompt": "Simplify the following source, using simple, easy-to-understand language while ensuring the key information is still conveyed. Do not omit, add, or alter any core information in the process.\n\nRemember the end-goal is that readers give more attention to this source, when presented with a series of summaries, so make the language easier to understand, but do not delete any information.\nThe length of the new source should be the same as the original. Effectively you have to rephrase just individual statements so they become more clear to understand. Do not explain the changes, just give me the revised source.\n\nSource:\n```\n{description}\n```\n",
+    "system": "You are an expert ml researcher having previous background in SEO and search engines in general. You are working on novel research ideas for next generation of products. These products will have language models augmented with search engines, with the task of answering questions based on sources backed by the search engine. This new set of systems will be collectively called language engines (generative search engines). This will require websites to update their SEO techniques to rank higher in the llm generated answer. Specifically they will use GEO (Generative Engine Optimization) techniques to boost their visibility in the final text answer outputted by the Language Engine.",
+    "top_p": 0.9,
+    "code": "cba8871da4da8e53235702133dbd4218656b92b390d62a11deda7f3592ad0490",
+    "schema": 1,
+    "experiment": "simple_language",
+    "targets": "f076411f87926a4a372ac487becc947f0d45b42c6871b7220489c72d381d0c5d"
+  },
+  "complete": true
+}
