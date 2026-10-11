@@ -1,7 +1,7 @@
 #!/bin/bash
 #SBATCH --job-name=llmrank-automotive
 #SBATCH --partition=gpuA100x4
-#SBATCH --account=bfsl-delta-gpu
+#SBATCH --account=YOUR_ACCOUNT-delta-gpu
 #SBATCH --nodes=1
 #SBATCH --gpus-per-node=1
 #SBATCH --cpus-per-task=16
